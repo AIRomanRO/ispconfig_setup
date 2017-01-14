@@ -5,9 +5,9 @@
 InstallSQLServer() {
   if [ $CFG_SQLSERVER == "MySQL" ]; then
     echo -n "Installing MySQL... "
-    echo "mysql-server mysql-community-server/root_password password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
-    echo "mysql-server mysql-community-server/root_password_again password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
-    apt-get -y install mysql-client mysql-server > /dev/null 2>&1
+    echo "mysql-server-5.7 mysql-server/root_password password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
+    echo "mysql-server-5.7 mysql-server/root_password_again password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
+    apt-get -yqq install mysql-server mysql-client > /dev/null 2>&1
     #sed -i 's/bind-address		= 127.0.0.1/#bind-address		= 127.0.0.1/' /etc/mysql/my.cnf
 	echo 'sql-mode="NO_ENGINE_SUBSTITUTION"' >> /etc/mysql/mysql.conf.d/mysqld.cnf
     service mysql restart > /dev/null
