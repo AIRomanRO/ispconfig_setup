@@ -29,7 +29,7 @@ PreInstallCheck() {
 # Debian backports - Required for Letsencrypt
 deb http://ftp.debian.org/debian jessie-backports main
 ###############################################################" >> /etc/apt/sources.list.d/jessie-backports.list
-  echo -e "${green} Added Debian backports - Required for Letsencrypt${NC}\n"
+  echo -e "\n${green} Added Debian backports - Required for Letsencrypt${NC}\n"
   
   #Add dotdeb repo for php
   echo "###############################################################
@@ -50,9 +50,9 @@ deb-src http://nginx.org/packages/mainline/debian/ jessie nginx
   wget -q https://nginx.org/keys/nginx_signing.key && sudo apt-key add nginx_signing.key
   echo -e "${green} Added latest nginx version repo${NC}\n"
   
-  mkdir temp && cd temp/
-  wget -q https://repo.mysql.com//mysql-apt-config_0.8.1-1_all.deb && dpkg -i mysql-apt-config_0.8.1-1_all.deb
-  cd ../
+  #mkdir temp && cd temp/
+  #wget -q https://repo.mysql.com//mysql-apt-config_0.8.1-1_all.deb && dpkg -i mysql-apt-config_0.8.1-1_all.deb
+  #cd ../
   
   echo -e "${green} OK${NC}\n"
 }
