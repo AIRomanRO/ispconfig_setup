@@ -60,12 +60,12 @@ to install debian as required for ISPConfig
 After you got a fresh and perfect Debian installation you had to
 
 ```shell
-cd /tmp; wget --no-check-certificate -O installer.tgz "https://github.com/servisys/ispconfig_setup/tarball/master"; tar zxvf installer.tgz; cd *ispconfig*; bash install.sh
+cd /tmp; wget --no-check-certificate -O installer.tgz "https://github.com/a1ur3l/ispconfig_setup/tarball/master"; tar zxvf installer.tgz; cd *ispconfig*; bash install.sh
 ```
 * Centos 7
 
 ```shell
-cd /tmp; yum install wget unzip net-tools; wget --no-check-certificate -O installer.tgz "https://github.com/servisys/ispconfig_setup/tarball/master"; tar zxvf installer.tgz; cd *ispconfig*; bash install.sh
+cd /tmp; yum install wget unzip net-tools; wget --no-check-certificate -O installer.tgz "https://github.com/a1ur3l/ispconfig_setup/tarball/master"; tar zxvf installer.tgz; cd *ispconfig*; bash install.sh
 ```
 
 Centos 7 is in a very early stage, we got to test a bit, any help will be appreciated. 
@@ -81,3 +81,4 @@ Follow the instruction on the screen
 * Special thanks to Bartłomiej Gajda ( http://webard.me/ ) for the bug fixes to multiserver setup and beta installation
 * The code is based on the "Automatic Debian System Installation for ISPConfig 3" of Author: Mark Stunnenberg <mark@e-rave.nl>
 * Howtoforge community https://www.howtoforge.com/community/
+* This version is forked and updated by Aurel Roman (http://www.airoman.ro)
