@@ -48,7 +48,7 @@ InstallISPConfig() {
 	echo
 	echo "[expert]" >> autoinstall.ini
 	echo "mysql_ispconfig_user=ispconfig" >> autoinstall.ini
-	echo "mysql_ispconfig_password=afStEratXBsgatRtsa42CadwhQ" >> autoinstall.ini
+	echo "mysql_ispconfig_password=$CFG_ISPCONFIG_DB_PASS" >> autoinstall.ini
 	echo "join_multiserver_setup=$MULTISERVER" >> autoinstall.ini
     echo "mysql_master_hostname=$CFG_MASTER_FQDN" >> autoinstall.ini
 	echo "mysql_master_root_user=root" >> autoinstall.ini
@@ -76,7 +76,7 @@ InstallISPConfig() {
 	echo "mysql_master_database=dbispconfig" >> autoinstall.ini
 	echo "reconfigure_permissions_in_master_database=no" >> autoinstall.ini
 	echo "reconfigure_services=yes" >> autoinstall.ini
-    echo "ispconfig_port=8080" >> autoinstall.ini
+    echo "ispconfig_port=$CFG_ISPONCFIG_PORT" >> autoinstall.ini
 	echo "create_new_ispconfig_ssl_cert=no" >> autoinstall.ini
     echo "reconfigure_crontab=yes" >> autoinstall.ini
     php -q install.php --autoinstall=autoinstall.ini
