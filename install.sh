@@ -171,7 +171,7 @@ if [ -f /etc/debian_version ]; then
   InstallISPConfig
   InstallFix
   echo -e "${green}Well done ISPConfig installed and configured correctly :D ${NC}"
-  echo "Now you can connect to your ISPConfig installation at https://$CFG_HOSTNAME_FQDN:8080 or https://IP_ADDRESS:8080"
+  echo "Now you can connect to your ISPConfig installation at https://$CFG_HOSTNAME_FQDN:$CFG_ISPONCFIG_PORT or https://IP_ADDRESS:$CFG_ISPONCFIG_PORT"
   echo "You can visit my GitHub profile at https://github.com/servisys/ispconfig_setup/"
   if [ "$CFG_WEBMAIL" == "roundcube" ]; then
     if [ "$DISTRO" != "debian8" ]; then
