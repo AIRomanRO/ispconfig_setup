@@ -1,5 +1,6 @@
 # README #
 
+This is the support button for the original repo ( https://github.com/servisys/ispconfig_setup ).
 
 [![PayPayl donate button](https://www.paypalobjects.com/it_IT/IT/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TB4Q3UJDC5JDJ "Help US support this project using Paypal")
 
