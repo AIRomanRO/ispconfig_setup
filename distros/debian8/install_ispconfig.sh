@@ -11,7 +11,7 @@ InstallISPConfig() {
 	cd ispconfig3_install*
 	cd install
   else
-	wget -Oq ISPConfig-3-stable-latest.tar.gz  https://sourceforge.net/projects/ispconfig/files/latest/download
+	wget -O ISPConfig-3-stable-latest.tar.gz  https://sourceforge.net/projects/ispconfig/files/latest/download
 	tar xfz ISPConfig-3-stable-latest.tar.gz
 	cd ispconfig3_install/install/
   fi
