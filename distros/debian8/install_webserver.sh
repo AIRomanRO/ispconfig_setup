@@ -77,6 +77,7 @@ InstallWebServer() {
 	#sed -i "s/#/;/" /etc/php5/conf.d/ming.ini
 	service php7.0-fpm reload
 	apt-get -yqq install fcgiwrap
+	service php7.0-fpm reload
   
   if [ $CFG_PHPMYADMIN == "yes" ]; then
 	echo "==========================================================================================="
