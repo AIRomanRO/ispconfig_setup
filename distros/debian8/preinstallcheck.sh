@@ -36,7 +36,7 @@ deb http://ftp.debian.org/debian jessie-backports main
 #php  7
 deb http://packages.dotdeb.org jessie all
 deb-src http://packages.dotdeb.org jessie all" >> /etc/apt/sources.list.d/dotdeb-PHP7.0.list
-  wget https://www.dotdeb.org/dotdeb.gpg && sudo apt-key add dotdeb.gpg
+  wget -q https://www.dotdeb.org/dotdeb.gpg && sudo apt-key add dotdeb.gpg
   
   echo -e "${green} Added PHP 7.0 - DotDeb repo${NC}\n"
   
@@ -47,11 +47,11 @@ deb http://nginx.org/packages/mainline/debian/ jessie nginx
 
 deb-src http://nginx.org/packages/mainline/debian/ jessie nginx
 ###############################################################" >> /etc/apt/sources.list.d/nginx-latest-official.list
-  wget https://nginx.org/keys/nginx_signing.key && sudo apt-key add nginx_signing.key
+  wget -q https://nginx.org/keys/nginx_signing.key && sudo apt-key add nginx_signing.key
   echo -e "${green} Added latest nginx version repo${NC}\n"
   
   mkdir temp && cd temp/
-  wget https://repo.mysql.com//mysql-apt-config_0.8.1-1_all.deb && dpkg -i mysql-apt-config_0.8.1-1_all.deb
+  wget -q https://repo.mysql.com//mysql-apt-config_0.8.1-1_all.deb && dpkg -i mysql-apt-config_0.8.1-1_all.deb
   cd ../
   
   echo -e "${green} OK${NC}\n"
