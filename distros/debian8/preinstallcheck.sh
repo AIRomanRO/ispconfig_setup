@@ -50,15 +50,6 @@ deb-src http://nginx.org/packages/mainline/debian/ jessie nginx
   wget -q https://nginx.org/keys/nginx_signing.key && sudo apt-key add nginx_signing.key
   echo -e "${green} Added latest nginx version repo${NC}\n"
   
-echo "### THIS FILE IS AUTOMATICALLY CONFIGURED ###
-# You may comment out entries below, but any other modifications may be lost.
-# Use command 'dpkg-reconfigure mysql-apt-config' as root for modifications.
-deb http://repo.mysql.com/apt/debian/ jessie mysql-apt-config
-deb http://repo.mysql.com/apt/debian/ jessie mysql-5.7
-deb http://repo.mysql.com/apt/debian/ jessie mysql-tools
-#deb http://repo.mysql.com/apt/debian/ jessie mysql-tools-preview
-deb-src http://repo.mysql.com/apt/debian/ jessie mysql-5.7" >> /etc/apt/sources.list.d/mysql.list
-  echo -e "${green} Added latest mysql version repo${NC}\n"
   
   echo -e "${green} OK${NC}\n"
 }
