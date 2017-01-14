@@ -64,10 +64,12 @@ InstallWebServer() {
   CFG_APACHE=n
 	echo -n "Installing NGINX and Modules... "
 	service apache2 stop
-	systemctl disable apache2
-	update-rc.d -f apache2 remove
+	systemctl disable apache2 > /dev/null 2>&1
+	update-rc.d -f apache2 remove > /dev/null 2>&1
 	apt-get -yqq remove apache2
-	apt-get -yqq install nginx > /dev/null 2>&1
+	apt-get -yqq install nginx nginx-common nginx-full > /dev/null 2>&1
+	mkdir /etc/nginx/sites-available
+	mkdir /etc/nginx/sites-enabled
 	service nginx start 
 	apt-get -yqq install php7.0-fpm php7.0-mysql php7.0-curl php7.0-imap php7.0-mcrypt php7.0-mbstring php7.0-sqlite3 php7.0-soap php7.0-xml php7.0-xsl php7.0-zip php7.0-recode php7.0-tidy php7.0-xmlrpc php7.0-snmp php7.0-cli > /dev/null 2>&1
 	sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.0/fpm/php.ini
@@ -75,7 +77,6 @@ InstallWebServer() {
 	echo -n "Installing needed Programs for PHP and NGINX... "
 	apt-get -yqq install mcrypt imagemagick memcached curl tidy snmp > /dev/null 2>&1
 	#sed -i "s/#/;/" /etc/php5/conf.d/ming.ini
-	service php7.0-fpm reload
 	apt-get -yqq install fcgiwrap
 	service php7.0-fpm reload
   
