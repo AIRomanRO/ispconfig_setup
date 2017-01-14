@@ -34,7 +34,7 @@ InstallWebServer() {
 	
   if [ "$CFG_XCACHE" == "yes" ]; then
 	echo -n "Installing XCache... "
-	apt-get -yqq install php5-xcache > /dev/null 2>&1
+	apt-get -yqq install php7.0-xcache > /dev/null 2>&1
 	echo -e "[${green}DONE${NC}]\n"
   fi
 	

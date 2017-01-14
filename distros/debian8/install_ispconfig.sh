@@ -11,7 +11,7 @@ InstallISPConfig() {
 	cd ispconfig3_install*
 	cd install
   else
-	wget -O ISPConfig-3-stable-latest.tar.gz  https://sourceforge.net/projects/ispconfig/files/latest/download
+	wget -Oq ISPConfig-3-stable-latest.tar.gz  https://sourceforge.net/projects/ispconfig/files/latest/download
 	tar xfz ISPConfig-3-stable-latest.tar.gz
 	cd ispconfig3_install/install/
   fi
@@ -35,7 +35,7 @@ InstallISPConfig() {
 	else
     echo "http_server=" >> autoinstall.ini
   fi
-	echo "ispconfig_port=8080" >> autoinstall.ini
+	echo "ispconfig_port=$CFG_ISPONCFIG_PORT" >> autoinstall.ini
 	echo "ispconfig_use_ssl=y" >> autoinstall.ini
 	echo
 	echo "[ssl_cert]" >> autoinstall.ini
