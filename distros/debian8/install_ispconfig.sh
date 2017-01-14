@@ -11,8 +11,8 @@ InstallISPConfig() {
 	cd ispconfig3_install*
 	cd install
   else
-	wget http://www.ispconfig.org/downloads/ISPConfig-3-stable.tar.gz
-	tar xfz ISPConfig-3-stable.tar.gz
+	wget -O ISPConfig-3-stable-latest.tar.gz  https://sourceforge.net/projects/ispconfig/files/latest/download
+	tar xfz ISPConfig-3-stable-latest.tar.gz
 	cd ispconfig3_install/install/
   fi
   if [ $CFG_ISPC == "standard" ]; then
