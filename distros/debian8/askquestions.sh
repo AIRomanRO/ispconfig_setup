@@ -11,7 +11,7 @@ AskQuestions() {
 	  
 	  while [ "x$CFG_SQLSERVER" == "x" ]
           do
-                CFG_SQLSERVER=$(whiptail --title "SQLSERVER" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "Select SQL Server type" 10 50 2 "MySQL" "(default)" ON "MariaDB" "" OFF 3>&1 1>&2 2>&3)
+                CFG_SQLSERVER=$(whiptail --title "SQLSERVER" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "Select SQL Server type" 10 50 3 "MySQL" "(default)" ON "MariaDB" "" OFF "None" "(already installed)" OFF 3>&1 1>&2 2>&3)
           done
 		  
 	  while [ "x$CFG_MYSQL_ROOT_PWD" == "x" ]
@@ -76,7 +76,7 @@ AskQuestions() {
 		CFG_ISPONCFIG_PORT=$(whiptail --title "ISPConfig" --backtitle "$WT_BACKTITLE" --inputbox "Please specify a ISPConfig Port" --nocancel 10 50 3>&1 1>&2 2>&3)
 	  done
 	  
-	  CFG_ISPCONFIG_DB_PASS=$(whiptail --title "ISPConfig db pass for advanced" --backtitle "$WT_BACKTITLE" --inputbox "ISPConfig db pass for advance" --nocancel 10 50 3>&1 1>&2 2>&3)
+	  CFG_ISPCONFIG_DB_PASS=$(whiptail --title "ISPConfig db pass for advanced" --backtitle "$WT_BACKTITLE" --inputbox "ISPConfig db pass for advanced" --nocancel 10 50 3>&1 1>&2 2>&3)
 	  
 	  SSL_COUNTRY=$(whiptail --title "SSL Country" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - Country (ex. EN)" --nocancel 10 50 3>&1 1>&2 2>&3)
       SSL_STATE=$(whiptail --title "SSL State" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - STATE (ex. Italy)" --nocancel 10 50 3>&1 1>&2 2>&3)

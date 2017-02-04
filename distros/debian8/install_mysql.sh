@@ -5,16 +5,17 @@
 InstallSQLServer() {
   if [ $CFG_SQLSERVER == "MySQL" ]; then
     echo -n "Installing MySQL... "
+    
 	export DEBIAN_FRONTEND=noninteractive
-    echo debconf-set-selections <<< "mysql-server-5.7 mysql-server/root_password password $CFG_MYSQL_ROOT_PWD"
-    echo debconf-set-selections <<< "mysql-server-5.7 mysql-server/root_password_again password $CFG_MYSQL_ROOT_PWD"
+    echo debconf-set-selections <<< "mysql-server mysql-server/root_password password $CFG_MYSQL_ROOT_PWD"
+    echo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $CFG_MYSQL_ROOT_PWD"
     apt-get -qq install mysql-server mysql-client > /dev/null
     #sed -i 's/bind-address		= 127.0.0.1/#bind-address		= 127.0.0.1/' /etc/mysql/my.cnf
     echo 'sql-mode="NO_ENGINE_SUBSTITUTION"' >> /etc/mysql/mysql.conf.d/mysqld.cnf
     service mysql restart > /dev/null
     echo -e "[${green}DONE${NC}]\n"
   
-  else
+  elif [ $CFG_SQLSERVER == "MariaDB" ]; then
   
     echo -n "Installing MariaDB... "
     echo "mysql-server-5.5 mysql-server/root_password password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
@@ -23,5 +24,9 @@ InstallSQLServer() {
     sed -i 's/bind-address		= 127.0.0.1/#bind-address		= 127.0.0.1/' /etc/mysql/my.cnf
     service mysql restart /dev/null 2>&1
     echo -e "[${green}DONE${NC}]\n"
+	
+  else
+	echo -n "No installation of DB server... "
+	echo -e "[${green}DONE${NC}]\n"
   fi	
 }
