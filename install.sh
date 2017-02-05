@@ -39,6 +39,7 @@ PWD=$(pwd);
 source $PWD/functions/check_linux.sh
 echo "Checking your system, please wait..."
 CheckLinux
+CheckIPV6
 
 #---------------------------------------------------------------------
 # Load needed Modules
@@ -96,6 +97,12 @@ if [ -n "$PRETTY_NAME" ]; then
 	echo -e "The detected Linux Distribution is: " $PRETTY_NAME
 else
 	echo -e "The detected Linux Distribution is: " $ID-$VERSION_ID
+fi
+echo
+if [ $IPV6_ENABLED == true ]; then
+    echo -e "IPV6 enabled: ${green} YES ${NC}"
+else
+    echo -e "IPV6 enabled: ${red} NO ${NC}"
 fi
 echo
 if [ -n "$DISTRO" ]; then
