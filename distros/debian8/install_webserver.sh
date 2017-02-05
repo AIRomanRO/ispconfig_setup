@@ -62,18 +62,37 @@ InstallWebServer() {
 	
   CFG_NGINX=y
   CFG_APACHE=n
-	echo -n "Installing NGINX and Modules... "
+	echo -n "Installing NGINX and Modules... \n"
 	service apache2 stop
 	systemctl disable apache2 > /dev/null 2>&1
 	update-rc.d -f apache2 remove > /dev/null 2>&1
-	apt-get -yqq remove apache2
+	apt-get -yqq remove --purge apache2
+	echo -n "Remove of Apache completed... \n"
+
 	apt-get -yqq install nginx nginx-common nginx-full > /dev/null 2>&1
-	mkdir /etc/nginx/sites-available
-	mkdir /etc/nginx/sites-enabled
+	
+	if [ ! -d "/etc/nginx/sites-available" ]; then
+       mkdir /etc/nginx/sites-available
+	fi
+	
+	if [ ! -d "/etc/nginx/sites-enabled" ]; then
+       mkdir /etc/nginx/sites-enabled
+    fi
+	
+	#Force install of nginx if no IPV6 enabled
+	if [ $IPV6_ENABLED == false ]; then
+	    sed -i "s/listen \[::\]:80/###-No IPV6### listen [::]:80/" /etc/nginx/sites-available/default
+		apt-get -yqq install nginx nginx-common nginx-full > /dev/null 2>&1
+    fi
+	
 	service nginx start 
+	echo -n "Install of NGINx completed... \n"
+
 	apt-get -yqq install php7.0-fpm php7.0-mysql php7.0-curl php7.0-imap php7.0-mcrypt php7.0-mbstring php7.0-sqlite3 php7.0-soap php7.0-xml php7.0-xsl php7.0-zip php7.0-recode php7.0-tidy php7.0-xmlrpc php7.0-snmp php7.0-cli > /dev/null 2>&1
 	sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.0/fpm/php.ini
 	sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/7.0/fpm/php.ini
+	echo -n "Install of PHP7.0 completed... \n"
+	
 	echo -n "Installing needed Programs for PHP and NGINX... "
 	apt-get -yqq install mcrypt imagemagick memcached curl tidy snmp > /dev/null 2>&1
 	#sed -i "s/#/;/" /etc/php5/conf.d/ming.ini
@@ -93,7 +112,7 @@ InstallWebServer() {
   fi
   
   	echo -n "Installing Lets Encrypt... "	
-	apt-get -yqq install certbot -t jessie-backports
+	apt-get -yqq install certbot python-certbot -t jessie-backports
 	certbot &
 	echo -e "[${green}DONE${NC}]\n"
   

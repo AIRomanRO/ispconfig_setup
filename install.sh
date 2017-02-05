@@ -133,68 +133,95 @@ else
 fi
 
 if [ -f /etc/debian_version ]; then
-  PreInstallCheck
-  if [ "$CFG_MULTISERVER" == "no" ]; then
-	AskQuestions
-  else
-    source $PWD/distros/$DISTRO/askquestions_multiserver.sh
-	AskQuestionsMultiserver
-  fi
-  InstallBasics 
-  InstallSQLServer 
-  if [ "$CFG_SETUP_WEB" == "yes" ] || [ "$CFG_MULTISERVER" == "no" ]; then
-    InstallWebServer
-    InstallFTP 
-    if [ "$CFG_QUOTA" == "yes" ]; then
-    	InstallQuota 
+    PreInstallCheck
+    if [ "$CFG_MULTISERVER" == "no" ]; then
+	    AskQuestions
+    else
+        source $PWD/distros/$DISTRO/askquestions_multiserver.sh
+	    AskQuestionsMultiserver
     fi
-    if [ "$CFG_JKIT" == "yes" ]; then
-    	InstallJailkit 
+    InstallBasics 
+    InstallSQLServer 
+    if [ "$CFG_SETUP_WEB" == "yes" ] || [ "$CFG_MULTISERVER" == "no" ]; then
+        InstallWebServer
+        InstallFTP 
+		
+        if [ "$CFG_QUOTA" == "yes" ]; then
+    	    InstallQuota 
+        fi
+		
+        if [ "$CFG_JKIT" == "yes" ]; then
+    	    InstallJailkit 
+        fi
+		
+        if [ "$CFG_HHVM" == "yes" ]; then
+    	    InstallHHVM
+        fi
+		
+        if [ "$CFG_METRONOM" == "yes" ]; then
+    	    InstallMetronom 
+        fi
+		
+        InstallWebmail 
+    else
+        InstallBasePhp    #to remove in feature release
+    fi  
+	
+    if [ "$CFG_SETUP_MAIL" == "yes" ] || [ "$CFG_MULTISERVER" == "no" ]; then
+        InstallPostfix 
+        InstallMTA 
+        InstallAntiVirus 
+    fi  
+ 
+    if [ "$CFG_SETUP_NS" == "yes" ] || [ "$CFG_MULTISERVER" == "no" ]; then
+        InstallBind 
     fi
-    if [ "$CFG_HHVM" == "yes" ]; then
-    	InstallHHVM
-    fi
-    if [ "$CFG_METRONOM" == "yes" ]; then
-    	InstallMetronom 
-    fi
-    InstallWebmail 
-  else
-    InstallBasePhp    #to remove in feature release
-  fi  
-  if [ "$CFG_SETUP_MAIL" == "yes" ] || [ "$CFG_MULTISERVER" == "no" ]; then
-    InstallPostfix 
-    InstallMTA 
-    InstallAntiVirus 
-  fi  
-  if [ "$CFG_SETUP_NS" == "yes" ] || [ "$CFG_MULTISERVER" == "no" ]; then
-    InstallBind 
-  fi
-  InstallWebStats
-  InstallFail2ban
-  if [ "$CFG_ISPCVERSION" == "Beta" ]; then
+	
+	InstallWebStats
+    InstallFail2ban
+	
+    if [ "$CFG_ISPCVERSION" == "Beta" ]; then
 		source $PWD/distros/$DISTRO/install_ispconfigbeta.sh
 		InstallISPConfigBeta
-  fi
-  InstallISPConfig
-  InstallFix
-  echo -e "${green}Well done ISPConfig installed and configured correctly :D ${NC}"
-  echo "Now you can connect to your ISPConfig installation at https://$CFG_HOSTNAME_FQDN:$CFG_ISPONCFIG_PORT or https://IP_ADDRESS:$CFG_ISPONCFIG_PORT"
-  echo "You can visit my GitHub profile at https://github.com/servisys/ispconfig_setup/"
-  if [ "$CFG_WEBMAIL" == "roundcube" ]; then
-    if [ "$DISTRO" != "debian8" ]; then
-		echo -e "${red}You had to edit user/pass /var/lib/roundcube/plugins/ispconfig3_account/config/config.inc.php of roudcube user, as the one you inserted in ISPconfig ${NC}"
+    fi
+	
+    InstallISPConfig
+    InstallFix
+	
+    echo -e "${green}Well done ISPConfig installed and configured correctly :D ${NC}"
+    echo
+	
+	echo "Now you can connect to your ISPConfig installation at https://$CFG_HOSTNAME_FQDN:$CFG_ISPONCFIG_PORT or https://IP_ADDRESS:$CFG_ISPONCFIG_PORT"
+	echo
+	
+    echo "You can visit my GitHub profile at https://github.com/a1ur3l/ispconfig_setup"
+    echo "Original version of this script can be found on GitHub at	https://github.com/servisys/ispconfig_setup/"
+    echo
+	
+	if [ "$CFG_WEBMAIL" == "roundcube" ]; then
+        if [ "$DISTRO" != "debian8" ]; then
+		    echo -e "${red}You had to edit user/pass /var/lib/roundcube/plugins/ispconfig3_account/config/config.inc.php of roudcube user, as the one you inserted in ISPconfig ${NC}"
+	    fi
+    fi
+	
+    if [ "$CFG_WEBSERVER" == "nginx" ]; then
+  	    if [ "$CFG_PHPMYADMIN" == "yes" ]; then
+  		    echo "Phpmyadmin is accessibile at  http://$CFG_HOSTNAME_FQDN:8081/phpmyadmin or http://IP_ADDRESS:8081/phpmyadmin";
+	    fi
+		
+	    if [ "$DISTRO" == "debian8" ] && [ "$CFG_WEBMAIL" == "roundcube" ]; then
+		    echo "Webmail is accessibile at  https://$CFG_HOSTNAME_FQDN/webmail or https://IP_ADDRESS/webmail";
+	    else
+		    echo "Webmail is accessibile at  http://$CFG_HOSTNAME_FQDN:8081/webmail or http://IP_ADDRESS:8081/webmail";
+	    fi
+    fi
+	
+    if [ "$DISTRO" == "debian8" ] && [ $CFG_MYSQL_ROOT_PWD_AUTO == true ]; then
+		echo "You Have choosed to autogenerate the MySQL ROOT PASSWORD \n"
+		echo "Please copy and keep it safe \n"
+		echo -e "MySQL GENERATED PASS (Copy only ${red}red text${NC}): ${red}$CFG_MYSQL_ROOT_PWD${NC} \n"
 	fi
-  fi
-  if [ "$CFG_WEBSERVER" == "nginx" ]; then
-  	if [ "$CFG_PHPMYADMIN" == "yes" ]; then
-  		echo "Phpmyadmin is accessibile at  http://$CFG_HOSTNAME_FQDN:8081/phpmyadmin or http://IP_ADDRESS:8081/phpmyadmin";
-	fi
-	if [ "$DISTRO" == "debian8" ] && [ "$CFG_WEBMAIL" == "roundcube" ]; then
-		echo "Webmail is accessibile at  https://$CFG_HOSTNAME_FQDN/webmail or https://IP_ADDRESS/webmail";
-	else
-		echo "Webmail is accessibile at  http://$CFG_HOSTNAME_FQDN:8081/webmail or http://IP_ADDRESS:8081/webmail";
-	fi
-  fi
+	
 else 
 	if [ -f /etc/centos-release ]; then
 		echo "Attention pls, this is the very first version of the script for Centos 7"
