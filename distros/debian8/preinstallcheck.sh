@@ -49,8 +49,33 @@ deb-src http://nginx.org/packages/mainline/debian/ jessie nginx
 ###############################################################" >> /etc/apt/sources.list.d/nginx-latest-official.list
   wget -q https://nginx.org/keys/nginx_signing.key && sudo apt-key add nginx_signing.key
   echo -e "${green} Added latest nginx version repo${NC}\n"
-  
-  
+
+  echo "###############################################################
+deb http://httpredir.debian.org/debian/ stretch main contrib non-free
+deb-src http://httpredir.debian.org/debian/ stretch main contrib non-free
+
+deb http://security.debian.org/ stretch/updates main contrib non-free
+deb-src http://security.debian.org/ stretch/updates main contrib non-free
+
+# stretch-updates, previously known as 'volatile'
+deb http://httpredir.debian.org/debian/ stretch-updates main contrib non-free
+deb-src http://httpredir.debian.org/debian/ stretch-updates main contrib non-free
+###############################################################" >> /etc/apt/sources.list.d/debian-stretch.list
+
+echo "##############################
+Package: *
+Pin: release n=jessie
+Pin-Priority: 900
+
+Package: * 
+Pin: release a=jessie-backports
+Pin-Priority: 500
+
+Package: *
+Pin: release n=stretch
+Pin-Priority: 100
+####################################" >> /etc/apt/preferences
+
   echo -e "${green} OK${NC}\n"
 }
 
