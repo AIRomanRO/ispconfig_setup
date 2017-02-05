@@ -11,9 +11,16 @@ AskQuestions() {
 	  
 	  while [ "x$CFG_SQLSERVER" == "x" ]
           do
-                CFG_SQLSERVER=$(whiptail --title "SQLSERVER" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "Select SQL Server type" 10 50 3 "MySQL" "(default)" ON "MariaDB" "" OFF "None" "(already installed)" OFF 3>&1 1>&2 2>&3)
+			CFG_SQLSERVER=$(whiptail --title "SQLSERVER" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "Select SQL Server type" 10 50 3 "MySQL" "(default)" ON "MariaDB" "" OFF "None" "(already installed)" OFF 3>&1 1>&2 2>&3)
           done
 		  
+	  if [ $CFG_SQLSERVER == "MySQL" ]; then
+		while [ "x$CFG_MYSQL_VERSION" == "x" ]
+          do
+			CFG_MYSQL_VERSION=$(whiptail --title "MySQL" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "Select MySQL Version" 10 50 3 "default" "OS Current Version" ON "5.6" "MySQL-5.6" OFF "5.7" "MySQL-5.7" OFF 3>&1 1>&2 2>&3)
+          done
+	  fi
+	  
 	  while [ "x$CFG_MYSQL_ROOT_PWD" == "x" ]
 	  do
 		CFG_MYSQL_ROOT_PWD=$(whiptail --title "MySQL" --backtitle "$WT_BACKTITLE" --inputbox "Please specify a root password" --nocancel 10 50 3>&1 1>&2 2>&3)

@@ -8,9 +8,16 @@ AskQuestionsMultiserver(){
 	  [ -f /bin/whiptail ] && echo -e "whiptail found: ${green}OK${NC}\n"  || apt-get -y install whiptail > /dev/null 2>&1
 
 	  while [ "x$CFG_SQLSERVER" == "x" ]
-	  do
-		CFG_SQLSERVER=$(whiptail --title "SQLSERVER" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "Select SQL Server type" 10 50 3 "MySQL" "(default)" ON "MariaDB" "" OFF "None" "(already installed)" OFF 3>&1 1>&2 2>&3)
-	  done
+          do
+			CFG_SQLSERVER=$(whiptail --title "SQLSERVER" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "Select SQL Server type" 10 50 3 "MySQL" "(default)" ON "MariaDB" "" OFF "None" "(already installed)" OFF 3>&1 1>&2 2>&3)
+          done
+		  
+	  if [ $CFG_SQLSERVER == "MySQL" ]; then
+		while [ "x$CFG_MYSQL_VERSION" == "x" ]
+          do
+			CFG_MYSQL_VERSION=$(whiptail --title "MySQL" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "Select MySQL Version" 10 50 3 "OS Default" "(default)" ON "5.6" "mysql-5.6" OFF "5.7" "mysql-5.7" OFF 3>&1 1>&2 2>&3)
+          done
+	  fi
 
 	  while [ "x$CFG_MYSQL_ROOT_PWD" == "x" ]
 	  do
