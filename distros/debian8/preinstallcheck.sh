@@ -24,6 +24,12 @@ PreInstallCheck() {
 	exit 1
   fi
   
+  echo -e "Start install ${green}nano, whiptail & debconf-utils${NC}\n"
+  
+  apt-get -y install nano whiptail debconf-utils > /dev/null 2>&1
+  
+  touch /etc/inetd.conf
+  
   #Add Debian backports - Required for Letsencrypt
   echo "###############################################################
 # Debian backports - Required for Letsencrypt
