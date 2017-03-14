@@ -26,6 +26,7 @@ WT_BACKTITLE="ISPConfig 3 System Installer from Temporini Matteo"
 # Bash Colour
 red='\033[0;31m'
 green='\033[0;32m'
+BBlack='\033[1;30m'
 NC='\033[0m' # No Color
 
 
