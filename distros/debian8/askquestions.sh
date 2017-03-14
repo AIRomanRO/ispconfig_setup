@@ -8,8 +8,8 @@ AskQuestions() {
 	CFG_SETUP_NS=yes #Needed for Multiserver setup compatibility
 	echo "Installing pre-required packages"
 	
-	if [ -f /bin/whiptail ]; then
-	    echo -e "whiptail found: ${green}OK${NC}\n"
+	if [ -f /bin/whiptail ] || [ -f /usr/bin/whiptail ]; then
+     	echo -e "whiptail found: ${green}OK${NC}\n"
     else
 	    echo -n "whiptail found: ${red}NOT FOUND${NC} - go and install it"
         apt-get -y install whiptail > /dev/null 2>&1

@@ -17,7 +17,7 @@ PreInstallCheck() {
         echo -e "${red}ERROR: Couldn't reach www.ispconfig.org, please check your internet connection${NC}"
         exit 1;
 	else
-	    echo -e "${green} OK${NC}\n"
+	    echo -e "${green}OK${NC}"
     fi
   
     # Check for already installed ispconfig version
@@ -31,7 +31,7 @@ PreInstallCheck() {
     apt-get -yqq install htop nano whiptail debconf-utils > /dev/null 2>&1
     touch /etc/inetd.conf
   
-    echo -e "[${green}DONE${NC}]\n"
+    echo -e "[${green}DONE${NC}]"
   
     echo -n "Adding Debian backports - ${BBlack}Required for Letsencrypt${NC}"
   
@@ -98,7 +98,7 @@ Pin-Priority: 100
 
     echo -e "${green}DONE${NC}"
 	
-	echo -n "Pre Install Check - ${green}Completed{$NC}"
+	echo -n "Pre Install Check - ${green}Completed{$NC}\n"
 }
 
 
