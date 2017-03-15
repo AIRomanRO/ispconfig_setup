@@ -117,11 +117,12 @@ AskQuestions() {
 		CFG_WEBMAIL=$(whiptail --title "Webmail client" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "Select your webmail client" 10 60 2 "roundcube" "(default)" ON "squirrelmail" "" OFF 3>&1 1>&2 2>&3)
 	done
 
-	while [ "x$CFG_AVUPDATE" == "x" ]
-	do
-		CFG_AVUPDATE=$(whiptail --title "Update Freshclam DB" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "You want to update Antivirus Database during install?" 10 60 2 "yes" "(default)" ON "no" "" OFF 3>&1 1>&2 2>&3)
-	done
-	  
+	if (whiptail --title "Update Freshclam DB" --backtitle "$WT_BACKTITLE" --yesno "You want to update Antivirus Database during install?" 10 60) then
+		CFG_AVUPDATE=yes
+	else
+		CFG_AVUPDATE=no
+	fi
+	
 	if (whiptail --title "Quota" --backtitle "$WT_BACKTITLE" --yesno "Setup user quota?" 10 60) then
 		CFG_QUOTA=yes
 	else

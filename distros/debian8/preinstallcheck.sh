@@ -26,47 +26,45 @@ PreInstallCheck() {
 	    exit 1
     fi
   
-	echo -n "Check for pre-required packages"
+	echo -n "Check for pre-required packages\n"
 	
 	#Check for whiptail
 	if [ -f /bin/whiptail ] || [ -f /usr/bin/whiptail ]; then
-     	echo -ne "${BBlack}Whiptail${NC}: ${green}FOUND${NC}\n"
+     	echo -ne " - ${BBlack}Whiptail${NC}: ${green}FOUND${NC}"
     else
-	    echo -ne "${BBlack}Whiptail${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+	    echo -ne " - ${BBlack}Whiptail${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
         apt-get -yqq install whiptail > /dev/null 2>&1
 		echo -e " [ ${green}DONE${NC} ]"
 	fi
 	
 	#Check for htop
 	if [ -f /bin/htop ] || [ -f /usr/bin/htop ]; then
-     	echo -ne "${BBlack}HTOP${NC}: ${green}FOUND${NC}\n"
+     	echo -ne " - ${BBlack}HTOP${NC}: ${green}FOUND${NC}"
     else
-	    echo -ne "${BBlack}HTOP${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+	    echo -ne " - ${BBlack}HTOP${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
         apt-get -yqq install htop > /dev/null 2>&1
 		echo -e " [ ${green}DONE${NC} ]"
 	fi
 	
 	#Check for nano
 	if [ -f /bin/nano ] || [ -f /usr/bin/nano ]; then
-     	echo -ne "${BBlack}NANO${NC}: ${green}FOUND${NC}\n"
+     	echo -ne " - ${BBlack}NANO${NC}: ${green}FOUND${NC}"
     else
-	    echo -ne "${BBlack}NANO${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+	    echo -ne " - ${BBlack}NANO${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
         apt-get -yqq install nano > /dev/null 2>&1
 		echo -e " [ ${green}DONE${NC} ]"
 	fi
 	
 	#Check for debconf-utils
 	if [ -f /bin/debconf ] || [ -f /usr/bin/debconf ]; then
-     	echo -ne "${BBlack}debconf-utils${NC}: ${green}FOUND${NC}\n"
+     	echo -ne " - ${BBlack}debconf-utils${NC}: ${green}FOUND${NC}"
     else
-	    echo -ne "${BBlack}debconf-utils${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+	    echo -ne " - ${BBlack}debconf-utils${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
         apt-get -yqq install debconf-utils > /dev/null 2>&1
 		echo -e " [ ${green}DONE${NC} ]"
 	fi
 	
     touch /etc/inetd.conf
-  
-    echo -e " [ ${green}DONE${NC} ]"
   
     echo -ne "Adding Debian backports - ${BBlack}Required for Letsencrypt${NC}"
   
