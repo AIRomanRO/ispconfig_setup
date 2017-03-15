@@ -26,42 +26,42 @@ PreInstallCheck() {
 	    exit 1
     fi
   
-	echo -n -e "Check for pre-required packages\n"
+	echo -n -e "Check for pre-required packages:\n"
 	
 	#Check for whiptail
 	if [ -f /bin/whiptail ] || [ -f /usr/bin/whiptail ]; then
-     	echo -n -e " - ${BBlack}Whiptail${NC}: ${green}FOUND${NC}"
+     	echo -n -e " - ${BBlack}Whiptail${NC}: ${green}FOUND${NC}\n"
     else
 	    echo -n -e " - ${BBlack}Whiptail${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
         apt-get -yqq install whiptail > /dev/null 2>&1
-		echo -e " [ ${green}DONE${NC} ]"
+		echo -e " [ ${green}DONE${NC} ]\n"
 	fi
 	
 	#Check for htop
 	if [ -f /bin/htop ] || [ -f /usr/bin/htop ]; then
-     	echo -n -e " - ${BBlack}HTOP${NC}: ${green}FOUND${NC}"
+     	echo -n -e " - ${BBlack}HTOP${NC}: ${green}FOUND${NC}\n"
     else
 	    echo -n -e " - ${BBlack}HTOP${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
         apt-get -yqq install htop > /dev/null 2>&1
-		echo -e " [ ${green}DONE${NC} ]"
+		echo -e " [ ${green}DONE${NC} ]\n"
 	fi
 	
 	#Check for nano
 	if [ -f /bin/nano ] || [ -f /usr/bin/nano ]; then
-     	echo -n -e " - ${BBlack}NANO${NC}: ${green}FOUND${NC}"
+     	echo -n -e " - ${BBlack}NANO${NC}: ${green}FOUND${NC}\n"
     else
 	    echo -n -e " - ${BBlack}NANO${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
         apt-get -yqq install nano > /dev/null 2>&1
-		echo -e " [ ${green}DONE${NC} ]"
+		echo -e " [ ${green}DONE${NC} ]\n"
 	fi
 	
 	#Check for debconf-utils
 	if [ -f /bin/debconf ] || [ -f /usr/bin/debconf ]; then
-     	echo -n -e " - ${BBlack}debconf-utils${NC}: ${green}FOUND${NC}"
+     	echo -n -e " - ${BBlack}debconf-utils${NC}: ${green}FOUND${NC}\n"
     else
 	    echo -n -e " - ${BBlack}debconf-utils${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
         apt-get -yqq install debconf-utils > /dev/null 2>&1
-		echo -e " [ ${green}DONE${NC} ]"
+		echo -e " [ ${green}DONE${NC} ]\n"
 	fi
 	
     touch /etc/inetd.conf
@@ -83,7 +83,7 @@ deb http://ftp.debian.org/debian jessie-backports main
 #php  7
 deb http://packages.dotdeb.org jessie all
 deb-src http://packages.dotdeb.org jessie all" >> /etc/apt/sources.list.d/dotdeb-PHP7.0.list
-    wget -q https://www.dotdeb.org/dotdeb.gpg && sudo apt-key add dotdeb.gpg  > /dev/null 2>&1
+    wget -q https://www.dotdeb.org/dotdeb.gpg && sudo apt-key add dotdeb.gpg > /dev/null 2>&1
   
     echo -e " [ ${green}DONE${NC} ]"
   
@@ -95,7 +95,7 @@ deb http://nginx.org/packages/mainline/debian/ jessie nginx
 
 deb-src http://nginx.org/packages/mainline/debian/ jessie nginx
 ###############################################################" >> /etc/apt/sources.list.d/nginx-latest-official.list
-    wget -q https://nginx.org/keys/nginx_signing.key && sudo apt-key add nginx_signing.key
+    wget -q https://nginx.org/keys/nginx_signing.key && sudo apt-key add nginx_signing.key > /dev/null 2>&1
 	
     echo -e " [ ${green}DONE${NC} ]"
 
@@ -131,7 +131,7 @@ Pin-Priority: 100
 
     echo -e " [ ${green}DONE${NC} ]"
 	
-	echo -n -e "Pre Install Check - [${green}Completed{$NC}]\n"
+	echo -n -e "Pre Install Check - [ ${green}Completed${NC} ]\n"
 }
 
 
