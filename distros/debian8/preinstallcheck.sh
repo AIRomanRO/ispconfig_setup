@@ -26,47 +26,47 @@ PreInstallCheck() {
 	    exit 1
     fi
   
-	echo -n "Check for pre-required packages\n"
+	echo -n -e "Check for pre-required packages\n"
 	
 	#Check for whiptail
 	if [ -f /bin/whiptail ] || [ -f /usr/bin/whiptail ]; then
-     	echo -ne " - ${BBlack}Whiptail${NC}: ${green}FOUND${NC}"
+     	echo -n -e " - ${BBlack}Whiptail${NC}: ${green}FOUND${NC}"
     else
-	    echo -ne " - ${BBlack}Whiptail${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+	    echo -n -e " - ${BBlack}Whiptail${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
         apt-get -yqq install whiptail > /dev/null 2>&1
 		echo -e " [ ${green}DONE${NC} ]"
 	fi
 	
 	#Check for htop
 	if [ -f /bin/htop ] || [ -f /usr/bin/htop ]; then
-     	echo -ne " - ${BBlack}HTOP${NC}: ${green}FOUND${NC}"
+     	echo -n -e " - ${BBlack}HTOP${NC}: ${green}FOUND${NC}"
     else
-	    echo -ne " - ${BBlack}HTOP${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+	    echo -n -e " - ${BBlack}HTOP${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
         apt-get -yqq install htop > /dev/null 2>&1
 		echo -e " [ ${green}DONE${NC} ]"
 	fi
 	
 	#Check for nano
 	if [ -f /bin/nano ] || [ -f /usr/bin/nano ]; then
-     	echo -ne " - ${BBlack}NANO${NC}: ${green}FOUND${NC}"
+     	echo -n -e " - ${BBlack}NANO${NC}: ${green}FOUND${NC}"
     else
-	    echo -ne " - ${BBlack}NANO${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+	    echo -n -e " - ${BBlack}NANO${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
         apt-get -yqq install nano > /dev/null 2>&1
 		echo -e " [ ${green}DONE${NC} ]"
 	fi
 	
 	#Check for debconf-utils
 	if [ -f /bin/debconf ] || [ -f /usr/bin/debconf ]; then
-     	echo -ne " - ${BBlack}debconf-utils${NC}: ${green}FOUND${NC}"
+     	echo -n -e " - ${BBlack}debconf-utils${NC}: ${green}FOUND${NC}"
     else
-	    echo -ne " - ${BBlack}debconf-utils${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+	    echo -n -e " - ${BBlack}debconf-utils${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
         apt-get -yqq install debconf-utils > /dev/null 2>&1
 		echo -e " [ ${green}DONE${NC} ]"
 	fi
 	
     touch /etc/inetd.conf
   
-    echo -ne "Adding Debian backports - ${BBlack}Required for Letsencrypt${NC}"
+    echo -n -e "Adding Debian backports - ${BBlack}Required for Letsencrypt${NC}"
   
     #Add Debian backports - Required for Letsencrypt
     echo "###############################################################
@@ -76,18 +76,18 @@ deb http://ftp.debian.org/debian jessie-backports main
   
     echo -e " [ ${green}DONE${NC} ]"
   
-    echo -ne "Adding PHP 7.0 - ${BBlack}DotDeb repo${NC}"
+    echo -n -e "Adding PHP 7.0 - ${BBlack}DotDeb repository${NC}"
   
     #Add dotdeb repo for php
     echo "###############################################################
 #php  7
 deb http://packages.dotdeb.org jessie all
 deb-src http://packages.dotdeb.org jessie all" >> /etc/apt/sources.list.d/dotdeb-PHP7.0.list
-    wget -q https://www.dotdeb.org/dotdeb.gpg && sudo apt-key add dotdeb.gpg
+    wget -q https://www.dotdeb.org/dotdeb.gpg && sudo apt-key add dotdeb.gpg  > /dev/null 2>&1
   
     echo -e " [ ${green}DONE${NC} ]"
   
-    echo -ne "Adding ${BBlack}latest nginx version repo${NC}"
+    echo -n -e "Adding ${BBlack}latest nginx version repo${NC}"
     #Add latest nginx version
     echo "###############################################################
 #latest nginx version
@@ -99,7 +99,7 @@ deb-src http://nginx.org/packages/mainline/debian/ jessie nginx
 	
     echo -e " [ ${green}DONE${NC} ]"
 
-	echo -ne "Adding ${BBlack}debian-stretch sources ${NC}"
+	echo -n -e "Adding ${BBlack}debian-stretch sources ${NC}"
     #Add the debian-stretch sources
     echo "###############################################################
 deb http://httpredir.debian.org/debian/ stretch main contrib non-free
@@ -114,7 +114,7 @@ deb-src http://httpredir.debian.org/debian/ stretch-updates main contrib non-fre
 ###############################################################" >> /etc/apt/sources.list.d/debian-stretch.list
     echo -e " [ ${green}DONE${NC} ]"
 	
-	echo -ne "Configure ${BBlack}sources priority via PIN${NC}"
+	echo -n -e "Configure ${BBlack}sources priority via PIN${NC}"
     echo "##############################
 Package: *
 Pin: release n=jessie
@@ -131,7 +131,7 @@ Pin-Priority: 100
 
     echo -e " [ ${green}DONE${NC} ]"
 	
-	echo -ne "Pre Install Check - [${green}Completed{$NC}]\n"
+	echo -n -e "Pre Install Check - [${green}Completed{$NC}]\n"
 }
 
 
