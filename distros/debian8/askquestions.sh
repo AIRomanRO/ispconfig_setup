@@ -83,17 +83,26 @@ AskQuestions() {
 	  
 	while [ "x$CFG_HHVM" == "x" ]
     do
-        CFG_HHVM=$(whiptail --title "HHVM" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "Do you want to install HHVM?" 10 60 2 "no" "(default)" ON "yes" "" OFF 3>&1 1>&2 2>&3)
+        CFG_HHVM=$(whiptail --title "HHVM" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
+		"Do you want to install HHVM?" 10 60 2 \
+		"no" "(default)" ON \
+		"yes" "" OFF 3>&1 1>&2 2>&3)
     done
 	
 	while [ "x$CFG_XCACHE" == "x" ]
 	do
-	    CFG_XCACHE=$(whiptail --title "Install XCache" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "You want to install XCache during install? ATTENTION: If XCache is installed, Ioncube Loaders will not work !!" 20 50 2 "yes" "(default)" ON "no" "" OFF 3>&1 1>&2 2>&3)
+	    CFG_XCACHE=$(whiptail --title "Install XCache" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
+		"You want to install XCache during install? ATTENTION: If XCache is installed, Ioncube Loaders will not work !!" 20 50 2 \
+		"yes" "(default)" ON \
+		"no" "" OFF 3>&1 1>&2 2>&3)
 	done
 	
 	while [ "x$CFG_PHPMYADMIN" == "x" ]
 	do
-		CFG_PHPMYADMIN=$(whiptail --title "Install phpMyAdmin" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "You want to install phpMyAdmin during install?" 10 60 2 "yes" "(default)" ON "no" "" OFF 3>&1 1>&2 2>&3)
+		CFG_PHPMYADMIN=$(whiptail --title "Install phpMyAdmin" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
+		"You want to install phpMyAdmin during install?" 10 60 2 \
+		"yes" "(default)" ON \
+		"no" "" OFF 3>&1 1>&2 2>&3)
 	done
 	  
 	if [ $CFG_PHPMYADMIN == "yes" ]; then
@@ -109,15 +118,22 @@ AskQuestions() {
 	  
 	while [ "x$CFG_MTA" == "x" ]
 	do
-		CFG_MTA=$(whiptail --title "Mail Server" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "Select mailserver type" 10 60 2 "dovecot" "(default)" ON "courier" "" OFF 3>&1 1>&2 2>&3)
+		CFG_MTA=$(whiptail --title "Mail Server" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
+		"Select mailserver type" 10 60 2 \
+		"dovecot" "(default)" ON \
+		"courier" "" OFF 3>&1 1>&2 2>&3)
 	done
 
 	while [ "x$CFG_WEBMAIL" == "x" ]
 	do
-		CFG_WEBMAIL=$(whiptail --title "Webmail client" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "Select your webmail client" 10 60 2 "roundcube" "(default)" ON "squirrelmail" "" OFF 3>&1 1>&2 2>&3)
+		CFG_WEBMAIL=$(whiptail --title "Webmail client" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
+		"Select which Web Mail client you want" 10 60 2 \
+		"roundcube" "(default)" ON \
+		"squirrelmail" "" OFF 
+		"none" "No Web Mail Client" OFF 3>&1 1>&2 2>&3)
 	done
 
-	if (whiptail --title "Update Freshclam DB" --backtitle "$WT_BACKTITLE" --yesno "You want to update Antivirus Database during install?" 10 60) then
+	if ( whiptail --title "Update Freshclam DB" --backtitle "$WT_BACKTITLE" --yesno "You want to update Antivirus Database during install?" 10 60) then
 		CFG_AVUPDATE=yes
 	else
 		CFG_AVUPDATE=no
@@ -137,19 +153,23 @@ AskQuestions() {
 
 	while [ "x$CFG_ISPC" == "x" ]
 	do
-      	CFG_ISPC=$(whiptail --title "ISPConfig Setup" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "Would you like full unattended setup of expert mode for ISPConfig?" 10 60 2 "standard" "(default)" ON "expert" "" OFF 3>&1 1>&2 2>&3)
+      	CFG_ISPC=$(whiptail --title "ISPConfig Setup" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
+		"Would you like full unattended setup of expert mode for ISPConfig?" 10 60 2 \
+		"standard" "Yes (default)" ON \
+		"expert" "No, i want to configure" OFF 3>&1 1>&2 2>&3)
     done
 	
 	while [ "x$CFG_ISPONCFIG_PORT" == "x" ]
 	do
-		CFG_ISPONCFIG_PORT=$(whiptail --title "ISPConfig" --backtitle "$WT_BACKTITLE" --inputbox "Please specify a ISPConfig Port" --nocancel 10 60 3>&1 1>&2 2>&3)
+		CFG_ISPONCFIG_PORT=$(whiptail --title "ISPConfig" --backtitle "$WT_BACKTITLE" --inputbox \
+		"Please specify a ISPConfig Port" --nocancel 10 60 3>&1 1>&2 2>&3)
 	done
 	  
 	CFG_ISPCONFIG_DB_PASS=$(whiptail --title "ISPConfig db pass for advanced" --backtitle "$WT_BACKTITLE" --inputbox "ISPConfig db pass for advanced" --nocancel 10 60 3>&1 1>&2 2>&3)
 	  
-	SSL_COUNTRY=$(whiptail --title "SSL Country" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - Country (ex. EN)" --nocancel 10 60 3>&1 1>&2 2>&3)
-    SSL_STATE=$(whiptail --title "SSL State" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - STATE (ex. Italy)" --nocancel 10 60 3>&1 1>&2 2>&3)
-    SSL_LOCALITY=$(whiptail --title "SSL Locality" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - Locality (ex. Udine)" --nocancel 10 60 3>&1 1>&2 2>&3)
+	SSL_COUNTRY=$(whiptail --title "SSL Country Code" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - Country Code (2 letter code - ex. EN)" --nocancel 10 60 3>&1 1>&2 2>&3)
+    SSL_STATE=$(whiptail --title "SSL State or Province Name" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - STATE or Province Name (full name - ex. Romania)" --nocancel 10 60 3>&1 1>&2 2>&3)
+    SSL_LOCALITY=$(whiptail --title "SSL Locality" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - Locality (ex. Craiova)" --nocancel 10 60 3>&1 1>&2 2>&3)
     SSL_ORGANIZATION=$(whiptail --title "SSL Organization" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - Organization (ex. Company L.t.d.)" --nocancel 10 60 3>&1 1>&2 2>&3)
-    SSL_ORGUNIT=$(whiptail --title "SSL Organization Unit" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - Organization Unit (ex. IT Department)" --nocancel 10 60 3>&1 1>&2 2>&3)
+    SSL_ORGUNIT=$(whiptail --title "SSL Organization Unit" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - Organization Unit (ex. IT)" --nocancel 10 60 3>&1 1>&2 2>&3)
 }
