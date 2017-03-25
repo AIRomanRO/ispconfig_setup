@@ -27,7 +27,7 @@ sql-mode='NO_ENGINE_SUBSTITUTION'
 		echo "mysql-apt-config mysql-apt-config/select-server select mysql-5.6" | debconf-set-selections
 		echo "mysql-apt-config mysql-apt-config/select-preview select Disabled" | debconf-set-selections
 		
-		wget https://repo.mysql.com/mysql-apt-config_0.8.1-1_all.deb && dpkg -i mysql-apt-config_0.8.1-1_all.deb > /dev/null		
+		wget https://repo.mysql.com/mysql-apt-config_0.8.3-1_all.deb && dpkg -i mysql-apt-config_0.8.3-1_all.deb > /dev/null		
 		apt-get -qq update > /dev/null 2>&1
 		
 		echo "mysql-community-server mysql-community-server/root-pass password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
