@@ -8,7 +8,8 @@ PreInstallCheck() {
         echo -n "Error: You must be root to run this script, please use the root user to install the software."
         exit 1
     fi
-  
+
+
     # Check connectivity
     echo -n "Checking internet connection... "
     ping -q -c 3 www.ispconfig.org > /dev/null 2>&1
@@ -19,7 +20,8 @@ PreInstallCheck() {
 	else
 	    echo -e " [ ${green}OK${NC} ]"
     fi
-  
+
+
     # Check for already installed ispconfig version
     if [ -f /usr/local/ispconfig/interface/lib/config.inc.php ]; then
         echo "ISPConfig is already installed, can't go on."
@@ -27,7 +29,8 @@ PreInstallCheck() {
     fi
   
 	echo -n -e "Check for pre-required packages:\n"
-	
+
+
 	#Check for whiptail
 	if [ -f /bin/whiptail ] || [ -f /usr/bin/whiptail ]; then
      	echo -n -e " - ${BBlack}Whiptail${NC}: ${green}FOUND${NC}\n"
@@ -36,25 +39,8 @@ PreInstallCheck() {
         apt-get -yqq install whiptail > /dev/null 2>&1
 		echo -e " [ ${green}DONE${NC} ]\n"
 	fi
-	
-	#Check for htop
-	if [ -f /bin/htop ] || [ -f /usr/bin/htop ]; then
-     	echo -n -e " - ${BBlack}HTOP${NC}: ${green}FOUND${NC}\n"
-    else
-	    echo -n -e " - ${BBlack}HTOP${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
-        apt-get -yqq install htop > /dev/null 2>&1
-		echo -e " [ ${green}DONE${NC} ]\n"
-	fi
-	
-	#Check for nano
-	if [ -f /bin/nano ] || [ -f /usr/bin/nano ]; then
-     	echo -n -e " - ${BBlack}NANO${NC}: ${green}FOUND${NC}\n"
-    else
-	    echo -n -e " - ${BBlack}NANO${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
-        apt-get -yqq install nano > /dev/null 2>&1
-		echo -e " [ ${green}DONE${NC} ]\n"
-	fi
-	
+
+
 	#Check for debconf-utils
 	if [ -f /bin/debconf ] || [ -f /usr/bin/debconf ]; then
      	echo -n -e " - ${BBlack}debconf-utils${NC}: ${green}FOUND${NC}\n"
@@ -65,71 +51,46 @@ PreInstallCheck() {
 	fi
 	
     touch /etc/inetd.conf
-  
-    echo -n -e "Adding Debian backports - ${BBlack}Required for Letsencrypt${NC}"
-  
-    #Add Debian backports - Required for Letsencrypt
-    echo "###############################################################
-# Debian backports - Required for Letsencrypt
-deb http://ftp.debian.org/debian jessie-backports main
-###############################################################" >> /etc/apt/sources.list.d/jessie-backports.list
-  
-    echo -e " [ ${green}DONE${NC} ]"
-  
-    echo -n -e "Adding PHP 7.0 - ${BBlack}DotDeb repository${NC}"
-  
-    #Add dotdeb repo for php
-    echo "###############################################################
-#php  7
-deb http://packages.dotdeb.org jessie all
-deb-src http://packages.dotdeb.org jessie all" >> /etc/apt/sources.list.d/dotdeb-PHP7.0.list
-    wget -q https://www.dotdeb.org/dotdeb.gpg && sudo apt-key add dotdeb.gpg > /dev/null 2>&1
-  
-    echo -e " [ ${green}DONE${NC} ]"
-  
-    echo -n -e "Adding ${BBlack}latest nginx version repo${NC}"
-    #Add latest nginx version
-    echo "###############################################################
-#latest nginx version
-deb http://nginx.org/packages/mainline/debian/ jessie nginx
 
-deb-src http://nginx.org/packages/mainline/debian/ jessie nginx
-###############################################################" >> /etc/apt/sources.list.d/nginx-latest-official.list
-    wget -q https://nginx.org/keys/nginx_signing.key && sudo apt-key add nginx_signing.key > /dev/null 2>&1
-	
-    echo -e " [ ${green}DONE${NC} ]"
 
-	echo -n -e "Adding ${BBlack}debian-stretch sources ${NC}"
-    #Add the debian-stretch sources
-    echo "###############################################################
-deb http://httpredir.debian.org/debian/ stretch main contrib non-free
-deb-src http://httpredir.debian.org/debian/ stretch main contrib non-free
+	#Check for binutils
+	if [ -f /bin/ld ] || [ -f /usr/bin/ld ]; then
+		echo -n -e " - ${BBlack}BINUTILS${NC}: ${green}FOUND${NC}\n"
+	else
+		echo -n -e " - ${BBlack}BINUTILS${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+		apt-get -yqq install binutils > /dev/null 2>&1
+		echo -e " [ ${green}DONE${NC} ]\n"
+	fi
 
-deb http://security.debian.org/ stretch/updates main contrib non-free
-deb-src http://security.debian.org/ stretch/updates main contrib non-free
 
-# stretch-updates, previously known as 'volatile'
-deb http://httpredir.debian.org/debian/ stretch-updates main contrib non-free
-deb-src http://httpredir.debian.org/debian/ stretch-updates main contrib non-free
-###############################################################" >> /etc/apt/sources.list.d/debian-stretch.list
-    echo -e " [ ${green}DONE${NC} ]"
-	
-	echo -n -e "Configure ${BBlack}sources priority via PIN${NC}"
-    echo "##############################
-Package: *
-Pin: release n=jessie
-Pin-Priority: 900
+	#Check for sudo
+	if [ -f /bin/sudo ] || [ -f /usr/bin/sudo ]; then
+		echo -n -e " - ${BBlack}SUDO${NC}: ${green}FOUND${NC}\n"
+	else
+		echo -n -e " - ${BBlack}SUDO${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+		apt-get -yqq install sudo > /dev/null 2>&1
+		echo -e " [ ${green}DONE${NC} ]\n"
+	fi
 
-Package: * 
-Pin: release a=jessie-backports
-Pin-Priority: 500
 
-Package: *
-Pin: release n=stretch
-Pin-Priority: 100
-####################################" >> /etc/apt/preferences
-
-    echo -e " [ ${green}DONE${NC} ]"
+	#Check for lsb-release
+	if [ -f /bin/lsb_release ] || [ -f /usr/bin/lsb_release ]; then
+		echo -n -e " - ${BBlack}LSB-RELEASE${NC}: ${green}FOUND${NC}\n"
+	else
+		echo -n -e " - ${BBlack}LSB-RELEASE${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+		apt-get -yqq install lsb-release > /dev/null 2>&1
+		echo -e " [ ${green}DONE${NC} ]\n"
+	fi
+  
+  
+	#Check for apt-transport-https
+	if [ -f /usr/lib/apt/methods/https ]; then
+		echo -n -e " - ${BBlack}APT HTTPS Method{NC}: ${green}FOUND${NC}\n"
+	else
+		echo -n -e " - ${BBlack}APT HTTPS Method${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+		apt-get -yqq install apt-transport-https > /dev/null 2>&1
+		echo -e " [ ${green}DONE${NC} ]\n"
+	fi
 	
 	echo -n -e "Pre Install Check - [ ${green}Completed${NC} ]\n"
 }

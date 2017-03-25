@@ -52,35 +52,47 @@ AskQuestions() {
 	fi
 
     while [ "x$CFG_WEBSERVER" == "x" ]
-        do
-            CFG_WEBSERVER=$(whiptail --title "WEBSERVER" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
-			"Select webserver type" 10 60 2 \
-			"apache" "(default)" ON \
-			"nginx" "" OFF 3>&1 1>&2 2>&3)
-        done
-		  
+	do
+		CFG_WEBSERVER=$(whiptail --title "WEBSERVER" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
+		"Select webserver type" 10 60 2 \
+		"apache" "(default)" ON \
+		"nginx" "" OFF 3>&1 1>&2 2>&3)
+	done
+
 	if [ $CFG_WEBSERVER == "nginx" ]; then
-	  
 	    while [ "x$CFG_NGINX_VERSION" == "x" ]
 		do
 	        CFG_NGINX_VERSION=$(whiptail --title "WEBSERVER" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
-			"Select Nginx Version" 10 60 4 \
+			"Select Nginx Version" 10 60 5 \
 			"default" "OS Default" ON \
 			"nginx" "NGINX Official - nginx.org" OFF \
 			"dotdeb" "DotDeb.org - with 'full' HTTP2" OFF \
-			"stretch" "Debian Stretch - with HTTP2" OFF 3>&1 1>&2 2>&3)
-	    done
-		
-		while [ "x$CFG_CERTBOT_VERSION" == "x" ]
-		do
-			CFG_CERTBOT_VERSION=$(whiptail --title "WEBSERVER" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
-			"Select CertBot Version" 10 60 3 \
-			"default" "from jessie backports" ON \				
-			"stretch" "from stretch" OFF 3>&1 1>&2 2>&3)
-		done
-		
+			"stretch" "Debian Stretch - with HTTP2" OFF \
+            "custom" "With OpenSSL 1.1 and ChaCha20-Poly1305" OFF 3>&1 1>&2 2>&3)
+	    done		
 	fi
-	  
+	
+	while [ "x$CFG_PHP_VERSION" == "x" ]
+	do
+		CFG_PHP_VERSION=$(whiptail --title "Choose PHP Version(s)" --backtitle "$WT_BACKTITLE" --nocancel --separate-output --checklist \
+		    "Choose PHP Version do you want to install" 25 105 13 \
+            "php5.6"    "Latest Available from 5.6" ON \
+            "php7.0"    "Latest Available from 7.0" ON \
+            "php7.1"    "Latest Available from 7.1" ON \
+			"none"      "Not install any thing from the above list" OFF \
+	    3>&1 1>&2 2>&3)
+	done
+
+
+	while [ "x$CFG_CERTBOT_VERSION" == "x" ]
+	do
+		CFG_CERTBOT_VERSION=$(whiptail --title "WEBSERVER" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
+		"Select CertBot Version" 10 60 3 \
+		"none"    "No installation" OFF \
+		"default" "from jessie backports" ON \				
+		"stretch" "from stretch" OFF 3>&1 1>&2 2>&3)
+	done
+	
 	while [ "x$CFG_HHVM" == "x" ]
     do
         CFG_HHVM=$(whiptail --title "HHVM" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
@@ -129,7 +141,7 @@ AskQuestions() {
 		CFG_WEBMAIL=$(whiptail --title "Webmail client" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
 		"Select which Web Mail client you want" 10 60 2 \
 		"roundcube" "(default)" ON \
-		"squirrelmail" "" OFF 
+		"squirrelmail" "" OFF \
 		"none" "No Web Mail Client" OFF 3>&1 1>&2 2>&3)
 	done
 
@@ -150,13 +162,29 @@ AskQuestions() {
 	else
 		CFG_JKIT=no
 	fi
+	
+	while [ "x$CFG_INSTALL_ADITIONAL_SOFTWARE" == "x" ]
+	do
+		CFG_INSTALL_ADITIONAL_SOFTWARE=$(whiptail --title "Install Aditional Software" --backtitle "$WT_BACKTITLE" --nocancel --separate-output --checklist \
+		    "Choose what programs do you want to install" 25 105 13 \
+            "htop"                     "HTOP - interactive process viewer" ON \
+            "nano"                     "NANO - text editor" ON \
+            "haveged"                  "HAVEGED - A simple entropy daemon" ON \
+            "ssh"                      "SSH - Secure Shell" ON \
+            "openssh-server"           "OpenSSH Server - collection of tools for control and transfer of data" ON \
+			"openssh-server-stretch"   "OpenSSH Server - version from stretch branch - usually newer" ON \
+            "openssl-stable"           "OpenSSL - toolkit with full-strength cryptography" ON \
+            "openssl-stretch"          "OpenSSL - version from stretch branch - usually newer" ON \
+			"none"                     "Not install any thing from the above list" OFF \
+	    3>&1 1>&2 2>&3)
+	done
 
 	while [ "x$CFG_ISPC" == "x" ]
 	do
       	CFG_ISPC=$(whiptail --title "ISPConfig Setup" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
 		"Would you like full unattended setup of expert mode for ISPConfig?" 10 60 2 \
 		"standard" "Yes (default)" ON \
-		"expert" "No, i want to configure" OFF 3>&1 1>&2 2>&3)
+		"expert"   "No, i want to configure" OFF 3>&1 1>&2 2>&3)
     done
 	
 	while [ "x$CFG_ISPONCFIG_PORT" == "x" ]
