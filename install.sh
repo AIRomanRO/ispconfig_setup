@@ -50,6 +50,7 @@ CheckIPV6
 source $PWD/distros/$DISTRO/preinstallcheck.sh
 source $PWD/distros/$DISTRO/askquestions.sh
 
+source $PWD/distros/$DISTRO/install_aditional_repos.sh
 source $PWD/distros/$DISTRO/install_basics.sh
 source $PWD/distros/$DISTRO/install_postfix.sh
 source $PWD/distros/$DISTRO/install_mysql.sh
@@ -136,14 +137,18 @@ fi
 
 if [ -f /etc/debian_version ]; then
     PreInstallCheck
+
     if [ "$CFG_MULTISERVER" == "no" ]; then
 	    AskQuestions
     else
         source $PWD/distros/$DISTRO/askquestions_multiserver.sh
 	    AskQuestionsMultiserver
     fi
+	
+	InstallAditionalRepos
     InstallBasics 
     InstallSQLServer 
+	
     if [ "$CFG_SETUP_WEB" == "yes" ] || [ "$CFG_MULTISERVER" == "no" ]; then
         InstallWebServer
         InstallFTP 
@@ -165,8 +170,10 @@ if [ -f /etc/debian_version ]; then
         fi
 		
         InstallWebmail 
-    else
-        InstallBasePhp    #to remove in feature release
+    fi
+	
+	if [ "$CFG_PHP_VERSION" == "none"]; then
+        InstallBasePhp
     fi  
 	
     if [ "$CFG_SETUP_MAIL" == "yes" ] || [ "$CFG_MULTISERVER" == "no" ]; then
@@ -225,42 +232,11 @@ if [ -f /etc/debian_version ]; then
 	fi
 	
 else 
-	if [ -f /etc/centos-release ]; then
-		echo "Attention pls, this is the very first version of the script for Centos 7"
-		echo "Pls use only for test pourpose for now."
-		echo -e "${red}Not yet implemented: courier, nginx support${NC}"
-		echo -e "${green}Yet implemented: apache, mysql, bind, postfix, dovecot, roudcube webmail support${NC}"
-		echo "Help us to test and implement, press ENTER if you understand what i'm talinkg about..."
-		read DUMMY
-		PreInstallCheck
-		AskQuestions 
-		InstallBasics 
-		InstallPostfix 
-		InstallSQLServer 
-		InstallMTA 
-		InstallAntiVirus 
-		InstallWebServer
-		InstallFTP 
-		#if [ $CFG_QUOTA == "yes" ]; then
-		#		InstallQuota 
-		#fi
-		InstallBind 
-        InstallWebStats 
-	    if [ "$CFG_JKIT" == "yes" ]; then
-			InstallJailkit 
-	    fi
-		InstallFail2ban 
-		InstallWebmail 
-		InstallISPConfig
-		#InstallFix
-		echo -e "${green}Well done ISPConfig installed and configured correctly :D ${NC}"
-		echo "Now you can connect to your ISPConfig installation at https://$CFG_HOSTNAME_FQDN:8080 or https://IP_ADDRESS:8080"
-		echo "You can visit my GitHub profile at https://github.com/servisys/ispconfig_setup/"
-		echo -e "${red}If you setup Roundcube webmail go to http://$CFG_HOSTNAME_FQDN/roundcubemail/installer and configure db connection${NC}"
-		echo -e "${red}After that disable access to installer in /etc/httpd/conf.d/roundcubemail.conf${NC}"
-	else
-		echo "${red}Unsupported linux distribution.${NC}"
-	fi
+	echo "${red}Unsupported linux distribution.${NC} \n"
+	echo -n -e "For other distributions please visit the ${red}Original version of this script${NC}"
+	echo -n -e " which can be found on GitHub at ${red}https://github.com/servisys/ispconfig_setup/${NC}"
+	echo -n -e "Thanks"
+	
 fi
 
 exit 0
