@@ -153,14 +153,15 @@ InstallBasics() {
 		    apt-get -yqq install quilt > /dev/null 2>&1
 		    echo -e " [ ${green}DONE${NC} ]\n"
 	    fi
+		
+		
+        echo "##### Prevent NGINX from being updated because it is custom builded #####
+Package: nginx
+Pin: version
+Pin-Priority: 1001
+##### Prevent NGINX from being updated because it is custom builded #####" >> /etc/apt/preferences
+
 	fi
-
-  
-
-	
-	
-	
-  apt-get -y install ssh openssh-server  binutils sudo lsb-release haveged e2fsprogs openssl > /dev/null 2>&1
 
     echo -n "Reconfigure dash... "	  
     echo "dash dash/sh boolean false" | debconf-set-selections
