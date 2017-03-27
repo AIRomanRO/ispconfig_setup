@@ -6,16 +6,19 @@ AskQuestions() {
 	CFG_SETUP_WEB=yes #Needed for Multiserver setup compatibility
 	CFG_SETUP_MAIL=yes #Needed for Multiserver setup compatibility
 	CFG_SETUP_NS=yes #Needed for Multiserver setup compatibility
-		  
+	
+	echo -n -e "Selected Options: \n"
+	
 	while [ "x$CFG_SQLSERVER" == "x" ]
     do
 		CFG_SQLSERVER=$(whiptail --title "SQLSERVER" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
 		    "Select SQL Server type" 10 60 3 \
-		    "MySQL" "(default)" ON \
-		    "MariaDB" "" OFF \
-		    "None" "(already installed)" OFF 3>&1 1>&2 2>&3)
+		    "MySQL"   "MySQL (default)" ON \
+		    "MariaDB" "MariaDB" OFF \
+		    "None"    "(already installed)" OFF 3>&1 1>&2 2>&3)
     done
-		  
+	echo -n -e " - ${BBlack}SQL Server${NC}: ${green}$CFG_SQLSERVER${NC}\n"
+	
 	if [ $CFG_SQLSERVER == "MySQL" ]; then
 		while [ "x$CFG_MYSQL_VERSION" == "x" ]
         do
@@ -26,25 +29,27 @@ AskQuestions() {
 			    "5.7" "MySQL-5.7" OFF 3>&1 1>&2 2>&3)
         done
 	fi
+	echo -n -e " - ${BBlack}SQL Server Version${NC}: ${green}$CFG_MYSQL_VERSION${NC}\n"
 	  
 	if [ $CFG_SQLSERVER == "MySQL" ] || [ $CFG_SQLSERVER == "MariaDB" ]; then
 	    while [ "x$CFG_MYSQL_ROOT_PWD_AUTO" == "x" ]
         do
             CFG_MYSQL_ROOT_PWD_AUTO=$(whiptail --title "MySQL" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
 		        "Auto Generate ROOT PASSWORD?" 10 57 2 \
-		        "false" "NO, i have IT OR i want to choose one" ON \
-		        "true"  "YES, autogenerate it" OFF 3>&1 1>&2 2>&3)
+		        "false" "NO, i have IT OR i want to choose one" OFF \
+		        "true"  "YES, autogenerate it" ON 3>&1 1>&2 2>&3)
         done
 	else
 		CFG_MYSQL_ROOT_PWD_AUTO = false
 	fi
+	echo -n -e " - ${BBlack}SQL Server Generate PASSWORD${NC}: ${green}$CFG_MYSQL_ROOT_PWD_AUTO${NC}\n"
 	  
 	if [ $CFG_MYSQL_ROOT_PWD_AUTO == false ]; then
 	    #We should receive a password
 	    while [ "x$CFG_MYSQL_ROOT_PWD" == "x" ]
 	    do
-	        CFG_MYSQL_ROOT_PWD=$(whiptail --title "MySQL" --backtitle "$WT_BACKTITLE" --inputbox \
-				"Please specify a root password" --nocancel 10 60 3>&1 1>&2 2>&3)
+	        CFG_MYSQL_ROOT_PWD=$(whiptail --title "MySQL" --backtitle "$WT_BACKTITLE" --nocancel --inputbox \
+				"Please specify a root password" 10 60 3>&1 1>&2 2>&3)
 	    done
 	else
 		#We generate a random 32 Chars Length
@@ -55,34 +60,36 @@ AskQuestions() {
 	do
 		CFG_WEBSERVER=$(whiptail --title "WEBSERVER" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
 		"Select webserver type" 10 60 2 \
-		"apache" "(default)" ON \
-		"nginx" "" OFF 3>&1 1>&2 2>&3)
+		"apache" "Apache (default)" OFF \
+		"nginx"  "Nginx" ON 3>&1 1>&2 2>&3)
 	done
-
+	echo -n -e " - ${BBlack}Web Server${NC}: ${green}$CFG_WEBSERVER${NC}\n"
+	
 	if [ $CFG_WEBSERVER == "nginx" ]; then
 	    while [ "x$CFG_NGINX_VERSION" == "x" ]
 		do
 	        CFG_NGINX_VERSION=$(whiptail --title "WEBSERVER" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
 			"Select Nginx Version" 10 60 5 \
 			"default" "OS Default" ON \
-			"nginx" "NGINX Official - nginx.org" OFF \
-			"dotdeb" "DotDeb.org - with 'full' HTTP2" OFF \
+			"nginx"   "NGINX Official - nginx.org" OFF \
+			"dotdeb"  "DotDeb.org - with 'full' HTTP2" OFF \
 			"stretch" "Debian Stretch - with HTTP2" OFF \
-            "custom" "With OpenSSL 1.1 and ChaCha20-Poly1305" OFF 3>&1 1>&2 2>&3)
-	    done		
+            "custom"  "With OpenSSL 1.1 and ChaCha20-Poly1305" OFF 3>&1 1>&2 2>&3)
+	    done
+		echo -n -e " - ${BBlack}Nginx Web Server Version${NC}: ${green}$CFG_NGINX_VERSION${NC}\n"
 	fi
 	
 	while [ "x$CFG_PHP_VERSION" == "x" ]
 	do
 		CFG_PHP_VERSION=$(whiptail --title "Choose PHP Version(s)" --backtitle "$WT_BACKTITLE" --nocancel --separate-output --checklist \
-		    "Choose PHP Version do you want to install" 25 60 5 \
+		    "Choose PHP Version do you want to install" 10 65 5 \
             "php5.6"    "Latest Available from 5.6" ON \
             "php7.0"    "Latest Available from 7.0" ON \
             "php7.1"    "Latest Available from 7.1" ON \
 			"none"      "Not install" OFF \
 	    3>&1 1>&2 2>&3)
 	done
-
+	echo -n -e " - ${BBlack}PHP Version(s)${NC}: ${green}$CFG_PHP_VERSION${NC}\n"
 
 	while [ "x$CFG_CERTBOT_VERSION" == "x" ]
 	do
@@ -92,7 +99,8 @@ AskQuestions() {
 		"default" "from jessie backports" ON \				
 		"stretch" "from stretch" OFF 3>&1 1>&2 2>&3)
 	done
-	
+	echo -n -e " - ${BBlack}CertBot Version${NC}: ${green}$CFG_CERTBOT_VERSION${NC}\n"
+		
 	while [ "x$CFG_HHVM" == "x" ]
     do
         CFG_HHVM=$(whiptail --title "HHVM" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
@@ -100,15 +108,17 @@ AskQuestions() {
 		"no" "(default)" ON \
 		"yes" "" OFF 3>&1 1>&2 2>&3)
     done
+	echo -n -e " - ${BBlack}Install HHVM${NC}: ${green}$CFG_HHVM${NC}\n"
 	
 	while [ "x$CFG_XCACHE" == "x" ]
 	do
 	    CFG_XCACHE=$(whiptail --title "Install XCache" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
 		"You want to install XCache during install? ATTENTION: If XCache is installed, Ioncube Loaders will not work !!" 20 50 2 \
-		"yes" "(default)" ON \
-		"no" "" OFF 3>&1 1>&2 2>&3)
+		"yes" "" OFF \
+		"no"  "(default)" ON 3>&1 1>&2 2>&3)
 	done
-	
+	echo -n -e " - ${BBlack}Install XCACHE${NC}: ${green}$CFG_XCACHE${NC}\n"
+		
 	while [ "x$CFG_PHPMYADMIN" == "x" ]
 	do
 		CFG_PHPMYADMIN=$(whiptail --title "Install phpMyAdmin" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
@@ -116,6 +126,7 @@ AskQuestions() {
 		"yes" "(default)" ON \
 		"no" "" OFF 3>&1 1>&2 2>&3)
 	done
+	echo -n -e " - ${BBlack}Install PhpMyAdmin${NC}: ${green}$CFG_PHPMYADMIN${NC}\n"
 	  
 	if [ $CFG_PHPMYADMIN == "yes" ]; then
         while [ "x$CFG_PHPMYADMIN_VERSION" == "x" ]
@@ -123,9 +134,10 @@ AskQuestions() {
 		    CFG_PHPMYADMIN_VERSION=$(whiptail --title "Install phpMyAdmin" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
 			"From Where Do you want to install phpMyAdmin?" 10 60 3 \
 			"default" "Current OS Version" ON \
-			"jessie" "from jessie backports - possible newer" OFF \
+			"jessie"  "from jessie backports - possible newer" OFF \
 			"stretch" "from stretch version - newer" OFF 3>&1 1>&2 2>&3)
 	    done
+		echo -n -e " - ${BBlack}PhpMyAdmin Version${NC}: ${green}$CFG_PHPMYADMIN_VERSION${NC}\n"
 	fi
 	  
 	while [ "x$CFG_MTA" == "x" ]
@@ -135,7 +147,8 @@ AskQuestions() {
 		"dovecot" "(default)" ON \
 		"courier" "" OFF 3>&1 1>&2 2>&3)
 	done
-
+	echo -n -e " - ${BBlack}Mail Server${NC}: ${green}$CFG_MTA${NC}\n"
+	
 	while [ "x$CFG_WEBMAIL" == "x" ]
 	do
 		CFG_WEBMAIL=$(whiptail --title "Webmail client" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
@@ -144,24 +157,28 @@ AskQuestions() {
 		"squirrelmail" "" OFF \
 		"none" "No Web Mail Client" OFF 3>&1 1>&2 2>&3)
 	done
-
+	echo -n -e " - ${BBlack}WebMail client${NC}: ${green}$CFG_WEBMAIL${NC}\n"
+	
 	if ( whiptail --title "Update Freshclam DB" --backtitle "$WT_BACKTITLE" --yesno "You want to update Antivirus Database during install?" 10 60) then
 		CFG_AVUPDATE=yes
 	else
 		CFG_AVUPDATE=no
 	fi
+	echo -n -e " - ${BBlack}Update Antivirus Database${NC}: ${green}$CFG_AVUPDATE${NC}\n"
 	
 	if (whiptail --title "Quota" --backtitle "$WT_BACKTITLE" --yesno "Setup user quota?" 10 60) then
 		CFG_QUOTA=yes
 	else
 		CFG_QUOTA=no
 	fi
+	echo -n -e " - ${BBlack}Setup Quota${NC}: ${green}$CFG_QUOTA${NC}\n"
 	
 	if (whiptail --title "Jailkit" --backtitle "$WT_BACKTITLE" --yesno "Would you like to install Jailkit?" 10 60) then
 		CFG_JKIT=yes
 	else
 		CFG_JKIT=no
 	fi
+	echo -n -e " - ${BBlack}Install Jailkit${NC}: ${green}$CFG_JKIT${NC}\n"
 	
 	while [ "x$CFG_INSTALL_ADITIONAL_SOFTWARE" == "x" ]
 	do
@@ -178,7 +195,8 @@ AskQuestions() {
 			"none"                     "Not install any thing from the above list" OFF \
 	    3>&1 1>&2 2>&3)
 	done
-
+	echo -n -e " - ${BBlack}Install Aditional Software(s)${NC}: ${green}$CFG_INSTALL_ADITIONAL_SOFTWARE${NC}\n"
+	
 	while [ "x$CFG_ISPC" == "x" ]
 	do
       	CFG_ISPC=$(whiptail --title "ISPConfig Setup" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
@@ -186,13 +204,15 @@ AskQuestions() {
 		"standard" "Yes (default)" ON \
 		"expert"   "No, i want to configure" OFF 3>&1 1>&2 2>&3)
     done
+	echo -n -e " - ${BBlack}ISPConfig Install Mode${NC}: ${green}$CFG_ISPC${NC}\n"
 	
 	while [ "x$CFG_ISPONCFIG_PORT" == "x" ]
 	do
 		CFG_ISPONCFIG_PORT=$(whiptail --title "ISPConfig" --backtitle "$WT_BACKTITLE" --inputbox \
 		"Please specify a ISPConfig Port" --nocancel 10 60 3>&1 1>&2 2>&3)
 	done
-	  
+	echo -n -e " - ${BBlack}ISPConfig Port${NC}: ${green}$CFG_ISPONCFIG_PORT${NC}\n"
+	
 	CFG_ISPCONFIG_DB_PASS=$(whiptail --title "ISPConfig db pass for advanced" --backtitle "$WT_BACKTITLE" --inputbox "ISPConfig db pass for advanced" --nocancel 10 60 3>&1 1>&2 2>&3)
 	  
 	SSL_COUNTRY=$(whiptail --title "SSL Country Code" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - Country Code (2 letter code - ex. EN)" --nocancel 10 60 3>&1 1>&2 2>&3)
