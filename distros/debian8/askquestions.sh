@@ -87,12 +87,8 @@ AskQuestions() {
             "php7.0"    "Latest Available from 7.0" ON \
             "php7.1"    "Latest Available from 7.1" ON \
 			"none"      "Not install" OFF 3>&1 1>&2 2>&3)
-	done
-	
-	tmpStrinFromArray=$(printf ",%s" "${CFG_PHP_VERSION[@]}")
-	tmpStrinFromArray=${tmpStrinFromArray:1}
-	
-	echo -n -e " - ${BBlack}PHP Version(s)${NC}:\n ${green}$tmpStrinFromArray${NC}\n"
+	done 
+	echo -n -e " - ${BBlack}PHP Version(s)${NC}: ${green}"$CFG_PHP_VERSION"${NC}\n" 
 
 	while [ "x$CFG_CERTBOT_VERSION" == "x" ]
 	do
@@ -116,7 +112,7 @@ AskQuestions() {
 	while [ "x$CFG_XCACHE" == "x" ]
 	do
 	    CFG_XCACHE=$(whiptail --title "Install XCache" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
-		"You want to install XCache during install? ATTENTION: If XCache is installed, Ioncube Loaders will not work !!" 20 35 2 \
+		"You want to install XCache during install? ATTENTION: If XCache is installed, Ioncube Loaders will not work !!" 10 50 2 \
 		"yes" "" OFF \
 		"no"  "(default)" ON 3>&1 1>&2 2>&3)
 	done
@@ -197,11 +193,8 @@ AskQuestions() {
             "openssl-stretch"          "OpenSSL - version from stretch branch - usually newer" ON \
 			"none"                     "Not install any thing from the above list" OFF \
 	    3>&1 1>&2 2>&3)
-	done
-	tmpStrinFromArray=$(printf ",%s" "${CFG_INSTALL_ADITIONAL_SOFTWARE[@]}")
-	tmpStrinFromArray=${tmpStrinFromArray:1}
-	
-	echo -n -e " - ${BBlack}Install Aditional Software(s)${NC}: \n ${green}$tmpStrinFromArray${NC}\n"
+	done 
+	echo -n -e " - ${BBlack}Install Aditional Software(s)${NC}: ${green}"$CFG_INSTALL_ADITIONAL_SOFTWARE"${NC}\n"
 	
 	while [ "x$CFG_ISPC" == "x" ]
 	do
@@ -222,8 +215,18 @@ AskQuestions() {
 	CFG_ISPCONFIG_DB_PASS=$(whiptail --title "ISPConfig db pass for advanced" --backtitle "$WT_BACKTITLE" --inputbox "ISPConfig db pass for advanced" --nocancel 10 60 3>&1 1>&2 2>&3)
 	  
 	SSL_COUNTRY=$(whiptail --title "SSL Country Code" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - Country Code (2 letter code - ex. EN)" --nocancel 10 60 3>&1 1>&2 2>&3)
+	echo -n -e " - ${BBlack}SSL Country${NC}: ${green}"$SSL_COUNTRY"${NC}\n"
+	
     SSL_STATE=$(whiptail --title "SSL State or Province Name" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - STATE or Province Name (full name - ex. Romania)" --nocancel 10 60 3>&1 1>&2 2>&3)
+	echo -n -e " - ${BBlack}SSL State${NC}: ${green}"$SSL_STATE"${NC}\n"
+	
     SSL_LOCALITY=$(whiptail --title "SSL Locality" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - Locality (ex. Craiova)" --nocancel 10 60 3>&1 1>&2 2>&3)
+	echo -n -e " - ${BBlack}SSL Locality${NC}: ${green}"$SSL_LOCALITY"${NC}\n"
+	
     SSL_ORGANIZATION=$(whiptail --title "SSL Organization" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - Organization (ex. Company L.t.d.)" --nocancel 10 60 3>&1 1>&2 2>&3)
+	echo -n -e " - ${BBlack}SSL Organization${NC}: ${green}"$SSL_ORGANIZATION"${NC}\n"
+	
     SSL_ORGUNIT=$(whiptail --title "SSL Organization Unit" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - Organization Unit (ex. IT)" --nocancel 10 60 3>&1 1>&2 2>&3)
+	echo -n -e " - ${BBlack}SSL Unit${NC}: ${green}"$SSL_ORGUNIT"${NC}\n"
+
 }
