@@ -75,11 +75,11 @@ AskQuestions() {
 	while [ "x$CFG_PHP_VERSION" == "x" ]
 	do
 		CFG_PHP_VERSION=$(whiptail --title "Choose PHP Version(s)" --backtitle "$WT_BACKTITLE" --nocancel --separate-output --checklist \
-		    "Choose PHP Version do you want to install" 25 105 13 \
+		    "Choose PHP Version do you want to install" 25 105 5 \
             "php5.6"    "Latest Available from 5.6" ON \
             "php7.0"    "Latest Available from 7.0" ON \
             "php7.1"    "Latest Available from 7.1" ON \
-			"none"      "Not install any thing from the above list" OFF \
+			"none"      "Not install" OFF \
 	    3>&1 1>&2 2>&3)
 	done
 
@@ -166,7 +166,7 @@ AskQuestions() {
 	while [ "x$CFG_INSTALL_ADITIONAL_SOFTWARE" == "x" ]
 	do
 		CFG_INSTALL_ADITIONAL_SOFTWARE=$(whiptail --title "Install Aditional Software" --backtitle "$WT_BACKTITLE" --nocancel --separate-output --checklist \
-		    "Choose what programs do you want to install" 25 105 13 \
+		    "Choose what programs do you want to install" 25 105 10 \
             "htop"                     "HTOP - interactive process viewer" ON \
             "nano"                     "NANO - text editor" ON \
             "haveged"                  "HAVEGED - A simple entropy daemon" ON \
