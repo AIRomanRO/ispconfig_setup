@@ -39,58 +39,6 @@ PreInstallCheck() {
         apt-get -yqq install whiptail > /dev/null 2>&1
 		echo -e " [ ${green}DONE${NC} ]\n"
 	fi
-
-
-	#Check for debconf-utils
-	if [ -f /bin/debconf ] || [ -f /usr/bin/debconf ]; then
-     	echo -n -e " - ${BBlack}debconf-utils${NC}: ${green}FOUND${NC}\n"
-    else
-	    echo -n -e " - ${BBlack}debconf-utils${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
-        apt-get -yqq install debconf-utils > /dev/null 2>&1
-		echo -e " [ ${green}DONE${NC} ]\n"
-	fi
-	
-    touch /etc/inetd.conf
-
-
-	#Check for binutils
-	if [ -f /bin/ld ] || [ -f /usr/bin/ld ]; then
-		echo -n -e " - ${BBlack}BINUTILS${NC}: ${green}FOUND${NC}\n"
-	else
-		echo -n -e " - ${BBlack}BINUTILS${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
-		apt-get -yqq install binutils > /dev/null 2>&1
-		echo -e " [ ${green}DONE${NC} ]\n"
-	fi
-
-
-	#Check for sudo
-	if [ -f /bin/sudo ] || [ -f /usr/bin/sudo ]; then
-		echo -n -e " - ${BBlack}SUDO${NC}: ${green}FOUND${NC}\n"
-	else
-		echo -n -e " - ${BBlack}SUDO${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
-		apt-get -yqq install sudo > /dev/null 2>&1
-		echo -e " [ ${green}DONE${NC} ]\n"
-	fi
-
-
-	#Check for lsb-release
-	if [ -f /bin/lsb_release ] || [ -f /usr/bin/lsb_release ]; then
-		echo -n -e " - ${BBlack}LSB-RELEASE${NC}: ${green}FOUND${NC}\n"
-	else
-		echo -n -e " - ${BBlack}LSB-RELEASE${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
-		apt-get -yqq install lsb-release > /dev/null 2>&1
-		echo -e " [ ${green}DONE${NC} ]\n"
-	fi
-  
-  
-	#Check for apt-transport-https
-	if [ -f /usr/lib/apt/methods/https ]; then
-		echo -n -e " - ${BBlack}APT HTTPS Method{NC}: ${green}FOUND${NC}\n"
-	else
-		echo -n -e " - ${BBlack}APT HTTPS Method${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
-		apt-get -yqq install apt-transport-https > /dev/null 2>&1
-		echo -e " [ ${green}DONE${NC} ]\n"
-	fi
 	
 	echo -n -e "Pre Install Check - [ ${green}Completed${NC} ]\n"
 }

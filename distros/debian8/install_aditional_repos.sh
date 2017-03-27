@@ -3,7 +3,7 @@
 #    Install basic packages
 #---------------------------------------------------------------------
 InstallAditionalRepos() {
-	echo -n "Start Adding additional repositories: \n"	
+	echo -n -e "Start Adding additional repositories: \n"	
 	
 	#Add Debian backports - Required for Letsencrypt
     echo -n -e "   --- ${BBlack}Debian Jessie backports${NC} ... "

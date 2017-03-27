@@ -75,7 +75,7 @@ AskQuestions() {
 	while [ "x$CFG_PHP_VERSION" == "x" ]
 	do
 		CFG_PHP_VERSION=$(whiptail --title "Choose PHP Version(s)" --backtitle "$WT_BACKTITLE" --nocancel --separate-output --checklist \
-		    "Choose PHP Version do you want to install" 25 105 5 \
+		    "Choose PHP Version do you want to install" 25 60 5 \
             "php5.6"    "Latest Available from 5.6" ON \
             "php7.0"    "Latest Available from 7.0" ON \
             "php7.1"    "Latest Available from 7.1" ON \
@@ -139,7 +139,7 @@ AskQuestions() {
 	while [ "x$CFG_WEBMAIL" == "x" ]
 	do
 		CFG_WEBMAIL=$(whiptail --title "Webmail client" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
-		"Select which Web Mail client you want" 10 60 2 \
+		"Select which Web Mail client you want" 10 60 3 \
 		"roundcube" "(default)" ON \
 		"squirrelmail" "" OFF \
 		"none" "No Web Mail Client" OFF 3>&1 1>&2 2>&3)
