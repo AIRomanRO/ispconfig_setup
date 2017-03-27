@@ -5,7 +5,7 @@
 InstallSQLServer() {
   if [ $CFG_SQLSERVER == "MySQL" ]; then
     echo -n "Installing MySQL... \n"	
-	echo -n "Selected version: $CFG_MYSQL_VERSION\n"
+	echo -n -e "Selected version: $CFG_MYSQL_VERSION\n"
 	
     if [ $CFG_MYSQL_VERSION == "default" ]; then
 	
