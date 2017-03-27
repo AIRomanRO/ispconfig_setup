@@ -204,8 +204,8 @@ InstallBasics() {
 		    apt-get -yqq install quilt > /dev/null 2>&1
 		    echo -e " [ ${green}DONE${NC} ]\n"
 	    fi
-		
-		
+
+
         echo "##### Prevent NGINX from being updated because it is custom builded #####
 Package: nginx*
 Pin: version
@@ -218,6 +218,5 @@ Pin-Priority: 1001
     echo "dash dash/sh boolean false" | debconf-set-selections
     dpkg-reconfigure -f noninteractive dash > /dev/null 2>&1 
     echo -e " [ ${green}DONE${NC} ]\n"
-  
-  exit 1
+
 }

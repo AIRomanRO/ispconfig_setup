@@ -40,7 +40,7 @@ PreInstallCheck() {
 		echo -e " [ ${green}DONE${NC} ]\n"
 	fi
 	
-	echo -n -e "Pre Install Check - [ ${green}Completed${NC} ]\n"
+	echo -n -e "Pre Install Check [ ${green}Completed${NC} ]\n"
 }
 
 

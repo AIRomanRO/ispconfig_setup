@@ -100,7 +100,6 @@ Pin-Priority: 100
 
     echo -e " [ ${green}DONE${NC} ]"
 	
-    echo -n -e " Aditional Repositories Configuration Complete [ ${green}DONE${NC} ]"
-  
-  exit 1
+    echo -n -e " Aditional Repositories Configuration Complete [ ${green}DONE${NC} ] \n"
+	
 }

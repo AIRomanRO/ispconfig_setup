@@ -17,7 +17,7 @@ AskQuestions() {
 		    "MariaDB" "MariaDB" OFF \
 		    "None"    "(already installed)" OFF 3>&1 1>&2 2>&3)
     done
-	echo -n -e " - ${BBlack}SQL Server${NC}: ${green}$CFG_SQLSERVER${NC}\n"
+	echo -n -e "   - ${BBlack}SQL Server${NC}: ${green}$CFG_SQLSERVER${NC}\n"
 	
 	if [ $CFG_SQLSERVER == "MySQL" ]; then
 		while [ "x$CFG_MYSQL_VERSION" == "x" ]
@@ -29,7 +29,7 @@ AskQuestions() {
 			    "5.7" "MySQL-5.7" OFF 3>&1 1>&2 2>&3)
         done
 	fi
-	echo -n -e " - ${BBlack}SQL Server Version${NC}: ${green}$CFG_MYSQL_VERSION${NC}\n"
+	echo -n -e "   - ${BBlack}SQL Server Version${NC}: ${green}$CFG_MYSQL_VERSION${NC}\n"
 	  
 	if [ $CFG_SQLSERVER == "MySQL" ] || [ $CFG_SQLSERVER == "MariaDB" ]; then
 	    while [ "x$CFG_MYSQL_ROOT_PWD_AUTO" == "x" ]
@@ -42,7 +42,7 @@ AskQuestions() {
 	else
 		CFG_MYSQL_ROOT_PWD_AUTO = false
 	fi
-	echo -n -e " - ${BBlack}SQL Server Generate PASSWORD${NC}: ${green}$CFG_MYSQL_ROOT_PWD_AUTO${NC}\n"
+	echo -n -e "   - ${BBlack}SQL Server Generate PASSWORD${NC}: ${green}$CFG_MYSQL_ROOT_PWD_AUTO${NC}\n"
 	  
 	if [ $CFG_MYSQL_ROOT_PWD_AUTO == false ]; then
 	    #We should receive a password
@@ -63,7 +63,7 @@ AskQuestions() {
 		"apache" "Apache (default)" OFF \
 		"nginx"  "Nginx" ON 3>&1 1>&2 2>&3)
 	done
-	echo -n -e " - ${BBlack}Web Server${NC}: ${green}$CFG_WEBSERVER${NC}\n"
+	echo -n -e "   - ${BBlack}Web Server${NC}: ${green}$CFG_WEBSERVER${NC}\n"
 	
 	if [ $CFG_WEBSERVER == "nginx" ]; then
 	    while [ "x$CFG_NGINX_VERSION" == "x" ]
@@ -76,7 +76,7 @@ AskQuestions() {
 			"stretch" "Debian Stretch - with HTTP2" OFF \
             "custom"  "With OpenSSL 1.1 and ChaCha20-Poly1305" OFF 3>&1 1>&2 2>&3)
 	    done
-		echo -n -e " - ${BBlack}Nginx Web Server Version${NC}: ${green}$CFG_NGINX_VERSION${NC}\n"
+		echo -n -e "   - ${BBlack}Nginx Web Server Version${NC}: ${green}$CFG_NGINX_VERSION${NC}\n"
 	fi
 	
 	while [ "x$CFG_PHP_VERSION" == "x" ]
@@ -88,7 +88,7 @@ AskQuestions() {
             "php7.1"    "Latest Available from 7.1" ON \
 			"none"      "Not install" OFF 3>&1 1>&2 2>&3)
 	done 
-	echo -n -e " - ${BBlack}PHP Version(s)${NC}: ${green}"$CFG_PHP_VERSION"${NC}\n" 
+	echo -n -e "   - ${BBlack}PHP Version(s)${NC}: ${green}"$CFG_PHP_VERSION"${NC}\n" 
 
 	while [ "x$CFG_CERTBOT_VERSION" == "x" ]
 	do
@@ -98,7 +98,7 @@ AskQuestions() {
 		"default" "from jessie backports" ON \
 		"stretch" "from stretch backports" OFF 3>&1 1>&2 2>&3)
 	done
-	echo -n -e " - ${BBlack}CertBot Version${NC}: ${green}$CFG_CERTBOT_VERSION${NC}\n"
+	echo -n -e "   - ${BBlack}CertBot Version${NC}: ${green}$CFG_CERTBOT_VERSION${NC}\n"
 		
 	while [ "x$CFG_HHVM" == "x" ]
     do
@@ -107,7 +107,7 @@ AskQuestions() {
 		"no" "(default)" ON \
 		"yes" "" OFF 3>&1 1>&2 2>&3)
     done
-	echo -n -e " - ${BBlack}Install HHVM${NC}: ${green}$CFG_HHVM${NC}\n"
+	echo -n -e "   - ${BBlack}Install HHVM${NC}: ${green}$CFG_HHVM${NC}\n"
 	
 	while [ "x$CFG_XCACHE" == "x" ]
 	do
@@ -116,7 +116,7 @@ AskQuestions() {
 		"yes" "" OFF \
 		"no"  "(default)" ON 3>&1 1>&2 2>&3)
 	done
-	echo -n -e " - ${BBlack}Install XCACHE${NC}: ${green}$CFG_XCACHE${NC}\n"
+	echo -n -e "   - ${BBlack}Install XCACHE${NC}: ${green}$CFG_XCACHE${NC}\n"
 		
 	while [ "x$CFG_PHPMYADMIN" == "x" ]
 	do
@@ -125,7 +125,7 @@ AskQuestions() {
 		"yes" "(default)" ON \
 		"no" "" OFF 3>&1 1>&2 2>&3)
 	done
-	echo -n -e " - ${BBlack}Install PhpMyAdmin${NC}: ${green}$CFG_PHPMYADMIN${NC}\n"
+	echo -n -e "   - ${BBlack}Install PhpMyAdmin${NC}: ${green}$CFG_PHPMYADMIN${NC}\n"
 	  
 	if [ $CFG_PHPMYADMIN == "yes" ]; then
         while [ "x$CFG_PHPMYADMIN_VERSION" == "x" ]
@@ -136,7 +136,7 @@ AskQuestions() {
 			"jessie"  "from jessie backports - possible newer" OFF \
 			"stretch" "from stretch version - newer" OFF 3>&1 1>&2 2>&3)
 	    done
-		echo -n -e " - ${BBlack}PhpMyAdmin Version${NC}: ${green}$CFG_PHPMYADMIN_VERSION${NC}\n"
+		echo -n -e "   - ${BBlack}PhpMyAdmin Version${NC}: ${green}$CFG_PHPMYADMIN_VERSION${NC}\n"
 	fi
 	  
 	while [ "x$CFG_MTA" == "x" ]
@@ -146,7 +146,7 @@ AskQuestions() {
 		"dovecot" "(default)" ON \
 		"courier" "" OFF 3>&1 1>&2 2>&3)
 	done
-	echo -n -e " - ${BBlack}Mail Server${NC}: ${green}$CFG_MTA${NC}\n"
+	echo -n -e "   - ${BBlack}Mail Server${NC}: ${green}$CFG_MTA${NC}\n"
 	
 	while [ "x$CFG_WEBMAIL" == "x" ]
 	do
@@ -156,28 +156,28 @@ AskQuestions() {
 		"squirrelmail" "" OFF \
 		"none" "No Web Mail Client" OFF 3>&1 1>&2 2>&3)
 	done
-	echo -n -e " - ${BBlack}WebMail client${NC}: ${green}$CFG_WEBMAIL${NC}\n"
+	echo -n -e "   - ${BBlack}WebMail client${NC}: ${green}$CFG_WEBMAIL${NC}\n"
 	
 	if ( whiptail --title "Update Freshclam DB" --backtitle "$WT_BACKTITLE" --yesno "You want to update Antivirus Database during install?" 10 60) then
 		CFG_AVUPDATE=yes
 	else
 		CFG_AVUPDATE=no
 	fi
-	echo -n -e " - ${BBlack}Update Antivirus Database${NC}: ${green}$CFG_AVUPDATE${NC}\n"
+	echo -n -e "   - ${BBlack}Update Antivirus Database${NC}: ${green}$CFG_AVUPDATE${NC}\n"
 	
 	if (whiptail --title "Quota" --backtitle "$WT_BACKTITLE" --yesno "Setup user quota?" 10 60) then
 		CFG_QUOTA=yes
 	else
 		CFG_QUOTA=no
 	fi
-	echo -n -e " - ${BBlack}Setup Quota${NC}: ${green}$CFG_QUOTA${NC}\n"
+	echo -n -e "   - ${BBlack}Setup Quota${NC}: ${green}$CFG_QUOTA${NC}\n"
 	
 	if (whiptail --title "Jailkit" --backtitle "$WT_BACKTITLE" --yesno "Would you like to install Jailkit?" 10 60) then
 		CFG_JKIT=yes
 	else
 		CFG_JKIT=no
 	fi
-	echo -n -e " - ${BBlack}Install Jailkit${NC}: ${green}$CFG_JKIT${NC}\n"
+	echo -n -e "   - ${BBlack}Install Jailkit${NC}: ${green}$CFG_JKIT${NC}\n"
 	
 	while [ "x$CFG_INSTALL_ADITIONAL_SOFTWARE" == "x" ]
 	do
@@ -194,7 +194,7 @@ AskQuestions() {
 			"none"                     "Not install any thing from the above list" OFF \
 	    3>&1 1>&2 2>&3)
 	done 
-	echo -n -e " - ${BBlack}Install Aditional Software(s)${NC}: ${green}"$CFG_INSTALL_ADITIONAL_SOFTWARE"${NC}\n"
+	echo -n -e "   - ${BBlack}Install Aditional Software(s)${NC}: ${green}"$CFG_INSTALL_ADITIONAL_SOFTWARE"${NC}\n"
 	
 	while [ "x$CFG_ISPC" == "x" ]
 	do
@@ -203,30 +203,30 @@ AskQuestions() {
 		"standard" "Yes (default)" ON \
 		"expert"   "No, i want to configure" OFF 3>&1 1>&2 2>&3)
     done
-	echo -n -e " - ${BBlack}ISPConfig Install Mode${NC}: ${green}$CFG_ISPC${NC}\n"
+	echo -n -e "   - ${BBlack}ISPConfig Install Mode${NC}: ${green}$CFG_ISPC${NC}\n"
 	
 	while [ "x$CFG_ISPONCFIG_PORT" == "x" ]
 	do
 		CFG_ISPONCFIG_PORT=$(whiptail --title "ISPConfig" --backtitle "$WT_BACKTITLE" --inputbox \
 		"Please specify a ISPConfig Port" --nocancel 10 60 3>&1 1>&2 2>&3)
 	done
-	echo -n -e " - ${BBlack}ISPConfig Port${NC}: ${green}$CFG_ISPONCFIG_PORT${NC}\n"
+	echo -n -e "   - ${BBlack}ISPConfig Port${NC}: ${green}$CFG_ISPONCFIG_PORT${NC}\n"
 	
 	CFG_ISPCONFIG_DB_PASS=$(whiptail --title "ISPConfig db pass for advanced" --backtitle "$WT_BACKTITLE" --inputbox "ISPConfig db pass for advanced" --nocancel 10 60 3>&1 1>&2 2>&3)
 	  
 	SSL_COUNTRY=$(whiptail --title "SSL Country Code" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - Country Code (2 letter code - ex. EN)" --nocancel 10 60 3>&1 1>&2 2>&3)
-	echo -n -e " - ${BBlack}SSL Country${NC}: ${green}"$SSL_COUNTRY"${NC}\n"
+	echo -n -e "   - ${BBlack}SSL Country${NC}: ${green}"$SSL_COUNTRY"${NC}\n"
 	
     SSL_STATE=$(whiptail --title "SSL State or Province Name" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - STATE or Province Name (full name - ex. Romania)" --nocancel 10 60 3>&1 1>&2 2>&3)
-	echo -n -e " - ${BBlack}SSL State${NC}: ${green}"$SSL_STATE"${NC}\n"
+	echo -n -e "   - ${BBlack}SSL State${NC}: ${green}"$SSL_STATE"${NC}\n"
 	
     SSL_LOCALITY=$(whiptail --title "SSL Locality" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - Locality (ex. Craiova)" --nocancel 10 60 3>&1 1>&2 2>&3)
-	echo -n -e " - ${BBlack}SSL Locality${NC}: ${green}"$SSL_LOCALITY"${NC}\n"
+	echo -n -e "   - ${BBlack}SSL Locality${NC}: ${green}"$SSL_LOCALITY"${NC}\n"
 	
     SSL_ORGANIZATION=$(whiptail --title "SSL Organization" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - Organization (ex. Company L.t.d.)" --nocancel 10 60 3>&1 1>&2 2>&3)
-	echo -n -e " - ${BBlack}SSL Organization${NC}: ${green}"$SSL_ORGANIZATION"${NC}\n"
+	echo -n -e "   - ${BBlack}SSL Organization${NC}: ${green}"$SSL_ORGANIZATION"${NC}\n"
 	
     SSL_ORGUNIT=$(whiptail --title "SSL Organization Unit" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - Organization Unit (ex. IT)" --nocancel 10 60 3>&1 1>&2 2>&3)
-	echo -n -e " - ${BBlack}SSL Unit${NC}: ${green}"$SSL_ORGUNIT"${NC}\n"
+	echo -n -e "   - ${BBlack}SSL Unit${NC}: ${green}"$SSL_ORGUNIT"${NC}\n"
 
 }

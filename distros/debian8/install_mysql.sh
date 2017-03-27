@@ -85,4 +85,6 @@ sql-mode='NO_ENGINE_SUBSTITUTION'
   fi
   
   	echo -e "[${green}DONE${NC}]\n"
+	
+	exit 1;
 }
