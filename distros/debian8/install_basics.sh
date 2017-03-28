@@ -83,7 +83,7 @@ InstallBasics() {
 				else
 					echo -n -e " - ${BBlack}NANO${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
 					apt-get -yqq install nano > /dev/null 2>&1
-					echo -e " [ ${green}DONE${NC} ]\n"
+					echo -e " [ ${green}DONE${NC} ]"
 				fi
 		    ;;
             "ntp" )
@@ -133,12 +133,12 @@ InstallBasics() {
 				if ! dpkg --list 2>&1 | grep -qw openssh-server; then
 					echo -n -e " - ${BBlack}OPENSSH-SERVER${NC}: ${green}Already Installed${NC}"
 				else
-					echo -n -e " - ${BBlack}OPENSSH-SERVER${NC}: ${red}NOT FOUNDED${NC}"					
+					echo -n -e " - ${BBlack}OPENSSH-SERVER${NC}: ${red}NOT FOUNDED${NC}"
 				fi
 				
 				echo -n -e " - ${BBlack}OPENSSH-SERVER${NC}: Try to install the Stretch Version ... "
 				apt-get -yqq install openssh-server -t stretch > /dev/null 2>&1
-				echo -e " [ ${green}DONE${NC} ]\n"
+				echo -e " [ ${green}DONE${NC} ]"
 		    ;;
 			"openssl-stable" )
 				#Check for openssl
@@ -150,14 +150,14 @@ InstallBasics() {
 				
 				echo -n -e " - ${BBlack}OpenSSL${NC}: Try to install the Jessie Version ... "
 				apt-get -yqq install openssl -t jessie > /dev/null 2>&1
-				echo -e " [ ${green}DONE${NC} ]\n"				
+				echo -e " [ ${green}DONE${NC} ]"
 		    ;;
             "openssl-stretch" )
 				#Check for openssh-server-stretch
 				if ! dpkg --list 2>&1 | grep -qw openssl; then
 					echo -n -e " - ${BBlack}OpenSSL${NC}: ${green}Already Installed${NC}"
 				else
-					echo -n -e " - ${BBlack}OpenSSL${NC}: ${red}NOT FOUNDED${NC}"					
+					echo -n -e " - ${BBlack}OpenSSL${NC}: ${red}NOT FOUNDED${NC}"
 				fi
 				
 				echo -n -e " - ${BBlack}OpenSSL${NC}: Try to install the Stretch Version ... "
