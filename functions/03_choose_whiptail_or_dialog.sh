@@ -13,7 +13,7 @@ ChooseWhiptailOrDialog() {
     read INTERFACE_GENERATOR <<< "$(which whiptail dialog 2> /dev/null)"
 
 	# exit if none found
-	[[ "$INTERFACE_GENERATOR" ]] || {
+	[[ "$INTERFACE_GENERATOR" ]] {
 		echo -n -e '${red} Interface Generator Error${BBlack}: Either whiptail nor dialog found${NC}'
 		INTERFACE_GENERATOR='none'
 	} else {

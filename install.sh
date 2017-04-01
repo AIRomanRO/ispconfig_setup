@@ -40,6 +40,7 @@ PWD=$(pwd);
 source $PWD/functions/01_check_linux.sh
 source $PWD/functions/02_check_ipv6.sh
 source $PWD/functions/03_choose_whiptail_or_dialog.sh
+
 echo "Checking your system, please wait..."
 CheckLinux
 CheckIPV6
