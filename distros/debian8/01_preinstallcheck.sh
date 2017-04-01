@@ -30,15 +30,6 @@ PreInstallCheck() {
   
 	echo -n -e "Check for pre-required packages:\n"
 
-
-	#Check for whiptail
-	if [ -f /bin/whiptail ] || [ -f /usr/bin/whiptail ]; then
-     	echo -n -e " - ${BBlack}Whiptail${NC}: ${green}FOUND${NC}\n"
-    else
-	    echo -n -e " - ${BBlack}Whiptail${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
-        apt-get -yqq install whiptail > /dev/null 2>&1
-		echo -e " [ ${green}DONE${NC} ]\n"
-	fi
 	
 	echo -n -e "Pre Install Check [ ${green}Completed${NC} ]\n"
 }
