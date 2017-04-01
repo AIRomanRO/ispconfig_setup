@@ -105,7 +105,6 @@ Pin-Priority: 100
     echo -e " [ ${green}DONE${NC} ]"
 	
 	ELAPSED_TIME=$(($SECONDS - $START_TIME))
-	echo 
 	echo -n -e "==> ${green}Completed ON ${NC}"
 	echo -e ": ${red} $(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) sec"
 	echo -e "${NC}"	
