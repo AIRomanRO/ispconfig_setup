@@ -121,7 +121,7 @@ InstallBasics() {
 		    ;;
             "openssh-server" )
 				#Check for openssh-server
-				if ! dpkg --list 2>&1 | grep -qw openssh-server; then
+				if dpkg --list 2>&1 | grep -qw openssh-server; then
 					echo -n -e "    - ${BBlack}OPENSSH-SERVER${NC}: ${green}Already Installed${NC}  \n"
 				else
 					echo -n -e "    - ${BBlack}OPENSSH-SERVER${NC}: ${red} NOT FOUND ${NC} \n"
@@ -133,10 +133,10 @@ InstallBasics() {
 		    ;;
             "openssh-server-stretch" )
 				#Check for openssh-server-stretch
-				if ! dpkg --list 2>&1 | grep -qw openssh-server; then
+				if dpkg --list 2>&1 | grep -qw openssh-server; then
 					echo -n -e "    - ${BBlack}OPENSSH-SERVER${NC}: ${green}Already Installed${NC} \n"
 				else
-					echo -n -e " - ${BBlack}OPENSSH-SERVER${NC}: ${red}NOT FOUND${NC} \n"
+					echo -n -e "    - ${BBlack}OPENSSH-SERVER${NC}: ${red}NOT FOUND${NC} \n"
 				fi
 				
 				echo -n -e "    - ${BBlack}OPENSSH-SERVER${NC}: Try to install the Stretch Version ... "
@@ -145,7 +145,7 @@ InstallBasics() {
 		    ;;
 			"openssl-stable" )
 				#Check for openssl
-				if ! dpkg --list 2>&1 | grep -qw openssl; then
+				if dpkg --list 2>&1 | grep -qw openssl; then
 					echo -n -e "    - ${BBlack}OpenSSL${NC}: ${green}Already Installed${NC} \n"
 				else
 					echo -n -e "    - ${BBlack}OpenSSL${NC}: ${red}NOT FOUND${NC} \n"
@@ -157,7 +157,7 @@ InstallBasics() {
 		    ;;
             "openssl-stretch" )
 				#Check for openssh-server-stretch
-				if ! dpkg --list 2>&1 | grep -qw openssl; then
+				if dpkg --list 2>&1 | grep -qw openssl; then
 					echo -n -e "    - ${BBlack}OpenSSL${NC}: ${green}Already Installed${NC} \n"
 				else
 					echo -n -e "    - ${BBlack}OpenSSL${NC}: ${red}NOT FOUND${NC} \n"
@@ -175,8 +175,8 @@ InstallBasics() {
 		echo -n -e " - Check and install the needed Packages for build the NGINX with OpenSSL 1.1 \n"
 		
 		#Check for DPKG DEV
-		if ! dpkg --list 2>&1 | grep -qw dpkg-dev; then
-			echo -n -e "   - ${BBlack}DPKG DEV{NC}: ${green}FOUND${NC} \n"
+		if dpkg --list 2>&1 | grep -qw dpkg-dev; then
+			echo -n -e "   - ${BBlack}DPKG DEV${NC}: ${green}FOUND${NC} \n"
 		else
 			echo -n -e "   - ${BBlack}DPKG DEV${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 			apt-get -yqq install dpkg-dev > /dev/null 2>&1
@@ -184,8 +184,8 @@ InstallBasics() {
 		fi
 	
 		#Check for Debian Keyring
-		if ! dpkg --list 2>&1 | grep -qw debian-keyring; then
-			echo -n -e "   - ${BBlack}Debian Keyring{NC}: ${green}FOUND${NC} \n"
+		if dpkg --list 2>&1 | grep -qw debian-keyring; then
+			echo -n -e "   - ${BBlack}Debian Keyring${NC}: ${green}FOUND${NC} \n"
 		else
 			echo -n -e "   - ${BBlack}Debian Keyring${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 			apt-get -yqq install debian-keyring > /dev/null 2>&1
@@ -193,8 +193,8 @@ InstallBasics() {
 		fi
 	
 		#Check for Dev Scripts
-		if ! dpkg --list 2>&1 | grep -qw debian-keyring; then
-			echo -n -e "   - ${BBlack}Dev Scripts{NC}: ${green}FOUND${NC} \n"
+		if dpkg --list 2>&1 | grep -qw debian-keyring; then
+			echo -n -e "   - ${BBlack}Dev Scripts${NC}: ${green}FOUND${NC} \n"
 		else
 			echo -n -e "   - ${BBlack}Dev Scripts${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 			apt-get -yqq install devscripts > /dev/null 2>&1
@@ -202,7 +202,7 @@ InstallBasics() {
 		fi
 	
 	    #Check for Quilt
-		if ! dpkg --list 2>&1 | grep -qw quilt; then
+		if dpkg --list 2>&1 | grep -qw quilt; then
 		    echo -n -e "   - ${BBlack}Quilt{NC}: ${green}FOUND${NC} \n"
 	    else
 		    echo -n -e "   - ${BBlack}Quilt${NC}: ${red}NOT FOUND${NC} - start and install it ... "
@@ -217,7 +217,6 @@ InstallBasics() {
     echo -e "[ ${green}DONE${NC} ]"
 	
 	ELAPSED_TIME=$(($SECONDS - $START_TIME))
-	echo 
 	echo -n -e "==> ${green}Completed ON ${NC}"
 	echo -e ": ${red} $(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) sec"
 	echo -e "${NC}"	
