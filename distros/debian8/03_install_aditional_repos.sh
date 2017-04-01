@@ -10,11 +10,11 @@ InstallAditionalRepos() {
     echo -n -e "   --- ${BBlack}Debian Jessie backports${NC} ... "
     echo "##################  Debian Jessie Backports  ##################
 
-deb http://ftp.debian.org/debian jessie-backports main
-deb-src http://ftp.debian.org/debian jessie-backports main
+deb http://ftp.debian.org/debian/ jessie-backports main
+deb-src http://ftp.debian.org/debian/ jessie-backports main
 
-deb http://http.debian.net/debian/ jessie-backports main contrib non-free
-deb-src http://http.debian.net/debian/ jessie-backports main contrib non-free
+deb http://ftp.debian.org/debian/ jessie-backports contrib non-free
+deb-src http://ftp.debian.org/debian/ jessie-backports contrib non-free
 
 ###############################################################" > /etc/apt/sources.list.d/jessie-backports.list
 	echo -e " [ ${green}DONE${NC} ]"
@@ -24,15 +24,15 @@ deb-src http://http.debian.net/debian/ jessie-backports main contrib non-free
     echo -n -e "   --- ${BBlack}Debian Stretch Repository${NC} ... "
 	echo "#################  Debian Stretch Repository  #################
 
-deb http://httpredir.debian.org/debian/ stretch main contrib non-free
-deb-src http://httpredir.debian.org/debian/ stretch main contrib non-free
+deb http://ftp.debian.org/debian/ stretch main contrib non-free
+deb-src http://ftp.debian.org/debian/ stretch main contrib non-free
 
 deb http://security.debian.org/ stretch/updates main contrib non-free
 deb-src http://security.debian.org/ stretch/updates main contrib non-free
 
 # stretch-updates, previously known as 'volatile'
-deb http://httpredir.debian.org/debian/ stretch-updates main contrib non-free
-deb-src http://httpredir.debian.org/debian/ stretch-updates main contrib non-free
+deb http://ftp.debian.org/debian/ stretch-updates main contrib non-free
+deb-src http://ftp.debian.org/debian/ stretch-updates main contrib non-free
 
 ###############################################################" > /etc/apt/sources.list.d/stretch-backports.list
     echo -e " [ ${green}DONE${NC} ]"
