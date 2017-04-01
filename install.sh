@@ -99,18 +99,32 @@ echo "- This is a clean standard clean installation for supported systems";
 echo "- Internet connection is working properly";
 echo
 echo
+
 if [ -n "$PRETTY_NAME" ]; then
 	echo -e "The detected Linux Distribution is: " $PRETTY_NAME
 else
 	echo -e "The detected Linux Distribution is: " $ID-$VERSION_ID
 fi
+
 echo 
+
 if [ $IPV6_ENABLED == true ]; then
     echo -e "IPV6 enabled: ${green} YES ${NC}"
 else
     echo -e "IPV6 enabled: ${red} NO ${NC}"
 fi
+
 echo
+
+if [[ -z "${INTERFACE_GENERATOR// }" ]]; then
+	echo -e "Interface Generator Error: ${red} Either whiptail nor dialog found ${NC} - Use Normal Input"
+	
+else
+	echo -e "Interface Generator: ${green} $INTERFACE_GENERATOR ${NC}"
+fi  
+
+echo
+
 if [ -n "$DISTRO" ]; then
 	read -p "Is this correct ($DISTRO) ? (y/n)" -n 1 -r
 	echo    # (optional) move to a new line
@@ -126,17 +140,64 @@ fi
 
 if [ "$DISTRO" == "debian8" ]; then
 	if [ "$INTERFACE_GENERATOR" == "none" ]; then
-	exit 1;
+		read -p "Select ISPConfig Version you want to install: Stable or Beta (s/b)" -n 1 -r
+		
+		echo    # (optional) move to a new line
+		
+		if [[ ! $REPLY =~ ^[SsBb]$ ]]
+			then
+			echo -e "${red} ERROR: Invalid Reponse. Please Restart Installation${NC}"
+			exit 1
+		else
+			if [ $REPLY == "S"] || [$REPLY == "s"]; then
+				CFG_ISPCVERSION="Stable"
+			else
+				CFG_ISPCVERSION="Beta"
+			fi			
+		fi
+		
+		echo
+		
+		
+		read -p "Would you like to install ISPConfig in a MultiServer Setup? (yes/no)" -n 1 -r
+		
+		echo    # (optional) move to a new line
+		
+		if [[ ! $REPLY =~ ^[yYnN]$ ]]
+			then
+			echo -e "${red} ERROR: Invalid Reponse. Please Restart Installation${NC}"
+			exit 1
+		else
+			if [ $REPLY == "Y"] || [$REPLY == "y"]; then
+				CFG_ISPCVERSION="yes"
+			else
+				CFG_ISPCVERSION="no"
+			fi			
+		fi
+		
+		echo
+		
 	else 
+	
 		while [ "x$CFG_ISPCVERSION" == "x" ]
 		do
-			CFG_ISPCVERSION=$("$INTERFACE_GENERATOR" --title "ISPConfig Version" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "Select ISPConfig Version you want to install" 10 50 2 "Stable" "(default)" ON "Beta" "" OFF 3>&1 1>&2 2>&3)
+			CFG_ISPCVERSION=$("$INTERFACE_GENERATOR" --title "ISPConfig Version" --backtitle "$WT_BACKTITLE" --nocancel \
+					--radiolist "Select ISPConfig Version you want to install" 10 50 2 \
+					"Stable" "Latest Stable" ON \
+					"Beta"   "Beta Version" OFF \
+				3>&1 1>&2 2>&3)
 		done
+		echo -n -e "   - ${BBlack}ISPConfig Version${NC}: ${green}$CFG_ISPCVERSION${NC}\n"
 		
 		while [ "x$CFG_MULTISERVER" == "x" ]
 		do
-			CFG_MULTISERVER=$("$INTERFACE_GENERATOR" --title "MULTISERVER SETUP" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "Would you like to install ISPConfig in a MultiServer Setup?" 10 50 2 "no" "(default)" ON "yes" "" OFF 3>&1 1>&2 2>&3)
+			CFG_MULTISERVER=$("$INTERFACE_GENERATOR" --title "MULTISERVER SETUP" --backtitle "$WT_BACKTITLE" --nocancel \
+					--radiolist "Would you like to install ISPConfig in a MultiServer Setup?" 10 50 2 \
+					"no" "Single Server" ON \
+					"yes" "Multi Server" OFF \
+				3>&1 1>&2 2>&3)
 		done
+		echo -n -e "   - ${BBlack}MULTISERVER SETUP${NC}: ${green}$CFG_MULTISERVER${NC}\n"
 	fi
 else
 	CFG_MULTISERVER=no
