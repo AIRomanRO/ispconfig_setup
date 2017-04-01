@@ -3,7 +3,8 @@
 #    Install basic packages
 #---------------------------------------------------------------------
 InstallBasics() {
-    echo -n " \n"
+	START_TIME=$SECONDS
+    echo -n -e " \n"
     echo -n "Updating apt and upgrading currently installed packages... "
     apt-get -qq update > /dev/null 2>&1
     apt-get -qqy upgrade > /dev/null 2>&1
@@ -170,6 +171,7 @@ InstallBasics() {
 	
 	
 	if [ $CFG_NGINX_VERSION == "custom" ]; then
+		echo 
 		echo -n -e "Check and install the needed Packages for build the NGINX with OpenSSL 1.1 \n"
 		
 		#Check for DPKG DEV
@@ -209,9 +211,17 @@ InstallBasics() {
 	    fi
 	fi
 
-    echo -n "Reconfigure dash... "	  
+    echo -n "   - Reconfigure dash... "	  
     echo "dash dash/sh boolean false" | debconf-set-selections
     dpkg-reconfigure -f noninteractive dash > /dev/null 2>&1 
     echo -e "[ ${green}DONE${NC} ] \n"
+	
+	ELAPSED_TIME=$(($SECONDS - $START_TIME))
+	echo 
+	echo -e "${green}Installation of Basic Packages Completed ${NC} - DURATION: ${red}"
+	echo "$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) sec"
+	echo -e "${NC}"
+	
+	echo -n -e " "
 
 }
