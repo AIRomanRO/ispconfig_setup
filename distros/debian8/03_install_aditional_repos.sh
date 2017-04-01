@@ -47,9 +47,10 @@ deb-src http://ftp.debian.org/debian/ stretch-updates main contrib non-free
 	echo "###############################################################" >> /etc/apt/sources.list.d/php-deb-sury.list
     echo -e " [ ${green}DONE${NC} ]"
 	
+	mkdir /etc/apt/trusted.custom.d > /dev/null 2>&1
+		
     echo -n -e "   --- ${BBlack}Deb Sury PHP [ packages.sury.org ] Repository GnuPG Key${NC} ... "
-    wget -q -O /etc/apt/trusted.gpg.d/php-packages-sury-org.gpg https://packages.sury.org/php/apt.gpg
-    #sudo apt-key add php-packages-sury-org.gpg > /dev/null 2>&1 
+    wget -q -O /etc/apt/trusted.custom.d/php-packages-sury-org.gpg https://packages.sury.org/php/apt.gpg && sudo apt-key add /etc/apt/trusted.custom.d/php-packages-sury-org.gpg > /dev/null 2>&1 
     echo -e " [ ${green}DONE${NC} ]"
   
 	
@@ -65,7 +66,7 @@ deb-src https://nginx.org/packages/mainline/debian/ jessie nginx
     echo -e " [ ${green}DONE${NC} ]"
 	
     echo -n -e "   --- ${BBlack}Official Nginx [ nginx.org ] Repository GnuPG Key${NC} ... "	
-    wget -q -O /etc/apt/trusted.gpg.d/nginx_signing.key https://nginx.org/keys/nginx_signing.key && sudo apt-key add nginx_signing.key > /dev/null 2>&1
+    wget -q -O /etc/apt/trusted.custom.d/nginx_signing.key https://nginx.org/keys/nginx_signing.key && sudo apt-key add /etc/apt/trusted.custom.d/nginx_signing.key > /dev/null 2>&1
 	echo -e " [ ${green}DONE${NC} ]"
 	
 	
@@ -81,7 +82,7 @@ deb-src http://packages.dotdeb.org jessie-nginx-http2 all
     echo -e " [ ${green}DONE${NC} ]"
 	
     echo -n -e "   --- ${BBlack}DotDeb Nginx [ dotdeb.org ] Repository GnuPG Key${NC} ... "	
-    wget -q -O /etc/apt/trusted.gpg.d/dot-deb.gpg https://www.dotdeb.org/dotdeb.gpg && sudo apt-key add dot-deb.gpg > /dev/null 2>&1
+    wget -q -O /etc/apt/trusted.custom.d/dot-deb.gpg https://www.dotdeb.org/dotdeb.gpg && sudo apt-key add /etc/apt/trusted.custom.d/dot-deb.gpg > /dev/null 2>&1
 	echo -e " [ ${green}DONE${NC} ]"
 	
 	
