@@ -28,7 +28,7 @@ sql-mode='NO_ENGINE_SUBSTITUTION'
 		export DEBIAN_FRONTEND=noninteractive
 		
 		echo -n -e "   --- Set Selections on debconf ... "
-		echo "mysql-apt-config mysql-apt-config/select-product select Ok" | debconf-set-selections
+		#echo "mysql-apt-config mysql-apt-config/select-product select Ok" | debconf-set-selections
 		echo "mysql-apt-config mysql-apt-config/select-tools select  Enabled" | debconf-set-selections
 		echo "mysql-apt-config mysql-apt-config/select-server select mysql-5.6" | debconf-set-selections
 		echo "mysql-apt-config mysql-apt-config/select-preview select Disabled" | debconf-set-selections
@@ -70,7 +70,7 @@ sql-mode='NO_ENGINE_SUBSTITUTION'
 		echo "mysql-apt-config mysql-apt-config/select-preview select Disabled" | debconf-set-selections
 		echo "mysql-apt-config mysql-apt-config/select-tools select  Enabled" | debconf-set-selections
 		echo "mysql-apt-config mysql-apt-config/select-server select mysql-5.7" | debconf-set-selections
-		echo "mysql-apt-config mysql-apt-config/select-product select Ok" | debconf-set-selections
+		#echo "mysql-apt-config mysql-apt-config/select-product select Ok" | debconf-set-selections
 		echo -e " [ ${green}DONE${NC} ] "
 		
 		echo -n -e "   --- Run the MySql APT Config ... "
