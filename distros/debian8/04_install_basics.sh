@@ -3,13 +3,14 @@
 #    Install basic packages
 #---------------------------------------------------------------------
 InstallBasics() {
-    echo -n " "
+    echo -n " \n"
     echo -n "Updating apt and upgrading currently installed packages... "
     apt-get -qq update > /dev/null 2>&1
     apt-get -qqy upgrade > /dev/null 2>&1
     echo -e "[${green}DONE${NC}]"
   
-	echo -n "Check and install the required Packages: \n"
+	echo -n -e "Check and install the required Packages: \n"
+	
 	#Check for debconf-utils
 	if [ -f /bin/debconf ] || [ -f /usr/bin/debconf ]; then
      	echo -n -e " - ${BBlack}debconf-utils${NC}: ${green}FOUND${NC}\n"
@@ -69,7 +70,7 @@ InstallBasics() {
             "htop" )
                 #Check for htop
 	            if [ -f /bin/htop ] || [ -f /usr/bin/htop ]; then
-     	            echo -n -e " - ${BBlack}HTOP${NC}: ${green}FOUND${NC}"
+     	            echo -n -e " - ${BBlack}HTOP${NC}: ${green}FOUND${NC} \n"
                 else
 	                echo -n -e " - ${BBlack}HTOP${NC}: ${red}NOT FOUND${NC} - start and install it ... "
                     apt-get -yqq install htop > /dev/null 2>&1
@@ -79,7 +80,7 @@ InstallBasics() {
             "nano" )
 				#Check for nano
 				if [ -f /bin/nano ] || [ -f /usr/bin/nano ]; then
-					echo -n -e " - ${BBlack}NANO${NC}: ${green}Already Installed${NC}"
+					echo -n -e " - ${BBlack}NANO${NC}: ${green}Already Installed${NC} \n"
 				else
 					echo -n -e " - ${BBlack}NANO${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 					apt-get -yqq install nano > /dev/null 2>&1
@@ -89,7 +90,7 @@ InstallBasics() {
             "ntp" )
 				#Check for ntp - disabled for the moment due to > cap_set_proc() failed to drop root privileges < error
 				if [ -f /sbin/ntpd ] || [ -f /usr/sbin/ntpd ]; then
-					echo -n -e " - ${BBlack}NTP${NC}: ${green}Already Installed${NC}"
+					echo -n -e " - ${BBlack}NTP${NC}: ${green}Already Installed${NC} \n"
 				else
 					echo -n -e " - ${BBlack}NTP${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 					apt-get -yqq install ntp ntpdate > /dev/null 2>&1
@@ -99,7 +100,7 @@ InstallBasics() {
             "haveged" )
 				#Check for haveged
 				if [ -f /sbin/haveged ] || [ -f /usr/sbin/haveged ]; then
-					echo -n -e " - ${BBlack}HAVEGED${NC}: ${green}Already Installed${NC}"
+					echo -n -e " - ${BBlack}HAVEGED${NC}: ${green}Already Installed${NC} \n"
 				else
 					echo -n -e " - ${BBlack}HAVEGED${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 					apt-get -yqq install haveged > /dev/null 2>&1
@@ -109,7 +110,7 @@ InstallBasics() {
             "ssh" )
 				#Check for ssh
 				if [ -f /bin/ssh ] || [ -f /usr/bin/ssh ]; then
-					echo -n -e " - ${BBlack}SSH${NC}: ${green}Already Installed${NC}"
+					echo -n -e " - ${BBlack}SSH${NC}: ${green}Already Installed${NC} \n"
 				else
 					echo -n -e " - ${BBlack}SSH${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 					apt-get -yqq install ssh > /dev/null 2>&1
@@ -119,21 +120,21 @@ InstallBasics() {
             "openssh-server" )
 				#Check for openssh-server
 				if ! dpkg --list 2>&1 | grep -qw openssh-server; then
-					echo -n -e " - ${BBlack}OPENSSH-SERVER${NC}: ${green}Already Installed${NC}"
+					echo -n -e " - ${BBlack}OPENSSH-SERVER${NC}: ${green}Already Installed${NC}  \n"
 				else
-					echo -n -e " - ${BBlack}OPENSSH-SERVER${NC}: ${red}NOT FOUND${NC}"
+					echo -n -e " - ${BBlack}OPENSSH-SERVER${NC}: ${red} NOT FOUND ${NC} \n"
 				fi
 				
 				echo -n -e " - ${BBlack}OPENSSH-SERVER${NC}: Try to install the Jessie Version ... "
 				apt-get -yqq install openssh-server -t jessie > /dev/null 2>&1
-				echo -e " [ ${green}DONE${NC} ]"				
+				echo -e " [ ${green}DONE${NC} ] "				
 		    ;;
             "openssh-server-stretch" )
 				#Check for openssh-server-stretch
 				if ! dpkg --list 2>&1 | grep -qw openssh-server; then
-					echo -n -e " - ${BBlack}OPENSSH-SERVER${NC}: ${green}Already Installed${NC}"
+					echo -n -e " - ${BBlack}OPENSSH-SERVER${NC}: ${green}Already Installed${NC} \n"
 				else
-					echo -n -e " - ${BBlack}OPENSSH-SERVER${NC}: ${red}NOT FOUND${NC}"
+					echo -n -e " - ${BBlack}OPENSSH-SERVER${NC}: ${red}NOT FOUND${NC} \n"
 				fi
 				
 				echo -n -e " - ${BBlack}OPENSSH-SERVER${NC}: Try to install the Stretch Version ... "
@@ -143,9 +144,9 @@ InstallBasics() {
 			"openssl-stable" )
 				#Check for openssl
 				if ! dpkg --list 2>&1 | grep -qw openssl; then
-					echo -n -e " - ${BBlack}OpenSSL${NC}: ${green}Already Installed${NC}"
+					echo -n -e " - ${BBlack}OpenSSL${NC}: ${green}Already Installed${NC} \n"
 				else
-					echo -n -e " - ${BBlack}OpenSSL${NC}: ${red}NOT FOUND${NC}"
+					echo -n -e " - ${BBlack}OpenSSL${NC}: ${red}NOT FOUND${NC} \n"
 				fi
 				
 				echo -n -e " - ${BBlack}OpenSSL${NC}: Try to install the Jessie Version ... "
@@ -155,9 +156,9 @@ InstallBasics() {
             "openssl-stretch" )
 				#Check for openssh-server-stretch
 				if ! dpkg --list 2>&1 | grep -qw openssl; then
-					echo -n -e " - ${BBlack}OpenSSL${NC}: ${green}Already Installed${NC}"
+					echo -n -e " - ${BBlack}OpenSSL${NC}: ${green}Already Installed${NC} \n"
 				else
-					echo -n -e " - ${BBlack}OpenSSL${NC}: ${red}NOT FOUND${NC}"
+					echo -n -e " - ${BBlack}OpenSSL${NC}: ${red}NOT FOUND${NC} \n"
 				fi
 				
 				echo -n -e " - ${BBlack}OpenSSL${NC}: Try to install the Stretch Version ... "
@@ -173,7 +174,7 @@ InstallBasics() {
 		
 		#Check for DPKG DEV
 		if ! dpkg --list 2>&1 | grep -qw dpkg-dev; then
-			echo -n -e "   - ${BBlack}DPKG DEV{NC}: ${green}FOUND${NC}\n"
+			echo -n -e "   - ${BBlack}DPKG DEV{NC}: ${green}FOUND${NC} \n"
 		else
 			echo -n -e "   - ${BBlack}DPKG DEV${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 			apt-get -yqq install dpkg-dev > /dev/null 2>&1
@@ -182,7 +183,7 @@ InstallBasics() {
 	
 		#Check for Debian Keyring
 		if ! dpkg --list 2>&1 | grep -qw debian-keyring; then
-			echo -n -e "   - ${BBlack}Debian Keyring{NC}: ${green}FOUND${NC}\n"
+			echo -n -e "   - ${BBlack}Debian Keyring{NC}: ${green}FOUND${NC} \n"
 		else
 			echo -n -e "   - ${BBlack}Debian Keyring${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 			apt-get -yqq install debian-keyring > /dev/null 2>&1
@@ -191,7 +192,7 @@ InstallBasics() {
 	
 		#Check for Dev Scripts
 		if ! dpkg --list 2>&1 | grep -qw debian-keyring; then
-			echo -n -e "   - ${BBlack}Dev Scripts{NC}: ${green}FOUND${NC}\n"
+			echo -n -e "   - ${BBlack}Dev Scripts{NC}: ${green}FOUND${NC} \n"
 		else
 			echo -n -e "   - ${BBlack}Dev Scripts${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 			apt-get -yqq install devscripts > /dev/null 2>&1
@@ -200,7 +201,7 @@ InstallBasics() {
 	
 	    #Check for Quilt
 		if ! dpkg --list 2>&1 | grep -qw quilt; then
-		    echo -n -e "   - ${BBlack}Quilt{NC}: ${green}FOUND${NC}\n"
+		    echo -n -e "   - ${BBlack}Quilt{NC}: ${green}FOUND${NC} \n"
 	    else
 		    echo -n -e "   - ${BBlack}Quilt${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 		    apt-get -yqq install quilt > /dev/null 2>&1
@@ -211,6 +212,6 @@ InstallBasics() {
     echo -n "Reconfigure dash... "	  
     echo "dash dash/sh boolean false" | debconf-set-selections
     dpkg-reconfigure -f noninteractive dash > /dev/null 2>&1 
-    echo -e "[ ${green}DONE${NC} ]\n"
+    echo -e "[ ${green}DONE${NC} ] \n"
 
 }
