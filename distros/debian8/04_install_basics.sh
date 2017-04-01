@@ -5,7 +5,7 @@
 InstallBasics() {
 	START_TIME=$SECONDS
     echo -n -e "\n"
-	echo -n -e "Start Install Basic Packages: "
+	echo -n -e "Start Install Basic Packages: \n"
     echo -n -e " - Updating apt and upgrading currently installed packages... "
     apt-get -qq update > /dev/null 2>&1
     apt-get -qqy upgrade > /dev/null 2>&1
@@ -218,10 +218,9 @@ InstallBasics() {
 	
 	ELAPSED_TIME=$(($SECONDS - $START_TIME))
 	echo 
-	echo -n -e "${green}Installation of Basic Packages Completed ${NC}"
-	echo -e "- DURATION: ${red} $(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) sec"
-	echo -e "${NC}"
-	
+	echo -n -e "==> ${green}Completed ON ${NC}"
+	echo -e ": ${red} $(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) sec"
+	echo -e "${NC}"	
 	echo -n -e " "
 
 }

@@ -3,7 +3,8 @@
 #    Install basic packages
 #---------------------------------------------------------------------
 InstallAditionalRepos() {
-	echo -n " "
+	START_TIME=$SECONDS
+	echo -n -e " \n"
 	echo -n -e "Start Adding additional repositories: \n"	
 	
 	#Add Debian backports - Required for Letsencrypt
@@ -103,5 +104,10 @@ Pin-Priority: 100
 
     echo -e " [ ${green}DONE${NC} ]"
 	
-    echo -n -e "   --- Aditional Repositories Configuration Complete [ ${green}DONE${NC} ] \n"	
+	ELAPSED_TIME=$(($SECONDS - $START_TIME))
+	echo 
+	echo -n -e "==> ${green}Completed ON ${NC}"
+	echo -e ": ${red} $(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) sec"
+	echo -e "${NC}"	
+	echo -n -e " "
 }

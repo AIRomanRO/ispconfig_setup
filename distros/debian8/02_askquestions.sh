@@ -3,6 +3,7 @@
 #    Ask for all needed user input
 #---------------------------------------------------------------------
 AskQuestions() {
+	START_TIME=$SECONDS
 	CFG_SETUP_WEB=yes #Needed for Multiserver setup compatibility
 	CFG_SETUP_MAIL=yes #Needed for Multiserver setup compatibility
 	CFG_SETUP_NS=yes #Needed for Multiserver setup compatibility
@@ -229,4 +230,10 @@ AskQuestions() {
     SSL_ORGUNIT=$(whiptail --title "SSL Organization Unit" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - Organization Unit (ex. IT)" --nocancel 10 60 3>&1 1>&2 2>&3)
 	echo -n -e "   - ${BBlack}SSL Unit${NC}: ${green}"$SSL_ORGUNIT"${NC}\n"
 
+	ELAPSED_TIME=$(($SECONDS - $START_TIME))
+	echo 
+	echo -n -e "==> ${green}Completed ON ${NC}"
+	echo -e ": ${red} $(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) sec"
+	echo -e "${NC}"	
+	echo -n -e " "
 }
