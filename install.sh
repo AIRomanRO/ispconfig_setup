@@ -68,7 +68,7 @@ source $PWD/distros/$DISTRO/install_webstats.sh
 source $PWD/distros/$DISTRO/install_jailkit.sh
 source $PWD/distros/$DISTRO/install_fail2ban.sh
 source $PWD/distros/$DISTRO/install_webmail.sh
-source $PWD/distros/$DISTRO/install_metronom.sh
+#source $PWD/distros/$DISTRO/install_metronom.sh
 source $PWD/distros/$DISTRO/install_ispconfig.sh
 source $PWD/distros/$DISTRO/install_fix.sh
 
