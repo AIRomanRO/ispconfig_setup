@@ -127,10 +127,12 @@ else
 	exit 1
 fi
 
+
 if [ "$DISTRO" == "debian8" ]; then
+
 	while [ "x$CFG_ISPCVERSION" == "x" ]
 	do
-		CFG_ISPCVERSION=$($INTERFACE_GENERATOR --backtitle "$WT_BACKTITLE" --title "ISPConfig Version" --nocancel --radiolist \
+		CFG_ISPCVERSION=$(whiptail --backtitle "$WT_BACKTITLE" --title "ISPConfig Version" --nocancel --radiolist \
 				"Select ISPConfig Version you want to install" 10 50 2 \
 				"Stable" "Latest Stable" ON \
 				"Beta"   "Beta Version" OFF \
@@ -140,14 +142,14 @@ if [ "$DISTRO" == "debian8" ]; then
 	
 	while [ "x$CFG_MULTISERVER" == "x" ]
 	do
-		CFG_MULTISERVER=$($INTERFACE_GENERATOR --backtitle "$WT_BACKTITLE" --title "MULTISERVER SETUP" --nocancel --radiolist \
+		CFG_MULTISERVER=$(whiptail --backtitle "$WT_BACKTITLE" --title "MULTISERVER SETUP" --nocancel --radiolist \
 				"Would you like to install ISPConfig in a MultiServer Setup?" 10 50 2 \
 				"no" "Single Server" ON \
 				"yes" "Multi Server" OFF \
 			3>&1 1>&2 2>&3 )
 	done
 	echo -n -e "   - ${BBlack}MULTISERVER SETUP${NC}: ${green}$CFG_MULTISERVER${NC}\n"
-	fi
+	
 else
 	CFG_MULTISERVER=no
 fi
