@@ -5,7 +5,7 @@
 InstallSQLServer() {
   if [ $CFG_SQLSERVER == "MySQL" ]; then
     echo -n -e "Installing MySQL... \n"	
-	echo -n -e "   --- Selected version: ${BBlack}$CFG_MYSQL_VERSION${NC}"
+	echo -n -e "   --- Selected version: ${BBlack}$CFG_MYSQL_VERSION${NC}\n"
 	
     if [ $CFG_MYSQL_VERSION == "default" ]; then
 	
@@ -21,19 +21,36 @@ sql-mode='NO_ENGINE_SUBSTITUTION'
 
 	elif [ $CFG_MYSQL_VERSION == "5.6" ]; then
 	
+		echo -n -e "   --- Downloading the MySQL APT Config [${BBlack}Version 0.8.3.1${NC}] ... "
+		wget -q -O "mysql-apt-config-all.deb" "https://repo.mysql.com/mysql-apt-config_0.8.3-1_all.deb"
+		echo -e " [ ${green}DONE${NC} ] \n"
+		
 		export DEBIAN_FRONTEND=noninteractive
 		
-		echo "mysql-apt-config mysql-apt-config/select-product select Apply" | debconf-set-selections
+		echo -n -e "   --- Set Selections on debconf ... "
+		echo "mysql-apt-config mysql-apt-config/select-product select Ok" | debconf-set-selections
+		echo "mysql-apt-config mysql-apt-config/select-tools select  Enabled" | debconf-set-selections
 		echo "mysql-apt-config mysql-apt-config/select-server select mysql-5.6" | debconf-set-selections
 		echo "mysql-apt-config mysql-apt-config/select-preview select Disabled" | debconf-set-selections
+		echo -e " [ ${green}DONE${NC} ] \n"
+
+		#wget https://repo.mysql.com/mysql-apt-config_0.8.3-1_all.deb && dpkg -i mysql-apt-config_0.8.3-1_all.deb > /dev/null		
+		#apt-get -qq update > /dev/null 2>&1
 		
-		wget https://repo.mysql.com/mysql-apt-config_0.8.3-1_all.deb && dpkg -i mysql-apt-config_0.8.3-1_all.deb > /dev/null		
+		echo -n -e "   --- Run the MySql APT Config ... "
+		dpkg -i mysql-apt-config-all.deb > /dev/null	
+		echo -e " [ ${green}DONE${NC} ] \n"
+		
+		echo -n -e "   --- Update the Packages List ... "
 		apt-get -qq update > /dev/null 2>&1
+		echo -e " [ ${green}DONE${NC} ] \n"		
 		
 		echo "mysql-community-server mysql-community-server/root-pass password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
 		echo "mysql-community-server mysql-community-server/re-root-pass password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
 		
+		echo -n -e "   --- Install MySQL Server & Client ... "
 		apt-get -qq install mysql-server mysql-client > /dev/null
+		echo -e " [ ${green}DONE${NC} ] \n"
 		
 		echo "[mysqld]
 sql-mode='NO_ENGINE_SUBSTITUTION'
@@ -45,7 +62,7 @@ sql-mode='NO_ENGINE_SUBSTITUTION'
 	
 		echo -n -e "   --- Downloading the MySQL APT Config [${BBlack}Version 0.8.3.1${NC}] ... "
 		wget -q -O "mysql-apt-config-all.deb" "https://repo.mysql.com/mysql-apt-config_0.8.3-1_all.deb"
-		echo -e " [ ${green}DONE${NC} ]"
+		echo -e " [ ${green}DONE${NC} ] \n"
 		
 		export DEBIAN_FRONTEND=noninteractive
 		
@@ -54,28 +71,28 @@ sql-mode='NO_ENGINE_SUBSTITUTION'
 		echo "mysql-apt-config mysql-apt-config/select-tools select  Enabled" | debconf-set-selections
 		echo "mysql-apt-config mysql-apt-config/select-server select mysql-5.7" | debconf-set-selections
 		echo "mysql-apt-config mysql-apt-config/select-product select Ok" | debconf-set-selections
-		echo -e " [ ${green}DONE${NC} ]"
+		echo -e " [ ${green}DONE${NC} ] \n"
 		
 		echo -n -e "   --- Run the MySql APT Config ... "
-		dpkg -i mysql-apt-config_0.8.1-1_all.deb > /dev/null	
-		echo -e " [ ${green}DONE${NC} ]"
+		dpkg -i mysql-apt-config-all.deb > /dev/null	
+		echo -e " [ ${green}DONE${NC} ] \n"
 		
 		echo -n -e "   --- Update the Packages List ... "
 		apt-get -qq update > /dev/null 2>&1
-		echo -e " [ ${green}DONE${NC} ]"
+		echo -e " [ ${green}DONE${NC} ] \n"
 		
 		echo -n -e "   --- Set the selected MySQL Password to MySQL Installer ... "
 		echo "mysql-community-server mysql-community-server/root-pass password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
 		echo "mysql-community-server mysql-community-server/re-root-pass password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
-		echo -e " [ ${green}DONE${NC} ]"
+		echo -e " [ ${green}DONE${NC} ] \n"
 		
 		echo -n -e "   --- Install MySQL Server & Client ... "
 		apt-get -qq install mysql-server mysql-client > /dev/null
-		echo -e " [ ${green}DONE${NC} ]"
+		echo -e " [ ${green}DONE${NC} ] \n"
 		
 		echo -n -e "   --- Change the SQL MODE ... "
 		echo 'sql-mode="NO_ENGINE_SUBSTITUTION"' >> /etc/mysql/mysql.conf.d/mysqld.cnf
-		echo -e " [ ${green}DONE${NC} ]"
+		echo -e " [ ${green}DONE${NC} ] \n"
 		
 		unset DEBIAN_FRONTEND
 		
