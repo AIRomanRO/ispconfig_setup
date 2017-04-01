@@ -37,23 +37,25 @@ PWD=$(pwd);
 # Load needed functions
 #---------------------------------------------------------------------
 
-source $PWD/functions/check_linux.sh
-source $PWD/functions/check_ipv6.sh
+source $PWD/functions/01_check_linux.sh
+source $PWD/functions/02_check_ipv6.sh
+source $PWD/functions/03_choose_whiptail_or_dialog.sh
 echo "Checking your system, please wait..."
 CheckLinux
 CheckIPV6
+ChooseWhiptailOrDialog
 
 #---------------------------------------------------------------------
 # Load needed Modules
 #---------------------------------------------------------------------
 
-source $PWD/distros/$DISTRO/preinstallcheck.sh
-source $PWD/distros/$DISTRO/askquestions.sh
+source $PWD/distros/$DISTRO/01_preinstallcheck.sh
+source $PWD/distros/$DISTRO/02_askquestions.sh
 
-source $PWD/distros/$DISTRO/install_aditional_repos.sh
-source $PWD/distros/$DISTRO/install_basics.sh
+source $PWD/distros/$DISTRO/03_install_aditional_repos.sh
+source $PWD/distros/$DISTRO/04_install_basics.sh
+source $PWD/distros/$DISTRO/05_install_mysql.sh
 source $PWD/distros/$DISTRO/install_postfix.sh
-source $PWD/distros/$DISTRO/install_mysql.sh
 source $PWD/distros/$DISTRO/install_mta.sh
 source $PWD/distros/$DISTRO/install_antivirus.sh
 source $PWD/distros/$DISTRO/install_webserver.sh
@@ -97,7 +99,7 @@ echo "- Internet connection is working properly";
 echo
 echo
 if [ -n "$PRETTY_NAME" ]; then
-	echo -e "The detected Linux Distribution is: {" $PRETTY_NAME
+	echo -e "The detected Linux Distribution is: " $PRETTY_NAME
 else
 	echo -e "The detected Linux Distribution is: " $ID-$VERSION_ID
 fi
@@ -122,15 +124,19 @@ else
 fi
 
 if [ "$DISTRO" == "debian8" ]; then
-	while [ "x$CFG_ISPCVERSION" == "x" ]
-	do
-		CFG_ISPCVERSION=$(whiptail --title "ISPConfig Version" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "Select ISPConfig Version you want to install" 10 50 2 "Stable" "(default)" ON "Beta" "" OFF 3>&1 1>&2 2>&3)
-	done
-	
-	while [ "x$CFG_MULTISERVER" == "x" ]
-	do
-		CFG_MULTISERVER=$(whiptail --title "MULTISERVER SETUP" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "Would you like to install ISPConfig in a MultiServer Setup?" 10 50 2 "no" "(default)" ON "yes" "" OFF 3>&1 1>&2 2>&3)
-	done
+	if [ "$INTERFACE_GENERATOR" == "none" ]; then
+	exit 1;
+	else 
+		while [ "x$CFG_ISPCVERSION" == "x" ]
+		do
+			CFG_ISPCVERSION=$("$INTERFACE_GENERATOR" --title "ISPConfig Version" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "Select ISPConfig Version you want to install" 10 50 2 "Stable" "(default)" ON "Beta" "" OFF 3>&1 1>&2 2>&3)
+		done
+		
+		while [ "x$CFG_MULTISERVER" == "x" ]
+		do
+			CFG_MULTISERVER=$("$INTERFACE_GENERATOR" --title "MULTISERVER SETUP" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "Would you like to install ISPConfig in a MultiServer Setup?" 10 50 2 "no" "(default)" ON "yes" "" OFF 3>&1 1>&2 2>&3)
+		done
+	fi
 else
 	CFG_MULTISERVER=no
 fi
@@ -141,7 +147,7 @@ if [ -f /etc/debian_version ]; then
     if [ "$CFG_MULTISERVER" == "no" ]; then
 	    AskQuestions
     else
-        source $PWD/distros/$DISTRO/askquestions_multiserver.sh
+        source $PWD/distros/$DISTRO/02_askquestions_multiserver.sh
 	    AskQuestionsMultiserver
     fi
 	
