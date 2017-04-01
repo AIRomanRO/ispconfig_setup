@@ -101,7 +101,7 @@ Pin: release n=stretch
 Pin-Priority: 100
 ####################################" > /etc/apt/preferences
 
-    echo -e " [ ${green}DONE${NC} ] \n"
+    echo -e " [ ${green}DONE${NC} ]"
 	
-    echo -n -e "Aditional Repositories Configuration Complete [ ${green}DONE${NC} ] \n"	
+    echo -n -e "   --- Aditional Repositories Configuration Complete [ ${green}DONE${NC} ] \n"	
 }
