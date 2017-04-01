@@ -9,7 +9,7 @@ CheckWhiptailAndInstallIfNeed() {
 	if [ -f /bin/whiptail ] || [ -f /usr/bin/whiptail ]; then
      	echo -n -e " - ${BBlack}Whiptail${NC}: ${green}FOUND${NC}\n"
     else
-	    echo -n -e " - ${BBlack}Whiptail${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+	    echo -n -e " - ${BBlack}Whiptail${NC}: ${red}NOT FOUND${NC} - start and install it ... "
         apt-get -yqq install whiptail > /dev/null 2>&1
 		echo -e " [ ${green}DONE${NC} ]\n"
 	fi

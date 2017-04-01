@@ -14,7 +14,7 @@ InstallBasics() {
 	if [ -f /bin/debconf ] || [ -f /usr/bin/debconf ]; then
      	echo -n -e " - ${BBlack}debconf-utils${NC}: ${green}FOUND${NC}\n"
     else
-	    echo -n -e " - ${BBlack}debconf-utils${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+	    echo -n -e " - ${BBlack}debconf-utils${NC}: ${red}NOT FOUND${NC} - start and install it ... "
         apt-get -yqq install debconf-utils > /dev/null 2>&1
 		echo -e " [ ${green}DONE${NC} ]\n"
 	fi
@@ -26,7 +26,7 @@ InstallBasics() {
 	if [ -f /bin/ld ] || [ -f /usr/bin/ld ]; then
 		echo -n -e " - ${BBlack}BINUTILS${NC}: ${green}FOUND${NC}\n"
 	else
-		echo -n -e " - ${BBlack}BINUTILS${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+		echo -n -e " - ${BBlack}BINUTILS${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 		apt-get -yqq install binutils > /dev/null 2>&1
 		echo -e " [ ${green}DONE${NC} ]\n"
 	fi
@@ -36,7 +36,7 @@ InstallBasics() {
 	if [ -f /bin/sudo ] || [ -f /usr/bin/sudo ]; then
 		echo -n -e " - ${BBlack}SUDO${NC}: ${green}FOUND${NC}\n"
 	else
-		echo -n -e " - ${BBlack}SUDO${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+		echo -n -e " - ${BBlack}SUDO${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 		apt-get -yqq install sudo > /dev/null 2>&1
 		echo -e " [ ${green}DONE${NC} ]\n"
 	fi
@@ -46,7 +46,7 @@ InstallBasics() {
 	if [ -f /bin/lsb_release ] || [ -f /usr/bin/lsb_release ]; then
 		echo -n -e " - ${BBlack}LSB-RELEASE${NC}: ${green}FOUND${NC}\n"
 	else
-		echo -n -e " - ${BBlack}LSB-RELEASE${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+		echo -n -e " - ${BBlack}LSB-RELEASE${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 		apt-get -yqq install lsb-release > /dev/null 2>&1
 		echo -e " [ ${green}DONE${NC} ]\n"
 	fi
@@ -56,7 +56,7 @@ InstallBasics() {
 	if [ -f /usr/lib/apt/methods/https ]; then
 		echo -n -e " - ${BBlack}APT HTTPS Method${NC}: ${green}FOUND${NC}\n"
 	else
-		echo -n -e " - ${BBlack}APT HTTPS Method${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+		echo -n -e " - ${BBlack}APT HTTPS Method${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 		apt-get -yqq install apt-transport-https > /dev/null 2>&1
 		echo -e " [ ${green}DONE${NC} ]\n"
 	fi
@@ -71,7 +71,7 @@ InstallBasics() {
 	            if [ -f /bin/htop ] || [ -f /usr/bin/htop ]; then
      	            echo -n -e " - ${BBlack}HTOP${NC}: ${green}FOUND${NC}"
                 else
-	                echo -n -e " - ${BBlack}HTOP${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+	                echo -n -e " - ${BBlack}HTOP${NC}: ${red}NOT FOUND${NC} - start and install it ... "
                     apt-get -yqq install htop > /dev/null 2>&1
 		            echo -e " [ ${green}DONE${NC} ]"
 	            fi
@@ -81,7 +81,7 @@ InstallBasics() {
 				if [ -f /bin/nano ] || [ -f /usr/bin/nano ]; then
 					echo -n -e " - ${BBlack}NANO${NC}: ${green}Already Installed${NC}"
 				else
-					echo -n -e " - ${BBlack}NANO${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+					echo -n -e " - ${BBlack}NANO${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 					apt-get -yqq install nano > /dev/null 2>&1
 					echo -e " [ ${green}DONE${NC} ]"
 				fi
@@ -91,7 +91,7 @@ InstallBasics() {
 				if [ -f /sbin/ntpd ] || [ -f /usr/sbin/ntpd ]; then
 					echo -n -e " - ${BBlack}NTP${NC}: ${green}Already Installed${NC}"
 				else
-					echo -n -e " - ${BBlack}NTP${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+					echo -n -e " - ${BBlack}NTP${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 					apt-get -yqq install ntp ntpdate > /dev/null 2>&1
 					echo -e " [ ${green}DONE${NC} ]"
 				fi
@@ -101,7 +101,7 @@ InstallBasics() {
 				if [ -f /sbin/haveged ] || [ -f /usr/sbin/haveged ]; then
 					echo -n -e " - ${BBlack}HAVEGED${NC}: ${green}Already Installed${NC}"
 				else
-					echo -n -e " - ${BBlack}HAVEGED${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+					echo -n -e " - ${BBlack}HAVEGED${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 					apt-get -yqq install haveged > /dev/null 2>&1
 					echo -e " [ ${green}DONE${NC} ]"
 				fi
@@ -111,7 +111,7 @@ InstallBasics() {
 				if [ -f /bin/ssh ] || [ -f /usr/bin/ssh ]; then
 					echo -n -e " - ${BBlack}SSH${NC}: ${green}Already Installed${NC}"
 				else
-					echo -n -e " - ${BBlack}SSH${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+					echo -n -e " - ${BBlack}SSH${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 					apt-get -yqq install ssh > /dev/null 2>&1
 					echo -e " [ ${green}DONE${NC} ]"
 				fi
@@ -121,7 +121,7 @@ InstallBasics() {
 				if ! dpkg --list 2>&1 | grep -qw openssh-server; then
 					echo -n -e " - ${BBlack}OPENSSH-SERVER${NC}: ${green}Already Installed${NC}"
 				else
-					echo -n -e " - ${BBlack}OPENSSH-SERVER${NC}: ${red}NOT FOUNDED${NC}"
+					echo -n -e " - ${BBlack}OPENSSH-SERVER${NC}: ${red}NOT FOUND${NC}"
 				fi
 				
 				echo -n -e " - ${BBlack}OPENSSH-SERVER${NC}: Try to install the Jessie Version ... "
@@ -133,7 +133,7 @@ InstallBasics() {
 				if ! dpkg --list 2>&1 | grep -qw openssh-server; then
 					echo -n -e " - ${BBlack}OPENSSH-SERVER${NC}: ${green}Already Installed${NC}"
 				else
-					echo -n -e " - ${BBlack}OPENSSH-SERVER${NC}: ${red}NOT FOUNDED${NC}"
+					echo -n -e " - ${BBlack}OPENSSH-SERVER${NC}: ${red}NOT FOUND${NC}"
 				fi
 				
 				echo -n -e " - ${BBlack}OPENSSH-SERVER${NC}: Try to install the Stretch Version ... "
@@ -145,7 +145,7 @@ InstallBasics() {
 				if ! dpkg --list 2>&1 | grep -qw openssl; then
 					echo -n -e " - ${BBlack}OpenSSL${NC}: ${green}Already Installed${NC}"
 				else
-					echo -n -e " - ${BBlack}OpenSSL${NC}: ${red}NOT FOUNDED${NC}"
+					echo -n -e " - ${BBlack}OpenSSL${NC}: ${red}NOT FOUND${NC}"
 				fi
 				
 				echo -n -e " - ${BBlack}OpenSSL${NC}: Try to install the Jessie Version ... "
@@ -157,7 +157,7 @@ InstallBasics() {
 				if ! dpkg --list 2>&1 | grep -qw openssl; then
 					echo -n -e " - ${BBlack}OpenSSL${NC}: ${green}Already Installed${NC}"
 				else
-					echo -n -e " - ${BBlack}OpenSSL${NC}: ${red}NOT FOUNDED${NC}"
+					echo -n -e " - ${BBlack}OpenSSL${NC}: ${red}NOT FOUND${NC}"
 				fi
 				
 				echo -n -e " - ${BBlack}OpenSSL${NC}: Try to install the Stretch Version ... "
@@ -175,7 +175,7 @@ InstallBasics() {
 		if ! dpkg --list 2>&1 | grep -qw dpkg-dev; then
 			echo -n -e "   - ${BBlack}DPKG DEV{NC}: ${green}FOUND${NC}\n"
 		else
-			echo -n -e "   - ${BBlack}DPKG DEV${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+			echo -n -e "   - ${BBlack}DPKG DEV${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 			apt-get -yqq install dpkg-dev > /dev/null 2>&1
 			echo -e " [ ${green}DONE${NC} ]\n"
 		fi
@@ -184,7 +184,7 @@ InstallBasics() {
 		if ! dpkg --list 2>&1 | grep -qw debian-keyring; then
 			echo -n -e "   - ${BBlack}Debian Keyring{NC}: ${green}FOUND${NC}\n"
 		else
-			echo -n -e "   - ${BBlack}Debian Keyring${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+			echo -n -e "   - ${BBlack}Debian Keyring${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 			apt-get -yqq install debian-keyring > /dev/null 2>&1
 			echo -e " [ ${green}DONE${NC} ]\n"
 		fi
@@ -193,7 +193,7 @@ InstallBasics() {
 		if ! dpkg --list 2>&1 | grep -qw debian-keyring; then
 			echo -n -e "   - ${BBlack}Dev Scripts{NC}: ${green}FOUND${NC}\n"
 		else
-			echo -n -e "   - ${BBlack}Dev Scripts${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+			echo -n -e "   - ${BBlack}Dev Scripts${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 			apt-get -yqq install devscripts > /dev/null 2>&1
 			echo -e " [ ${green}DONE${NC} ]\n"
 		fi
@@ -202,7 +202,7 @@ InstallBasics() {
 		if ! dpkg --list 2>&1 | grep -qw quilt; then
 		    echo -n -e "   - ${BBlack}Quilt{NC}: ${green}FOUND${NC}\n"
 	    else
-		    echo -n -e "   - ${BBlack}Quilt${NC}: ${red}NOT FOUNDED${NC} - start and install it ... "
+		    echo -n -e "   - ${BBlack}Quilt${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 		    apt-get -yqq install quilt > /dev/null 2>&1
 		    echo -e " [ ${green}DONE${NC} ]\n"
 	    fi
