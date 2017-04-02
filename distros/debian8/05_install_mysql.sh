@@ -5,8 +5,8 @@
 InstallSQLServer() {
 	START_TIME=$SECONDS
 	if [ $CFG_SQLSERVER == "MySQL" ]; then
-		echo -n -e "Installing MySQL... \n"	
-		echo -n -e "   --- Selected version: ${BBlack}$CFG_MYSQL_VERSION${NC}\n"
+		echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing MySQL... ${NC}\n"	
+		echo -n -e "$IDENTATION_LVL_1 Selected version: ${BBlack}$CFG_MYSQL_VERSION${NC}\n"
 		
 		if [ $CFG_MYSQL_VERSION == "default" ]; then
 		
@@ -22,13 +22,13 @@ InstallSQLServer() {
 
 		elif [ $CFG_MYSQL_VERSION == "5.6" ]; then
 		
-			echo -n -e "   --- Downloading the MySQL APT Config [${BBlack}Version 0.8.3.1${NC}] ... "
+			echo -n -e "$IDENTATION_LVL_1 Downloading the MySQL APT Config [${BBlack}Version 0.8.3.1${NC}] ... "
 			wget -q -O "mysql-apt-config-all.deb" "https://repo.mysql.com/mysql-apt-config_0.8.3-1_all.deb"
 			echo -e " [ ${green}DONE${NC} ] "
 			
 			export DEBIAN_FRONTEND=noninteractive
 			
-			echo -n -e "   --- Set Selections on debconf ... "
+			echo -n -e "$IDENTATION_LVL_1 Set Selections on debconf ... "
 			#echo "mysql-apt-config mysql-apt-config/select-product select Ok" | debconf-set-selections
 			echo "mysql-apt-config mysql-apt-config/select-tools select  Enabled" | debconf-set-selections
 			echo "mysql-apt-config mysql-apt-config/select-server select mysql-5.6" | debconf-set-selections
@@ -38,18 +38,18 @@ InstallSQLServer() {
 			#wget https://repo.mysql.com/mysql-apt-config_0.8.3-1_all.deb && dpkg -i mysql-apt-config_0.8.3-1_all.deb > /dev/null		
 			#apt-get -qq update > /dev/null 2>&1
 			
-			echo -n -e "   --- Run the MySql APT Config ... "
+			echo -n -e "$IDENTATION_LVL_1 Run the MySql APT Config ... "
 			dpkg -i mysql-apt-config-all.deb > /dev/null 2>&1	
 			echo -e " [ ${green}DONE${NC} ] "
 			
-			echo -n -e "   --- Update the Packages List ... "
+			echo -n -e "$IDENTATION_LVL_1 Update the Packages List ... "
 			apt-get -qq update > /dev/null 2>&1
 			echo -e " [ ${green}DONE${NC} ] "		
 			
 			echo "mysql-community-server mysql-community-server/root-pass password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
 			echo "mysql-community-server mysql-community-server/re-root-pass password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
 			
-			echo -n -e "   --- Install MySQL Server & Client ... "
+			echo -n -e "$IDENTATION_LVL_1 Install MySQL Server & Client ... "
 			apt-get -qq install mysql-server mysql-client > /dev/null
 			echo -e " [ ${green}DONE${NC} ] "
 			
@@ -61,48 +61,48 @@ InstallSQLServer() {
 			
 		elif [ $CFG_MYSQL_VERSION == "5.7" ]; then
 		
-			echo -n -e "   --- Downloading the MySQL APT Config [${BBlack}Version 0.8.3.1${NC}] ... "
+			echo -n -e "$IDENTATION_LVL_1 Downloading the MySQL APT Config [${BBlack}Version 0.8.3.1${NC}] ... "
 			wget -q -O "mysql-apt-config-all.deb" "https://repo.mysql.com/mysql-apt-config_0.8.3-1_all.deb"
 			echo -e " [ ${green}DONE${NC} ] "
 			
 			export DEBIAN_FRONTEND=noninteractive
 			
-			echo -n -e "   --- Set Selections on debconf ... "
+			echo -n -e "$IDENTATION_LVL_1 Set Selections on debconf ... "
 			echo "mysql-apt-config mysql-apt-config/select-preview select Disabled" | debconf-set-selections
 			echo "mysql-apt-config mysql-apt-config/select-tools select  Enabled" | debconf-set-selections
 			echo "mysql-apt-config mysql-apt-config/select-server select mysql-5.7" | debconf-set-selections
 			#echo "mysql-apt-config mysql-apt-config/select-product select Ok" | debconf-set-selections
 			echo -e " [ ${green}DONE${NC} ] "
 			
-			echo -n -e "   --- Run the MySql APT Config ... "
+			echo -n -e "$IDENTATION_LVL_1 Run the MySql APT Config ... "
 			dpkg -i mysql-apt-config-all.deb > /dev/null 2>&1	
 			echo -e " [ ${green}DONE${NC} ]"
 			
-			echo -n -e "   --- Update the Packages List ... "
+			echo -n -e "$IDENTATION_LVL_1 Update the Packages List ... "
 			apt-get -qq update > /dev/null 2>&1
 			echo -e " [ ${green}DONE${NC} ] "
 			
-			echo -n -e "   --- Set the selected MySQL Password to MySQL Installer ... "
+			echo -n -e "$IDENTATION_LVL_1 Set the selected MySQL Password to MySQL Installer ... "
 			echo "mysql-community-server mysql-community-server/root-pass password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
 			echo "mysql-community-server mysql-community-server/re-root-pass password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
 			echo -e " [ ${green}DONE${NC} ] "
 			
-			echo -n -e "   --- Install MySQL Server & Client ... "
+			echo -n -e "$IDENTATION_LVL_1 Install MySQL Server & Client ... "
 			apt-get -yqq install mysql-server mysql-client > /dev/null
 			echo -e " [ ${green}DONE${NC} ] "
 			
-			echo -n -e "   --- Change the SQL MODE ... "
+			echo -n -e "$IDENTATION_LVL_1 Change the SQL MODE ... "
 			echo 'sql-mode="NO_ENGINE_SUBSTITUTION"' >> /etc/mysql/mysql.conf.d/mysqld.cnf
 			echo -e " [ ${green}DONE${NC} ] "
 			
 			unset DEBIAN_FRONTEND
 			
 		else
-			echo -n "MySQL version NOT SUPPORTED"
+			echo -n "$IDENTATION_LVL_0 MySQL version NOT SUPPORTED"
 			exit 1
 		fi
 		
-		echo -n -e "   --- Restart the MySQL Service ... "
+		echo -n -e "$IDENTATION_LVL_1 Restart the MySQL Service ... "
 		service mysql restart > /dev/null
 		echo -e "[${green}DONE${NC}] "
   
@@ -124,7 +124,7 @@ InstallSQLServer() {
   
 	ELAPSED_TIME=$(($SECONDS - $START_TIME))
 	echo 
-	echo -n -e "==> ${green}Completed ON ${NC}"
+	echo -n -e "$IDENTATION_LVL_0 ${green}Completed ON ${NC}"
 	echo -e ": ${red} $(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) sec"
 	echo -e "${NC}"	
 	echo -n -e " "

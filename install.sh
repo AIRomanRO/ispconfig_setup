@@ -57,7 +57,7 @@ IDENTATION_LVL_2=''
 IDENTATION_LVL_3=''
 
 #Those lines are for logging porpuses
-echo -n -e "$IDENTATION_LVL_0 Setup Logging"
+echo -n -e "$IDENTATION_LVL_0 ${BWhite}Setup Logging${NC}"
 exec > >(tee -i /var/log/ispconfig_setup.log)
 exec 2>&1
 echo -e " [ ${green}DONE${NC} ] "
@@ -66,7 +66,7 @@ echo -e " [ ${green}DONE${NC} ] "
 #---------------------------------------------------------------------
 # Global variables
 #---------------------------------------------------------------------
-echo -n -e "$IDENTATION_LVL_0 Setup Global Variable"
+echo -n -e "$IDENTATION_LVL_0 ${BWhite}Setup Global Variable${NC}"
 CFG_HOSTNAME_FQDN=`hostname -f`;
 WT_BACKTITLE="ISPConfig 3 System Installer from Aurel Roman"
 #Saving current directory
@@ -74,7 +74,7 @@ PWD=$(pwd);
 echo -e " [ ${green}DONE${NC} ] "
 
 
-echo -e "$IDENTATION_LVL_0 Checking your system, please wait..."
+echo -e "$IDENTATION_LVL_0 ${BWhite}Checking your system, please wait...${NC}"
 #---------------------------------------------------------------------
 # Load needed functions
 #---------------------------------------------------------------------
@@ -88,14 +88,15 @@ source $PWD/functions/03_check_whiptail.sh
 CheckLinux
 CheckIPV6
 CheckWhiptailAndInstallIfNeed
-echo -e "$IDENTATION_LVL_0 System Checking [ ${green}DONE${NC} ] "
+echo -e "$IDENTATION_LVL_0 ${BWhite}System Checking [${NC} ${green}DONE${NC} ${BWhite}]${NC} "
 
 #---------------------------------------------------------------------
 # Main program [ main() ]
 #    Run the installer
 #---------------------------------------------------------------------
 
-echo -e -n "$IDENTATION_LVL_0 Confirm if we detected the correct Informations: "
+echo -e -n "$IDENTATION_LVL_0 ${BWhite}Confirm if we detected the correct Informations:${NC} "
+echo
 
 if [ -n "$PRETTY_NAME" ]; then
 	echo -n -e "$IDENTATION_LVL_1 Linux Distribution is: ${green}" $PRETTY_NAME "${NC}"
@@ -106,10 +107,13 @@ echo
 
 if [ $IPV6_ENABLED == true ]; then
     echo -n -e "$IDENTATION_LVL_1 IPV6 enabled: ${green} YES ${NC}"
+	echo
 	echo -n -e "$IDENTATION_LVL_1 IPV4: ${green} $CFG_IPV4 ${NC} - is possible to be incorrect - we don't use it anywhere in configuration"
+	echo
 	echo -n -e "$IDENTATION_LVL_1 IPV6: ${red} $CFG_IPV6 ${NC} - is possible to be incorrect - we don't use it anywhere in configuration"
 else
     echo -n -e "$IDENTATION_LVL_1 IPV6 enabled: ${red} NO ${NC}"
+	echo
 	echo -n -e "$IDENTATION_LVL_1 IPV4: ${green} $CFG_IPV4 ${NC} - is possible to be incorrect - we don't use it anywhere in configuration"
 fi
 echo
@@ -118,14 +122,20 @@ echo -n -e "$IDENTATION_LVL_1 Host Name FQDN: ${green} $CFG_HOSTNAME_FQDN ${NC}"
 echo
 
 echo -n -e "$IDENTATION_LVL_1 DISTRO: ${green} $DISTRO ${NC}"
+echo
 
 if [ -n "$DISTRO" ]; then
-	echo -e -n "$IDENTATION_LVL_0 Are this Informations Correct?"
-	echo -e -n "$IDENTATION_LVL_0 Please answer with y/n: "
+	echo -e -n "$IDENTATION_LVL_0 ${BWhite}Are this Informations Correct ? ${NC}"
+	echo
+	echo -e -n "$IDENTATION_LVL_0 ${BWhite}Please answer with y/n: ${NC} "
 	read -n 1 RESPONSE
-	echo    # (optional) move to a new line
-	if [[ ! $RESPONSE =~ ^[Yy]$ ]]
-		then
+	
+	if [[ ! $RESPONSE =~ ^[Yy]$ ]]; then
+		echo -e -n "$IDENTATION_LVL_0 Sorry, but you choosed to not continue"
+		echo
+		echo -e -n "$IDENTATION_LVL_0 If you want to install anyway please, restart the installation and answer ${green} y ${NC} or ${green} Y ${NC}"
+		echo
+		
 		exit 1
 	fi
 else
@@ -139,7 +149,7 @@ else
 	exit 1
 fi
 
-echo -n -e "$IDENTATION_LVL_0 Load needed Modules "
+echo -n -e "$IDENTATION_LVL_0 ${BWhite}Load needed Modules ${NC} "
 #---------------------------------------------------------------------
 # Load needed Modules
 #---------------------------------------------------------------------
@@ -171,7 +181,7 @@ source $PWD/distros/$DISTRO/install_basephp.sh #to remove in feature release
 echo -e " [ ${green}DONE${NC} ] "
 
 
-echo -n -e "$IDENTATION_LVL_0 Gathering the ISPConfig Version which you want and Setup Type"
+echo -n -e "$IDENTATION_LVL_0 ${BWhite}Gathering the ISPConfig Version which you want and Setup Type{$NC}"
 if [ "$DISTRO" == "debian8" ]; then
 
 	while [ "x$CFG_ISPCVERSION" == "x" ]
@@ -182,7 +192,7 @@ if [ "$DISTRO" == "debian8" ]; then
 				"Beta"   "Beta Version" OFF \
 			3>&1 1>&2 2>&3 )
 	done
-	echo -n -e "   - ${BBlack}ISPConfig Version${NC}: ${green}$CFG_ISPCVERSION${NC}\n"
+	echo -n -e "$IDENTATION_LVL_1 ${BBlack}ISPConfig Version${NC}: ${green}$CFG_ISPCVERSION${NC}\n"
 	
 	while [ "x$CFG_MULTISERVER" == "x" ]
 	do
@@ -192,12 +202,12 @@ if [ "$DISTRO" == "debian8" ]; then
 				"yes" "Multi Server" OFF \
 			3>&1 1>&2 2>&3 )
 	done
-	echo -n -e "   - ${BBlack}MULTISERVER SETUP${NC}: ${green}$CFG_MULTISERVER${NC}\n"
+	echo -n -e "$IDENTATION_LVL_1 ${BBlack}MULTISERVER SETUP${NC}: ${green}$CFG_MULTISERVER${NC}\n"
 	
 else
 	CFG_MULTISERVER=no
 fi
-echo -n -e "$IDENTATION_LVL_0 Gathering ISPConfig Version & Setup Type [ ${green}DONE${NC} ] "
+echo -n -e "$IDENTATION_LVL_0 ${BWhite}Gathering ISPConfig Version & Setup Type [${NC} ${green}DONE${NC} ${BWhite}]${NC} "
 
 
 if [ -f /etc/debian_version ]; then
