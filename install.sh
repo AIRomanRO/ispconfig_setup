@@ -106,8 +106,11 @@ echo
 
 if [ $IPV6_ENABLED == true ]; then
     echo -n -e "$IDENTATION_LVL_1 IPV6 enabled: ${green} YES ${NC}"
+	echo -n -e "$IDENTATION_LVL_1 IPV4: ${green} $CFG_IPV4 ${NC} - is possible to be incorrect - we don't use it anywhere in configuration"
+	echo -n -e "$IDENTATION_LVL_1 IPV6: ${red} $CFG_IPV6 ${NC} - is possible to be incorrect - we don't use it anywhere in configuration"
 else
     echo -n -e "$IDENTATION_LVL_1 IPV6 enabled: ${red} NO ${NC}"
+	echo -n -e "$IDENTATION_LVL_1 IPV4: ${green} $CFG_IPV4 ${NC} - is possible to be incorrect - we don't use it anywhere in configuration"
 fi
 echo
 
