@@ -195,12 +195,7 @@ InstallWebServer() {
 		echo -e "[${green}DONE${NC}]"
 	fi
 	
-  	ELAPSED_TIME=$(($SECONDS - $START_TIME))
-	echo 
-	echo -n -e "==> ${green}Completed ON ${NC}"
-	echo -e ": ${red} $(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) sec"
-	echo -e "${NC}"	
-	echo -n -e " "
+  	MeasureTimeDuration $START_TIME
 	
 	exit 1;
 }
