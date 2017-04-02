@@ -4,7 +4,6 @@
 #---------------------------------------------------------------------
 InstallAditionalRepos() {
 	START_TIME=$SECONDS
-	echo -n -e " \n"
 	echo -n -e "Start Adding additional repositories: \n"	
 	
 	#Add Debian backports - Required for Letsencrypt
