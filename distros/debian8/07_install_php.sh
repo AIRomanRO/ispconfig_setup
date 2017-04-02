@@ -8,6 +8,8 @@ InstallPHP() {
 	echo -n -e "$IDENTATION_LVL_0 Installing PHP... \n"	
 	echo -n -e "$IDENTATION_LVL_2 Selected Versions: ${green}"$CFG_PHP_VERSION"${NC}\n"
 	
+	exit 1;
+	
 	  if [ $CFG_WEBSERVER == "apache" ]; then
 	  CFG_NGINX=n
 	  CFG_APACHE=y
