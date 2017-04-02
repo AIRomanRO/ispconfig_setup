@@ -34,17 +34,10 @@ echo "When this script starts running, it'll keep going all the way"
 echo
 echo "================================================================="
 echo "Let's Start and make the unicorn"
+
 echo
-
-#Those lines are for logging porpuses
-exec > >(tee -i /var/log/ispconfig_setup.log)
-exec 2>&1
-
-#---------------------------------------------------------------------
-# Global variables
-#---------------------------------------------------------------------
-CFG_HOSTNAME_FQDN=`hostname -f`;
-WT_BACKTITLE="ISPConfig 3 System Installer from Temporini Matteo"
+echo
+echo
 
 #---------------------------------------------------------------------
 # Bash Colours
@@ -62,9 +55,25 @@ IDENTATION_LVL_1=''
 IDENTATION_LVL_2=''
 IDENTATION_LVL_3=''
 
+#Those lines are for logging porpuses
+echo -n -e "$IDENTATION_LVL_0 Setup Logging"
+exec > >(tee -i /var/log/ispconfig_setup.log)
+exec 2>&1
+echo -e " [ ${green}DONE${NC} ] "
+
+
+#---------------------------------------------------------------------
+# Global variables
+#---------------------------------------------------------------------
+echo -n -e "$IDENTATION_LVL_0 Setup Global Variable"
+CFG_HOSTNAME_FQDN=`hostname -f`;
+WT_BACKTITLE="ISPConfig 3 System Installer from Aurel Roman"
 #Saving current directory
 PWD=$(pwd);
+echo -e " [ ${green}DONE${NC} ] "
 
+
+echo "$IDENTATION_LVL_0 Checking your system, please wait..."
 #---------------------------------------------------------------------
 # Load needed functions
 #---------------------------------------------------------------------
@@ -75,10 +84,10 @@ source $PWD/functions/03_check_whiptail.sh
 #---------------------------------------------------------------------
 # Basic Checks
 #---------------------------------------------------------------------
-echo "Checking your system, please wait..."
 CheckLinux
 CheckIPV6
 CheckWhiptailAndInstallIfNeed
+echo -e " [ ${green}DONE${NC} ] "
 
 #---------------------------------------------------------------------
 # Load needed Modules
