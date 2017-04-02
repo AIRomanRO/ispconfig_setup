@@ -122,6 +122,19 @@ InstallWebServer() {
 			echo -e "[ ${green}DONE${NC} ]"
 		elif [ $CFG_NGINX_VERSION == "dotdeb" ]; then
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green} DotDeb.org - with 'full' HTTP2 ${NC}"
+			
+			echo -n -e "$IDENTATION_LVL_3 ${BBlack}Build Dependencies${NC}"
+			apt-get build-dep nginx nginx-full -t jessie-nginx-http2 > /dev/null 2>&1
+			echo -e " [ ${green}DONE${NC} ]"
+			
+			echo -n -e "$IDENTATION_LVL_3 ${BBlack}Install ${BWhite}libssl1.0.0${BBlack} from ${BWhite}jessie-backports ${NC}"
+			apt-get install libssl1.0.0/jessie-backports libssl-dev/jessie-backports openssl/jessie-backports > /dev/null 2>&1
+			echo -e " [ ${green}DONE${NC} ]"
+			
+			echo -n -e "$IDENTATION_LVL_3 ${BBlack}Install ${BWhite}nginx${BBlack} & ${BWhite}nginx-full${NC}"
+			apt-get -yqq --force-yes install nginx nginx-full -t jessie-nginx-http2 > /dev/null 2>&1
+			echo -e " [ ${green}DONE${NC} ]"
+			
 		elif [ $CFG_NGINX_VERSION == "stretch" ]; then
 			echo -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green} Debian Stretch - with HTTP2 ${NC}"
 		elif [ $CFG_NGINX_VERSION == "custom" ]; then
