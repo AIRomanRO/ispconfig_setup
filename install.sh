@@ -81,6 +81,7 @@ echo -e "$IDENTATION_LVL_0 ${BWhite}Checking your system, please wait...${NC}"
 source $PWD/functions/01_check_linux.sh
 source $PWD/functions/02_check_ipv6.sh
 source $PWD/functions/03_check_whiptail.sh
+source $PWD/functions/04_measure_duration_and_echo.sh
 
 #---------------------------------------------------------------------
 # Basic Checks
@@ -149,6 +150,7 @@ else
 	exit 1
 fi
 
+echo
 echo -n -e "$IDENTATION_LVL_0 ${BWhite}Load needed Modules ${NC} "
 #---------------------------------------------------------------------
 # Load needed Modules
@@ -181,7 +183,8 @@ source $PWD/distros/$DISTRO/install_basephp.sh #to remove in feature release
 echo -e " [ ${green}DONE${NC} ] "
 
 
-echo -n -e "$IDENTATION_LVL_0 ${BWhite}Gathering the ISPConfig Version which you want and Setup Type{$NC}"
+echo -n -e "$IDENTATION_LVL_0 ${BWhite}Gathering the ISPConfig Version which you want and Setup Type ${NC}"
+echo
 if [ "$DISTRO" == "debian8" ]; then
 
 	while [ "x$CFG_ISPCVERSION" == "x" ]
@@ -208,7 +211,7 @@ else
 	CFG_MULTISERVER=no
 fi
 echo -n -e "$IDENTATION_LVL_0 ${BWhite}Gathering ISPConfig Version & Setup Type [${NC} ${green}DONE${NC} ${BWhite}]${NC} "
-
+echo
 
 if [ -f /etc/debian_version ]; then
     PreInstallCheck
