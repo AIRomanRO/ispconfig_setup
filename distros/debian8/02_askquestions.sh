@@ -29,9 +29,9 @@ AskQuestions() {
 			    "5.6" "MySQL-5.6" OFF \
 			    "5.7" "MySQL-5.7" OFF 3>&1 1>&2 2>&3)
         done
+		echo -n -e "   - ${BBlack}SQL Server Version${NC}: ${green}$CFG_MYSQL_VERSION${NC}\n"
 	fi
-	echo -n -e "   - ${BBlack}SQL Server Version${NC}: ${green}$CFG_MYSQL_VERSION${NC}\n"
-	  
+
 	if [ $CFG_SQLSERVER == "MySQL" ] || [ $CFG_SQLSERVER == "MariaDB" ]; then
 	    while [ "x$CFG_MYSQL_ROOT_PWD_AUTO" == "x" ]
         do
@@ -40,11 +40,11 @@ AskQuestions() {
 		        "false" "NO, i have IT OR i want to choose one" OFF \
 		        "true"  "YES, autogenerate it" ON 3>&1 1>&2 2>&3)
         done
+		echo -n -e "   - ${BBlack}SQL Server Generate PASSWORD${NC}: ${green}$CFG_MYSQL_ROOT_PWD_AUTO${NC}\n"
 	else
 		CFG_MYSQL_ROOT_PWD_AUTO = false
 	fi
-	echo -n -e "   - ${BBlack}SQL Server Generate PASSWORD${NC}: ${green}$CFG_MYSQL_ROOT_PWD_AUTO${NC}\n"
-	  
+
 	if [ $CFG_MYSQL_ROOT_PWD_AUTO == false ]; then
 	    #We should receive a password
 	    while [ "x$CFG_MYSQL_ROOT_PWD" == "x" ]

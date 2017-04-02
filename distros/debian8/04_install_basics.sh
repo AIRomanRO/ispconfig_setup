@@ -114,7 +114,7 @@ InstallBasics() {
 					echo -n -e "    - ${BBlack}SSH${NC}: ${green}Already Installed${NC} \n"
 				else
 					echo -n -e "    - ${BBlack}SSH${NC}: ${red}NOT FOUND${NC} - try to install it ... "
-					apt-get -yqq install ssh > /dev/null 2>&1
+					apt-get -yqq install --force-confnew ssh > /dev/null 2>&1
 					echo -e " [ ${green}DONE${NC} ]"
 				fi
 		    ;;
@@ -127,7 +127,7 @@ InstallBasics() {
 				fi
 				
 				echo -n -e "    - ${BBlack}OPENSSH-SERVER${NC}: Try to install the Jessie Version ... "
-				apt-get -yqq --force-yes install openssh-server -t jessie > /dev/null 2>&1
+				apt-get -yqq --force-yes --force-confnew install openssh-server -t jessie > /dev/null 2>&1
 				echo -e " [ ${green}DONE${NC} ] "				
 		    ;;
             "openssh-server-stretch" )
@@ -139,7 +139,7 @@ InstallBasics() {
 				fi
 				
 				echo -n -e "    - ${BBlack}OPENSSH-SERVER${NC}: Try to install the Stretch Version ... "
-				apt-get -yqq --force-yes install openssh-server -t stretch > /dev/null 2>&1
+				apt-get -yqq --force-yes --force-confnew install openssh-server -t stretch > /dev/null 2>&1
 				echo -e " [ ${green}DONE${NC} ]"
 		    ;;
 			"openssl-stable" )
@@ -151,7 +151,7 @@ InstallBasics() {
 				fi
 				
 				echo -n -e "    - ${BBlack}OpenSSL${NC}: Try to install the Jessie Version ... "
-				apt-get -yqq --force-yes install openssl -t jessie > /dev/null 2>&1
+				apt-get -yqq --force-yes --force-confnew install openssl -t jessie > /dev/null 2>&1
 				echo -e " [ ${green}DONE${NC} ]"
 		    ;;
             "openssl-stretch" )
@@ -163,7 +163,7 @@ InstallBasics() {
 				fi
 				
 				echo -n -e "    - ${BBlack}OpenSSL${NC}: Try to install the Stretch Version ... "
-				apt-get -yqq --force-yes install openssl -t stretch > /dev/null 2>&1
+				apt-get -yqq --force-yes --force-confnew install openssl -t stretch > /dev/null 2>&1
 				echo -e " [ ${green}DONE${NC} ]"
 		    ;; 
         esac
