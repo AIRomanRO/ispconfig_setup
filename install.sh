@@ -52,9 +52,9 @@ NC='\033[0m' # No Color
 #IDENTATION LVLS
 #---------------------------------------------------------------------
 IDENTATION_LVL_0="${BWhite}===>${NC}"
-IDENTATION_LVL_1="    -"
-IDENTATION_LVL_2="       *"
-IDENTATION_LVL_3=''
+IDENTATION_LVL_1="   -"
+IDENTATION_LVL_2="     *"
+IDENTATION_LVL_3="       *"
 
 #Those lines are for logging porpuses
 echo -n -e "$IDENTATION_LVL_0 ${BWhite}Setup Logging${NC}"
