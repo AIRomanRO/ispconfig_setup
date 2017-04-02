@@ -5,7 +5,7 @@
 PreInstallCheck() {
 	START_TIME=$SECONDS
 	
-	echo -n -e "$IDENTATION_LVL_0 ${BWhite} Check the stuffs before install ${NC} \n"
+	echo -n -e "$IDENTATION_LVL_0 ${BWhite}Check the stuffs before install ${NC} \n"
 	
 	echo -n -e "$IDENTATION_LVL_1 Check if current user is root"
     # Check if user is root
