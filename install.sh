@@ -51,8 +51,8 @@ NC='\033[0m' # No Color
 #---------------------------------------------------------------------
 #IDENTATION LVLS
 #---------------------------------------------------------------------
-IDENTATION_LVL_0='${BWhite}===>${NC}'
-IDENTATION_LVL_1=''
+IDENTATION_LVL_0="${BWhite}===>${NC}"
+IDENTATION_LVL_1="      - "
 IDENTATION_LVL_2=''
 IDENTATION_LVL_3=''
 
@@ -74,7 +74,7 @@ PWD=$(pwd);
 echo -e " [ ${green}DONE${NC} ] "
 
 
-echo "$IDENTATION_LVL_0 Checking your system, please wait..."
+echo -e "$IDENTATION_LVL_0 Checking your system, please wait..."
 #---------------------------------------------------------------------
 # Load needed functions
 #---------------------------------------------------------------------
@@ -90,6 +90,53 @@ CheckIPV6
 CheckWhiptailAndInstallIfNeed
 echo -e "$IDENTATION_LVL_0 System Checking [ ${green}DONE${NC} ] "
 
+#---------------------------------------------------------------------
+# Main program [ main() ]
+#    Run the installer
+#---------------------------------------------------------------------
+
+echo -e -n "$IDENTATION_LVL_0 Confirm if we detected the correct Informations: "
+
+if [ -n "$PRETTY_NAME" ]; then
+	echo -n -e "$IDENTATION_LVL_1 Linux Distribution is: ${green}" $PRETTY_NAME "${NC}"
+else
+	echo -n -e "$IDENTATION_LVL_1 Linux Distribution is: ${green}" $ID-$VERSION_ID "${NC}"
+fi
+echo
+
+if [ $IPV6_ENABLED == true ]; then
+    echo -n -e "$IDENTATION_LVL_1 IPV6 enabled: ${green} YES ${NC}"
+else
+    echo -n -e "$IDENTATION_LVL_1 IPV6 enabled: ${red} NO ${NC}"
+fi
+echo
+
+echo -n -e "$IDENTATION_LVL_1 Host Name FQDN: ${green} $CFG_HOSTNAME_FQDN ${NC}"
+echo
+
+echo -n -e "$IDENTATION_LVL_1 DISTRO: ${green} $DISTRO ${NC}"
+
+if [ -n "$DISTRO" ]; then
+	echo -e -n "$IDENTATION_LVL_0 Are this Informations Correct?"
+	echo -e -n "$IDENTATION_LVL_0 Please answer with y/n: "
+	read -n 1 RESPONSE
+	echo    # (optional) move to a new line
+	if [[ ! $RESPONSE =~ ^[Yy]$ ]]
+		then
+		exit 1
+	fi
+else
+	echo -e "${red}"
+	echo -e "Sorry but your System is not supported by this script,"
+    echo -e "If your system is a 8+ Debian Version please open and issue on https://github.com/a1ur3l/ispconfig_setup"
+	echo
+	echo -e "Otherwise please check if it is suported at https://github.com/servisys/ispconfig_setup"
+	echo -e "if you want your system supported there please open an issue on GitHub: https://github.com/servisys/ispconfig_setup"
+	echo -e "${NC}"
+	exit 1
+fi
+
+echo -n -e "$IDENTATION_LVL_0 Load needed Modules "
 #---------------------------------------------------------------------
 # Load needed Modules
 #---------------------------------------------------------------------
@@ -118,41 +165,7 @@ source $PWD/distros/$DISTRO/install_ispconfig.sh
 source $PWD/distros/$DISTRO/install_fix.sh
 
 source $PWD/distros/$DISTRO/install_basephp.sh #to remove in feature release
-#---------------------------------------------------------------------
-# Main program [ main() ]
-#    Run the installer
-#---------------------------------------------------------------------
-
-if [ -n "$PRETTY_NAME" ]; then
-	echo -n -e "$IDENTATION_LVL_0 The detected Linux Distribution is: ${green}" $PRETTY_NAME "${NC}"
-else
-	echo -n -e "$IDENTATION_LVL_0 The detected Linux Distribution is: ${green}" $ID-$VERSION_ID "${NC}"
-fi
-
-if [ $IPV6_ENABLED == true ]; then
-    echo -e "$IDENTATION_LVL_0 IPV6 enabled: ${green} YES ${NC}"
-else
-    echo -e "$IDENTATION_LVL_0 IPV6 enabled: ${red} NO ${NC}"
-fi
-echo
-
-if [ -n "$DISTRO" ]; then
-	read -p "$IDENTATION_LVL_0 Is this correct ($DISTRO) ? (Answer with y/n)" -n 1 -r
-	echo    # (optional) move to a new line
-	if [[ ! $REPLY =~ ^[Yy]$ ]]
-		then
-		exit 1
-	fi
-else
-	echo -e "${red}"
-	echo -e "Sorry but your System is not supported by this script,"
-    echo -e "If your system is a 8+ Debian Version please open and issue on https://github.com/a1ur3l/ispconfig_setup"
-	echo
-	echo -e "Otherwise please check if it is suported at https://github.com/servisys/ispconfig_setup"
-	echo -e "if you want your system supported there please open an issue on GitHub: https://github.com/servisys/ispconfig_setup"
-	echo -e "${NC}"
-	exit 1
-fi
+echo -e " [ ${green}DONE${NC} ] "
 
 
 echo -n -e "$IDENTATION_LVL_0 Gathering the ISPConfig Version which you want and Setup Type"
