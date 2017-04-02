@@ -61,7 +61,7 @@ InstallBasics() {
 	else
 		echo -n -e "    - ${BBlack}APT HTTPS Method${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 		apt-get -yqq install apt-transport-https > /dev/null 2>&1
-		echo -e " [ ${green}DONE${NC} ]\n"
+		echo -e " [ ${green}DONE${NC} ]"
 	fi
 	
     echo -n -e " - Installing Aditional Selected Software Packages:\n"
@@ -180,7 +180,7 @@ InstallBasics() {
 		else
 			echo -n -e "   - ${BBlack}DPKG DEV${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 			apt-get -yqq install dpkg-dev > /dev/null 2>&1
-			echo -e " [ ${green}DONE${NC} ]\n"
+			echo -e " [ ${green}DONE${NC} ]"
 		fi
 	
 		#Check for Debian Keyring
@@ -189,7 +189,7 @@ InstallBasics() {
 		else
 			echo -n -e "   - ${BBlack}Debian Keyring${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 			apt-get -yqq install debian-keyring > /dev/null 2>&1
-			echo -e " [ ${green}DONE${NC} ]\n"
+			echo -e " [ ${green}DONE${NC} ]"
 		fi
 	
 		#Check for Dev Scripts
@@ -198,7 +198,7 @@ InstallBasics() {
 		else
 			echo -n -e "   - ${BBlack}Dev Scripts${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 			apt-get -yqq install devscripts > /dev/null 2>&1
-			echo -e " [ ${green}DONE${NC} ]\n"
+			echo -e " [ ${green}DONE${NC} ]"
 		fi
 	
 	    #Check for Quilt
@@ -207,7 +207,7 @@ InstallBasics() {
 	    else
 		    echo -n -e "   - ${BBlack}Quilt${NC}: ${red}NOT FOUND${NC} - start and install it ... "
 		    apt-get -yqq install quilt > /dev/null 2>&1
-		    echo -e " [ ${green}DONE${NC} ]\n"
+		    echo -e " [ ${green}DONE${NC} ]"
 	    fi
 	fi
 

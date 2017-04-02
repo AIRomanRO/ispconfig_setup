@@ -56,10 +56,11 @@ source $PWD/distros/$DISTRO/02_askquestions.sh
 source $PWD/distros/$DISTRO/03_install_aditional_repos.sh
 source $PWD/distros/$DISTRO/04_install_basics.sh
 source $PWD/distros/$DISTRO/05_install_mysql.sh
+source $PWD/distros/$DISTRO/06_install_webserver.sh
 source $PWD/distros/$DISTRO/install_postfix.sh
 source $PWD/distros/$DISTRO/install_mta.sh
 source $PWD/distros/$DISTRO/install_antivirus.sh
-source $PWD/distros/$DISTRO/install_webserver.sh
+
 source $PWD/distros/$DISTRO/install_hhvm.sh
 source $PWD/distros/$DISTRO/install_ftp.sh
 source $PWD/distros/$DISTRO/install_quota.sh

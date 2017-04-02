@@ -128,6 +128,4 @@ InstallSQLServer() {
 	echo -e ": ${red} $(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) sec"
 	echo -e "${NC}"	
 	echo -n -e " "
-	
-	exit 1;
 }
