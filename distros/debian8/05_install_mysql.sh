@@ -108,7 +108,7 @@ InstallSQLServer() {
   
     elif [ $CFG_SQLSERVER == "MariaDB" ]; then
   
-		echo -n "Installing MariaDB... "
+		echo -n "$IDENTATION_LVL_0 Installing MariaDB... "
 		echo "mysql-server-5.5 mysql-server/root_password password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
 		echo "mysql-server-5.5 mysql-server/root_password_again password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
 		apt-get -y install mariadb-client mariadb-server > /dev/null 2>&1

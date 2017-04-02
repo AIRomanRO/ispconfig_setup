@@ -52,8 +52,8 @@ NC='\033[0m' # No Color
 #IDENTATION LVLS
 #---------------------------------------------------------------------
 IDENTATION_LVL_0="${BWhite}===>${NC}"
-IDENTATION_LVL_1="     - "
-IDENTATION_LVL_2="       * "
+IDENTATION_LVL_1="    -"
+IDENTATION_LVL_2="       *"
 IDENTATION_LVL_3=''
 
 #Those lines are for logging porpuses
@@ -111,7 +111,7 @@ if [ $IPV6_ENABLED == true ]; then
 	echo
 	echo -n -e "$IDENTATION_LVL_1 IPV4: ${green} $CFG_IPV4 ${NC} - is possible to be incorrect - we don't use it anywhere in configuration"
 	echo
-	echo -n -e "$IDENTATION_LVL_1 IPV6: ${red} $CFG_IPV6 ${NC} - is possible to be incorrect - we don't use it anywhere in configuration"
+	echo -n -e "$IDENTATION_LVL_1 IPV6: ${green} $CFG_IPV6 ${NC} - is possible to be incorrect - we don't use it anywhere in configuration"
 else
     echo -n -e "$IDENTATION_LVL_1 IPV6 enabled: ${red} NO ${NC}"
 	echo

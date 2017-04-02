@@ -10,8 +10,7 @@ MeasureTimeDuration() {
 	else
 		ELAPSED_TIME=$(($SECONDS - $1))
 		echo -n -e "$IDENTATION_LVL_0 ${green}Completed ON ${NC}"
-		echo -e ": ${red} $(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) sec"
-		echo -e "${NC}"	
+		echo -e ": ${red} $(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) sec ${NC}"
 		echo
 	fi	
 }
