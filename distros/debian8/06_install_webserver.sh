@@ -120,6 +120,8 @@ InstallWebServer() {
 		elif [ $CFG_NGINX_VERSION == "stretch" ]; then
 			echo -e "         * ${BBlack} Version{NC}: ${green} Debian Stretch - with HTTP2 ${NC}"
 		elif [ $CFG_NGINX_VERSION == "custom" ]; then
+			CWD=$(pwd);
+			
 			echo -n -e "         * ${BBlack} NGINX {NC} - Version: ${green} Custom - With OpenSSL 1.1 and ChaCha20-Poly1305 ${NC} \n"
 			echo -n -e "         * Make the Local src folder "
 			mkdir /usr/local/src -p && cd /usr/local/src
@@ -146,8 +148,7 @@ InstallWebServer() {
 			echo -e " [${green}DONE${NC}]"
 			
 			echo -n -e "         * Debuild Nginx Sources"
-			debuild -uc -us	
-			#> /dev/null 2>&1		
+			debuild -uc -us > /dev/null 2>&1		
 			echo -e " [${green}DONE${NC}]"
 			
 			echo -n -e "         * Go to main Nginx Sources folder"
@@ -155,9 +156,12 @@ InstallWebServer() {
 			echo -e " [${green}DONE${NC}]"
 			
 			echo -n -e "         * Install the builded Version"
-			dpkg -i nginx_*.deb		
+			dpkg -i nginx_*.deb > /dev/null 2>&1	
 			echo -e " [${green}DONE${NC}]"
 			
+			echo -n -e "         * Go back to previous working directory - $CWD"
+			cd $CWD
+			echo -e " [${green}DONE${NC}]"
 		fi
 		
 		echo
