@@ -45,12 +45,13 @@ echo
 red='\033[0;31m'
 green='\033[0;32m'
 BBlack='\033[1;30m'
+BWhite='\e[1m'
 NC='\033[0m' # No Color
 
 #---------------------------------------------------------------------
 #IDENTATION LVLS
 #---------------------------------------------------------------------
-IDENTATION_LVL_0=''
+IDENTATION_LVL_0='${BWhite}===>${NC}'
 IDENTATION_LVL_1=''
 IDENTATION_LVL_2=''
 IDENTATION_LVL_3=''
@@ -87,7 +88,7 @@ source $PWD/functions/03_check_whiptail.sh
 CheckLinux
 CheckIPV6
 CheckWhiptailAndInstallIfNeed
-echo -e " [ ${green}DONE${NC} ] "
+echo -e "$IDENTATION_LVL_0 System Checking [ ${green}DONE${NC} ] "
 
 #---------------------------------------------------------------------
 # Load needed Modules
@@ -123,32 +124,38 @@ source $PWD/distros/$DISTRO/install_basephp.sh #to remove in feature release
 #---------------------------------------------------------------------
 
 if [ -n "$PRETTY_NAME" ]; then
-	echo -e "The detected Linux Distribution is: " $PRETTY_NAME
+	echo -n -e "$IDENTATION_LVL_0 The detected Linux Distribution is: ${green}" $PRETTY_NAME "${NC}"
 else
-	echo -e "The detected Linux Distribution is: " $ID-$VERSION_ID
+	echo -n -e "$IDENTATION_LVL_0 The detected Linux Distribution is: ${green}" $ID-$VERSION_ID "${NC}"
 fi
-echo 
 
 if [ $IPV6_ENABLED == true ]; then
-    echo -e "IPV6 enabled: ${green} YES ${NC}"
+    echo -e "$IDENTATION_LVL_0 IPV6 enabled: ${green} YES ${NC}"
 else
-    echo -e "IPV6 enabled: ${red} NO ${NC}"
+    echo -e "$IDENTATION_LVL_0 IPV6 enabled: ${red} NO ${NC}"
 fi
 echo
 
 if [ -n "$DISTRO" ]; then
-	read -p "Is this correct ($DISTRO) ? (y/n)" -n 1 -r
+	read -p "$IDENTATION_LVL_0 Is this correct ($DISTRO) ? (Answer with y/n)" -n 1 -r
 	echo    # (optional) move to a new line
 	if [[ ! $REPLY =~ ^[Yy]$ ]]
 		then
 		exit 1
 	fi
 else
-	echo -e "Sorry but your System is not supported by this script, if you want your system supported "
-	echo -e "open an issue on GitHub: https://github.com/servisys/ispconfig_setup"
+	echo -e "${red}"
+	echo -e "Sorry but your System is not supported by this script,"
+    echo -e "If your system is a 8+ Debian Version please open and issue on https://github.com/a1ur3l/ispconfig_setup"
+	echo
+	echo -e "Otherwise please check if it is suported at https://github.com/servisys/ispconfig_setup"
+	echo -e "if you want your system supported there please open an issue on GitHub: https://github.com/servisys/ispconfig_setup"
+	echo -e "${NC}"
 	exit 1
 fi
 
+
+echo -n -e "$IDENTATION_LVL_0 Gathering the ISPConfig Version which you want and Setup Type"
 if [ "$DISTRO" == "debian8" ]; then
 
 	while [ "x$CFG_ISPCVERSION" == "x" ]
@@ -174,6 +181,8 @@ if [ "$DISTRO" == "debian8" ]; then
 else
 	CFG_MULTISERVER=no
 fi
+echo -n -e "$IDENTATION_LVL_0 Gathering ISPConfig Version & Setup Type [ ${green}DONE${NC} ] "
+
 
 if [ -f /etc/debian_version ]; then
     PreInstallCheck
