@@ -2,7 +2,7 @@
 # Function: InstallWebServer Debian 8
 #    Install and configure Apache2, php + modules
 #---------------------------------------------------------------------
-InstallWebServer() {
+InstallPHP() {
   	START_TIME=$SECONDS
 	  if [ $CFG_WEBSERVER == "apache" ]; then
 	  CFG_NGINX=n
