@@ -114,13 +114,19 @@ InstallWebServer() {
 		echo -n -e "$IDENTATION_LVL_1 Installing NGINX and Modules... \n "
 		
 		if [ $CFG_NGINX_VERSION == "default" ]; then
+		
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green} OS Default ${NC}"
 			apt-get -yqq --force-yes install nginx -t stable > /dev/null 2>&1
 			echo -e "[ ${green}DONE${NC} ]"
+			
 		elif [ $CFG_NGINX_VERSION == "nginx" ]; then
+		
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green} Official - nginx.org ${NC}"
+			apt-get -yqq --force-yes install nginx > /dev/null 2>&1
 			echo -e "[ ${green}DONE${NC} ]"
+			
 		elif [ $CFG_NGINX_VERSION == "dotdeb" ]; then
+		
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green} DotDeb.org - with 'full' HTTP2 ${NC}"
 			
 			echo -n -e "$IDENTATION_LVL_3 ${BBlack}Build Dependencies${NC}"
@@ -136,7 +142,11 @@ InstallWebServer() {
 			echo -e " [ ${green}DONE${NC} ]"
 			
 		elif [ $CFG_NGINX_VERSION == "stretch" ]; then
+		
 			echo -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green} Debian Stretch - with HTTP2 ${NC}"
+			apt-get -yqq --force-yes install nginx -t stretch > /dev/null 2>&1
+			echo -e " [ ${green}DONE${NC} ]"
+			
 		elif [ $CFG_NGINX_VERSION == "custom" ]; then
 			CWD=$(pwd);
 			

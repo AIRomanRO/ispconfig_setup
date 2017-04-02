@@ -1,9 +1,13 @@
 #---------------------------------------------------------------------
-# Function: InstallWebServer Debian 8
-#    Install and configure Apache2, php + modules
+# Function: InstallPHP Debian 8
+#    Install and configure php
 #---------------------------------------------------------------------
 InstallPHP() {
   	START_TIME=$SECONDS
+	
+	echo -n -e "$IDENTATION_LVL_0 Installing PHP... \n"	
+	echo -n -e "$IDENTATION_LVL_2 Selected Versions: ${green}"$CFG_PHP_VERSION"${NC}\n"
+	
 	  if [ $CFG_WEBSERVER == "apache" ]; then
 	  CFG_NGINX=n
 	  CFG_APACHE=y
@@ -119,12 +123,7 @@ InstallPHP() {
 	  fi
 	  echo -e "[${green}DONE${NC}]\n"
   
-  	ELAPSED_TIME=$(($SECONDS - $START_TIME))
-	echo 
-	echo -n -e "==> ${green}Completed ON ${NC}"
-	echo -e ": ${red} $(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) sec"
-	echo -e "${NC}"	
-	echo -n -e " "
+  	MeasureTimeDuration $START_TIME
 	
 	exit 1;
 }

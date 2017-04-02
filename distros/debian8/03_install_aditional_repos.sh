@@ -105,6 +105,4 @@ Pin-Priority: 100
     echo -e " [ ${green}DONE${NC} ]"
 	
 	MeasureTimeDuration $START_TIME
-	
-	exit 1
 }
