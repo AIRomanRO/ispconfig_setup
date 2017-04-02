@@ -60,9 +60,10 @@ AskQuestions() {
     while [ "x$CFG_WEBSERVER" == "x" ]
 	do
 		CFG_WEBSERVER=$(whiptail --title "WEBSERVER" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
-		"Select webserver type" 10 60 2 \
-		"apache" "Apache (default)" OFF \
-		"nginx"  "Nginx" ON 3>&1 1>&2 2>&3)
+		"Select webserver type" 10 60 3 \
+		"apache" "Apache" OFF \
+		"nginx"  "Nginx (default)" ON \
+		"none" "No Install" OFF 3>&1 1>&2 2>&3)
 	done
 	echo -n -e "   - ${BBlack}Web Server${NC}: ${green}$CFG_WEBSERVER${NC}\n"
 	
