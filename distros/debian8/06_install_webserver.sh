@@ -88,7 +88,7 @@ InstallWebServer() {
 	    CFG_NGINX=y
 		CFG_APACHE=n
 		
-		echo -n -e "   --- Try to Stop And Remove Apache ... "
+		echo -n "   --- Try to Stop And Remove Apache ... "
 		
 		echo -n -e "         * Stop Apache2 Service: "
 		service apache2 stop
@@ -103,12 +103,61 @@ InstallWebServer() {
 		echo -e "[${green}DONE${NC}]"
 		
 		echo -n -e "         * Remove Apache2 via ${BBlack}apt${NC}: "
-		apt-get -yqq remove --purge apache2
+		apt-get -yqq remove --purge apache2 > /dev/null 2>&1
 		echo -e "[${green}DONE${NC}]"
 
-		echo -n -e "   --- Installing NGINX and Modules... "
-		apt-get -yqq install nginx nginx-common nginx-full > /dev/null 2>&1
-		echo -e "[${green}DONE${NC}]"
+		echo -n "   --- Installing NGINX and Modules... \n "
+		
+		if [ $CFG_NGINX_VERSION == "default" ]; then
+			echo -n -e "         * ${BBlack} Version{NC}: ${green} OS Default ${NC}"
+			apt-get -yqq --force-yes install nginx > /dev/null 2>&1
+			echo -e "[${green}DONE${NC}]"
+		elif [ $CFG_NGINX_VERSION == "nginx" ]; then
+			echo -n -e "         * ${BBlack} Version{NC}: ${green} Official - nginx.org ${NC}"
+			echo -e "[${green}DONE${NC}]"
+		elif [ $CFG_NGINX_VERSION == "dotdeb" ]; then
+			echo -n -e "         * ${BBlack} Version{NC}: ${green} DotDeb.org - with 'full' HTTP2 ${NC}"
+		elif [ $CFG_NGINX_VERSION == "stretch" ]; then
+			echo -e "         * ${BBlack} Version{NC}: ${green} Debian Stretch - with HTTP2 ${NC}"
+		elif [ $CFG_NGINX_VERSION == "custom" ]; then
+			echo -n -e "         * ${BBlack} NGINX {NC} - Version: ${green} Custom - With OpenSSL 1.1 and ChaCha20-Poly1305 ${NC}"
+			echo -n -e "         * Make the Local src folder"
+			mkdir /usr/local/src -p && cd /usr/local/src
+			echo -e "[${green}DONE${NC}]"
+			
+			echo -n -e "         * Install OpenSSL v1.1"
+			apt-get install openssl libssl-dev -t stretch			
+			echo -e "[${green}DONE${NC}]"
+			
+			echo -n -e "         * Get NGINX sources"
+			apt-get source nginx			
+			echo -e "[${green}DONE${NC}]"
+			
+			echo -n -e "         * Untar Nginx Sources"
+			tar xf nginx*.gz			
+			echo -e "[${green}DONE${NC}]"
+			
+			echo -n -e "         * Go to Nginx Sources"
+			cd nginx*			
+			echo -e "[${green}DONE${NC}]"
+			
+			echo -n -e "         * Untar Nginx Sources"
+			tar xf ../nginx*.xz			
+			echo -e "[${green}DONE${NC}]"
+			
+			echo -n -e "         * Debuild Nginx Sources"
+			debuild -uc -us		
+			echo -e "[${green}DONE${NC}]"
+			
+			echo -n -e "         * Go to main Nginx Sources folder"
+			cd ..		
+			echo -e "[${green}DONE${NC}]"
+			
+			echo -n -e "         * Install the builded Version"
+			dpkg -i nginx_*.deb		
+			echo -e "[${green}DONE${NC}]"
+			
+		fi
 		
 		
 		echo -n -e "   --- Verify NGINX Available Sites Folder... "
