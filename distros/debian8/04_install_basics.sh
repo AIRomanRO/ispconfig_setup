@@ -5,11 +5,6 @@
 InstallBasics() {
 	START_TIME=$SECONDS
 	echo -n -e "$IDENTATION_LVL_0 ${BWhite}Start Install Basic Packages: ${NC} \n"
-    echo -n -e "$IDENTATION_LVL_1 Updating apt and upgrading currently installed packages... "
-    apt-get -qq update > /dev/null 2>&1
-    apt-get -qqy upgrade > /dev/null 2>&1
-    echo -e "[${green}DONE${NC}]"
-  
 	echo -n -e "$IDENTATION_LVL_1 Check and install the required Packages: \n"
 	
 	#Check for debconf-utils
@@ -63,8 +58,14 @@ InstallBasics() {
 		echo -e " [ ${green}DONE${NC} ]"
 	fi
 	
+	
+	echo -n -e "$IDENTATION_LVL_1 Updating apt and upgrading currently installed packages... "
+    apt-get -qq update > /dev/null 2>&1
+    apt-get -qqy upgrade > /dev/null 2>&1
+    echo -e "[${green}DONE${NC}]"
+  
+  
     echo -n -e "$IDENTATION_LVL_1 Installing Aditional Selected Software Packages:\n"
-
     for PACKAGE_NAME in ${CFG_INSTALL_ADITIONAL_SOFTWARE[@]};
     do
         case $PACKAGE_NAME in
