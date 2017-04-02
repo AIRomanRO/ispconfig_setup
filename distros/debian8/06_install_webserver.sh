@@ -1,6 +1,6 @@
 #---------------------------------------------------------------------
 # Function: InstallWebServer Debian 8
-#    Install and configure Apache2, php + modules
+#    Install and configure Apache2 / NGINX
 #---------------------------------------------------------------------
 InstallWebServer() {
   	START_TIME=$SECONDS
@@ -35,7 +35,7 @@ InstallWebServer() {
 		CFG_NGINX=n
 		CFG_APACHE=y
 		echo -n -e "$IDENTATION_LVL_1 Installing Apache and Modules... "		
-		apt-get -yqq install apache2 apache2.2-common apache2-doc apache2-mpm-prefork apache2-utils libapache2-mod-php5 libapache2-mod-fastcgi libapache2-mod-fcgid apache2-suexec libapache2-mod-passenger libapache2-mod-python libexpat1 ssl-cert libruby > /dev/null 2>&1  
+		apt-get -yqq install apache2 apache2.2-common apache2-doc apache2-mpm-prefork apache2-utils libapache2-mod-fastcgi libapache2-mod-fcgid apache2-suexec libapache2-mod-passenger libapache2-mod-python libexpat1 ssl-cert libruby > /dev/null 2>&1  
 		echo -e "[ ${green}DONE${NC} ]\n"		
 	  
 		echo -n "$IDENTATION_LVL_1 Activating Apache2 Modules: "
