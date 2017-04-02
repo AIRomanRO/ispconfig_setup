@@ -4,7 +4,6 @@
 #---------------------------------------------------------------------
 InstallBasics() {
 	START_TIME=$SECONDS
-    echo -n -e "\n"
 	echo -n -e "Start Install Basic Packages: \n"
     echo -n -e " - Updating apt and upgrading currently installed packages... "
     apt-get -qq update > /dev/null 2>&1
@@ -193,7 +192,7 @@ InstallBasics() {
 		fi
 	
 		#Check for Dev Scripts
-		if dpkg --list 2>&1 | grep -qw debian-keyring; then
+		if dpkg --list 2>&1 | grep -qw devscripts; then
 			echo -n -e "   - ${BBlack}Dev Scripts${NC}: ${green}FOUND${NC} \n"
 		else
 			echo -n -e "   - ${BBlack}Dev Scripts${NC}: ${red}NOT FOUND${NC} - try to install it ... "
