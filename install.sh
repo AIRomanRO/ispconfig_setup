@@ -2,16 +2,39 @@
 #---------------------------------------------------------------------
 # install.sh
 #
-# ISPConfig 3 system installer
+# ISPConfig 3 System installer on Debian 8+
 #
-# Script: install.sh
-# Version: 2.2.2
-# Author: Matteo Temporini <temporini.matteo@gmail.com>
-# Description: This script will install all the packages needed to install
-# ISPConfig 3 on your server.
-#
+# Script:      install.sh
+# Version:     2.3
+# Author:      Matteo Temporini <temporini.matteo@gmail.com>
+# Contributor: Aurel Roman <aur3l.roman@gmail.com>
+# Description: This script will install & basic configure all the 
+#                 packages needed to install ISPConfig 3 on your server.
 #
 #---------------------------------------------------------------------
+
+clear
+echo "Welcome to ISPConfig Setup Script v.2.3"
+echo "This software was initially developed by Temporini Matteo"
+echo "with the support of the community."
+echo "Starting with version 2.3 it is developed by Aurel Roman and it"
+echo "it is focused on Debian 8+ versions. For other versions you can check"
+echo "http://www.servisys.it http://www.temporini.net or contact the"
+echo "original author with the following information"
+echo "contact email/hangout: temporini.matteo@gmail.com"
+echo "skype: matteo.temporini"
+echo 
+echo "========================================="
+echo "ISPConfig 3 System installer on Debian 8+"
+echo "========================================="
+echo
+echo "This script will do a nearly unattended intallation of"
+echo "all software needed to run ISPConfig 3."
+echo "When this script starts running, it'll keep going all the way"
+echo
+echo "================================================================="
+echo "Let's Start and make the unicorn"
+echo
 
 #Those lines are for logging porpuses
 exec > >(tee -i /var/log/ispconfig_setup.log)
@@ -23,12 +46,21 @@ exec 2>&1
 CFG_HOSTNAME_FQDN=`hostname -f`;
 WT_BACKTITLE="ISPConfig 3 System Installer from Temporini Matteo"
 
-# Bash Colour
+#---------------------------------------------------------------------
+# Bash Colours
+#---------------------------------------------------------------------
 red='\033[0;31m'
 green='\033[0;32m'
 BBlack='\033[1;30m'
 NC='\033[0m' # No Color
 
+#---------------------------------------------------------------------
+#IDENTATION LVLS
+#---------------------------------------------------------------------
+IDENTATION_LVL_0=''
+IDENTATION_LVL_1=''
+IDENTATION_LVL_2=''
+IDENTATION_LVL_3=''
 
 #Saving current directory
 PWD=$(pwd);
@@ -36,11 +68,13 @@ PWD=$(pwd);
 #---------------------------------------------------------------------
 # Load needed functions
 #---------------------------------------------------------------------
-
 source $PWD/functions/01_check_linux.sh
 source $PWD/functions/02_check_ipv6.sh
 source $PWD/functions/03_check_whiptail.sh
 
+#---------------------------------------------------------------------
+# Basic Checks
+#---------------------------------------------------------------------
 echo "Checking your system, please wait..."
 CheckLinux
 CheckIPV6
@@ -49,7 +83,6 @@ CheckWhiptailAndInstallIfNeed
 #---------------------------------------------------------------------
 # Load needed Modules
 #---------------------------------------------------------------------
-
 source $PWD/distros/$DISTRO/01_preinstallcheck.sh
 source $PWD/distros/$DISTRO/02_askquestions.sh
 
@@ -57,6 +90,7 @@ source $PWD/distros/$DISTRO/03_install_aditional_repos.sh
 source $PWD/distros/$DISTRO/04_install_basics.sh
 source $PWD/distros/$DISTRO/05_install_mysql.sh
 source $PWD/distros/$DISTRO/06_install_webserver.sh
+source $PWD/distros/$DISTRO/07_install_php.sh
 source $PWD/distros/$DISTRO/install_postfix.sh
 source $PWD/distros/$DISTRO/install_mta.sh
 source $PWD/distros/$DISTRO/install_antivirus.sh
@@ -78,28 +112,6 @@ source $PWD/distros/$DISTRO/install_basephp.sh #to remove in feature release
 # Main program [ main() ]
 #    Run the installer
 #---------------------------------------------------------------------
-clear
-echo "Welcome to ISPConfig Setup Script v.2.3"
-echo "This software is developed by Temporini Matteo"
-echo "with the support of the community."
-echo "You can visit my website at the followings URLS"
-echo "http://www.servisys.it http://www.temporini.net"
-echo "and contact me with the following information"
-echo "contact email/hangout: temporini.matteo@gmail.com"
-echo "skype: matteo.temporini"
-echo "========================================="
-echo "ISPConfig 3 System installer"
-echo "========================================="
-echo
-echo "This script will do a nearly unattended intallation of"
-echo "all software needed to run ISPConfig 3."
-echo "When this script starts running, it'll keep going all the way"
-echo "So before you continue, please make sure the following checklist is ok:"
-echo
-echo "- This is a clean standard clean installation for supported systems";
-echo "- Internet connection is working properly";
-echo
-echo
 
 if [ -n "$PRETTY_NAME" ]; then
 	echo -e "The detected Linux Distribution is: " $PRETTY_NAME
@@ -127,7 +139,6 @@ else
 	echo -e "open an issue on GitHub: https://github.com/servisys/ispconfig_setup"
 	exit 1
 fi
-
 
 if [ "$DISTRO" == "debian8" ]; then
 
@@ -171,6 +182,7 @@ if [ -f /etc/debian_version ]; then
 	
     if [ "$CFG_SETUP_WEB" == "yes" ] || [ "$CFG_MULTISERVER" == "no" ]; then
         InstallWebServer
+		InstallPHP
         InstallFTP 
 		
         if [ "$CFG_QUOTA" == "yes" ]; then
