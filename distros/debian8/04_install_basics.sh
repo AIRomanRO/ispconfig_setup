@@ -208,6 +208,24 @@ InstallBasics() {
 		    apt-get -yqq install quilt > /dev/null 2>&1
 		    echo -e " [ ${green}DONE${NC} ]"
 	    fi
+		
+		#Check for Lib PCRE3 Dev
+		if dpkg --list 2>&1 | grep -qw libpcre3-dev; then
+		    echo -n -e "   - ${BBlack}Lib PCRE3 Dev{NC}: ${green}FOUND${NC} \n"
+	    else
+		    echo -n -e "   - ${BBlack}Lib PCRE3 Dev${NC}: ${red}NOT FOUND${NC} - try to install it ... "
+		    apt-get -yqq --force-yes install libpcre3-dev > /dev/null 2>&1
+		    echo -e " [ ${green}DONE${NC} ]"
+	    fi
+		
+		#Check for Lib Zlib 1g Dev
+		if dpkg --list 2>&1 | grep -qw zlib1g-dev; then
+		    echo -n -e "   - ${BBlack}Lib Zlib 1g Dev{NC}: ${green}FOUND${NC} \n"
+	    else
+		    echo -n -e "   - ${BBlack}Lib Zlib 1g Dev${NC}: ${red}NOT FOUND${NC} - try to install it ... "
+		    apt-get -yqq --force-yes install zlib1g-dev > /dev/null 2>&1
+		    echo -e " [ ${green}DONE${NC} ]"
+	    fi
 	fi
 
     echo -n " - Reconfigure dash... "	  

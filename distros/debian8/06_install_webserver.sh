@@ -88,7 +88,7 @@ InstallWebServer() {
 	    CFG_NGINX=y
 		CFG_APACHE=n
 		
-		echo -n -e "   --- Try to Stop And Remove Apache ... "
+		echo -n -e "   --- Stop And Remove Apache ... \n"
 		
 		echo -n -e "         * Stop Apache2 Service: "
 		service apache2 stop
@@ -121,7 +121,7 @@ InstallWebServer() {
 			echo -e "         * ${BBlack} Version{NC}: ${green} Debian Stretch - with HTTP2 ${NC}"
 		elif [ $CFG_NGINX_VERSION == "custom" ]; then
 			echo -n -e "         * ${BBlack} NGINX {NC} - Version: ${green} Custom - With OpenSSL 1.1 and ChaCha20-Poly1305 ${NC} \n"
-			echo -n -e "         * Make the Local src folder \n"
+			echo -n -e "         * Make the Local src folder "
 			mkdir /usr/local/src -p && cd /usr/local/src
 			echo -e " [${green}DONE${NC}]"
 			
@@ -146,7 +146,8 @@ InstallWebServer() {
 			echo -e " [${green}DONE${NC}]"
 			
 			echo -n -e "         * Debuild Nginx Sources"
-			debuild -uc -us		
+			debuild -uc -us	
+			#> /dev/null 2>&1		
 			echo -e " [${green}DONE${NC}]"
 			
 			echo -n -e "         * Go to main Nginx Sources folder"
@@ -158,6 +159,11 @@ InstallWebServer() {
 			echo -e " [${green}DONE${NC}]"
 			
 		fi
+		
+		echo
+		echo $PWD
+		echo $(pwd);
+		echo
 		
 		
 		echo -n -e "   --- Verify NGINX Available Sites Folder... "
