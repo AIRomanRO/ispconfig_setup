@@ -8,7 +8,7 @@ AskQuestions() {
 	CFG_SETUP_MAIL=yes #Needed for Multiserver setup compatibility
 	CFG_SETUP_NS=yes #Needed for Multiserver setup compatibility
 	
-	echo -n -e "$IDENTATION_LVL_0 ${BWhite}Selected Options:${NC} \n"
+	echo -n -e "$IDENTATION_LVL_0 ${BWhite}Gathering informations about softwares and versions:${NC} \n"
 	
 	while [ "x$CFG_SQLSERVER" == "x" ]
     do
