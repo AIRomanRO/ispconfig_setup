@@ -42,7 +42,7 @@ AskQuestions() {
         done
 		echo -n -e "$IDENTATION_LVL_1 ${BBlack}SQL Server Generate PASSWORD${NC}: ${green}$CFG_MYSQL_ROOT_PWD_AUTO${NC}\n"
 	else
-		CFG_MYSQL_ROOT_PWD_AUTO = false
+		CFG_MYSQL_ROOT_PWD_AUTO=false
 	fi
 
 	if [ $CFG_MYSQL_ROOT_PWD_AUTO == false ]; then
@@ -207,15 +207,42 @@ AskQuestions() {
     done
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}ISPConfig Install Mode${NC}: ${green}$CFG_ISPC${NC}\n"
 	
-	while [ "x$CFG_ISPONCFIG_PORT" == "x" ]
-	do
+	# while [ "x$CFG_ISPONCFIG_PORT" == "x" ]
+	# do
 		CFG_ISPONCFIG_PORT=$(whiptail --title "ISPConfig" --backtitle "$WT_BACKTITLE" --inputbox \
-		"Please specify a ISPConfig Port" --nocancel 10 60 3>&1 1>&2 2>&3)
-	done
+		"Please specify a ISPConfig Port (leave empty for use 8081 port)" --nocancel 10 60 3>&1 1>&2 2>&3)
+	# done
+	
+	if [[ -z $CFG_ISPONCFIG_PORT ]]; then
+		CFG_ISPONCFIG_PORT=8081
+	fi
+	
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}ISPConfig Port${NC}: ${green}$CFG_ISPONCFIG_PORT${NC}\n"
 	
-	CFG_ISPCONFIG_DB_PASS=$(whiptail --title "ISPConfig db pass for advanced" --backtitle "$WT_BACKTITLE" --inputbox "ISPConfig db pass for advanced" --nocancel 10 60 3>&1 1>&2 2>&3)
-	  
+	
+	while [ "x$CFG_ISPCONFIG_DB_PASS_AUTO" == "x" ]
+	do
+		CFG_ISPCONFIG_DB_PASS_AUTO=$(whiptail --title "Auto Generate ISPConfig DB pass for Advanced" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
+			"Auto Generate ISPConfig DB pass for Advanced?" 10 57 2 \
+			"false" "NO, i have IT OR i want to choose one" OFF \
+			"true"  "YES, autogenerate it" ON 3>&1 1>&2 2>&3)
+	done
+	echo -n -e "$IDENTATION_LVL_1 ${BBlack}Auto Generate ISPConfig DB pass for advanced${NC}: ${green}$CFG_ISPCONFIG_DB_PASS_AUTO${NC}\n"
+	
+
+	if [ $CFG_ISPCONFIG_DB_PASS_AUTO == false ]; then
+	    #We should receive a password
+	    while [ "x$CFG_ISPCONFIG_DB_PASS" == "x" ]
+	    do
+			CFG_ISPCONFIG_DB_PASS=$(whiptail --title "ISPConfig DB pass for advanced" --backtitle "$WT_BACKTITLE" --nocancel --inputbox \
+				"Please specify a password for ISPConfig db used on advanced" 10 60 3>&1 1>&2 2>&3)
+	    done
+	else
+		#We generate a random 32 Chars Length
+		CFG_ISPCONFIG_DB_PASS=$(< /dev/urandom tr -dc 'A-Z-a-z-0-9~!@#$%^&*_=-' | head -c${1:-32})
+	fi	
+	
+
 	SSL_COUNTRY=$(whiptail --title "SSL Country Code" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - Country Code (2 letter code - ex. EN)" --nocancel 10 60 3>&1 1>&2 2>&3)
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}SSL Country${NC}: ${green}" $SSL_COUNTRY "${NC}\n"
 	

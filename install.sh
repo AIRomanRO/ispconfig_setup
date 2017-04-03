@@ -230,6 +230,7 @@ if [ -f /etc/debian_version ]; then
     if [ "$CFG_SETUP_WEB" == "yes" ] || [ "$CFG_MULTISERVER" == "no" ]; then
         InstallWebServer
 		InstallPHP
+		InstallPHPMyAdmin
         InstallFTP 
 		
         if [ "$CFG_QUOTA" == "yes" ]; then
@@ -304,10 +305,18 @@ if [ -f /etc/debian_version ]; then
 	    fi
     fi
 	
-    if [ "$DISTRO" == "debian8" ] && [ $CFG_MYSQL_ROOT_PWD_AUTO == true ]; then
-		echo "You Have choosed to autogenerate the MySQL ROOT PASSWORD \n"
-		echo "Please copy and keep it safe \n"
-		echo -e "MySQL GENERATED PASS (Copy only ${red}red text${NC}): ${red}$CFG_MYSQL_ROOT_PWD${NC} \n"
+    if [ "$DISTRO" == "debian8" ]; then	
+	    if [ $CFG_MYSQL_ROOT_PWD_AUTO == true ]; then
+		    echo "You Have choosed to autogenerate the MySQL ROOT PASSWORD \n"
+		    echo "Please copy and keep it safe \n"
+		    echo -e "MySQL GENERATED PASS (Copy only ${red}red text${NC}): ${red}$CFG_MYSQL_ROOT_PWD${NC} \n"
+		fi
+		
+		if [ $CFG_ISPCONFIG_DB_PASS_AUTO == true ]; then
+		    echo "You Have choosed to autogenerate the PASSWORD used by ISPConfig advanced DB \n"
+		    echo "Please copy and keep it safe \n"
+		    echo -e "ISPConfig DB GENERATED PASS (Copy only ${red}red text${NC}): ${red}$CFG_ISPCONFIG_DB_PASS${NC} \n"
+		fi
 	fi
 	
 else 
