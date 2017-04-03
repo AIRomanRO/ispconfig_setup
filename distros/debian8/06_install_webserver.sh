@@ -2,7 +2,7 @@
 # Function: InstallWebServer Debian 8
 #    Install and configure Apache2 / NGINX
 #---------------------------------------------------------------------
-InstallWebServer() {
+InstallWebServer() { 
   	START_TIME=$SECONDS
 	
 	echo -n -e "$IDENTATION_LVL_0 Installing WEB Server... \n"	

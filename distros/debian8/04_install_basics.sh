@@ -115,7 +115,7 @@ InstallBasics() {
 					echo -n -e "$IDENTATION_LVL_2 ${BBlack}SSH${NC}: ${green}Already Installed${NC} \n"
 				else
 					echo -n -e "$IDENTATION_LVL_2 ${BBlack}SSH${NC}: ${red}NOT FOUND${NC} - try to install it ... "
-					apt-get -yqq install --force-confnew ssh >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+					apt-get -yqq install -o Dpkg::Options::="--force-confnew" ssh >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 					echo -e " [ ${green}DONE${NC} ]"
 				fi
 		    ;;
@@ -128,7 +128,7 @@ InstallBasics() {
 				fi
 				
 				echo -n -e "$IDENTATION_LVL_2 ${BBlack}OPENSSH-SERVER${NC}: Try to install the Jessie Version ... "
-				apt-get -yqq --force-yes --force-confnew install openssh-server -t jessie >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+				apt-get -yqq --force-yes -o Dpkg::Options::="--force-confnew" install openssh-server -t jessie >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 				echo -e " [ ${green}DONE${NC} ] "				
 		    ;;
             "openssh-server-stretch" )
@@ -140,7 +140,7 @@ InstallBasics() {
 				fi
 				
 				echo -n -e "$IDENTATION_LVL_2 ${BBlack}OPENSSH-SERVER${NC}: Try to install the Stretch Version ... "
-				apt-get -yqq --force-yes --force-confnew install openssh-server -t stretch >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+				apt-get -yqq --force-yes -o Dpkg::Options::="--force-confnew" install openssh-server -t stretch >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 				echo -e " [ ${green}DONE${NC} ]"
 		    ;;
 			"openssl-stable" )
@@ -152,7 +152,7 @@ InstallBasics() {
 				fi
 				
 				echo -n -e "$IDENTATION_LVL_2 ${BBlack}OpenSSL${NC}: Try to install the Jessie Version ... "
-				apt-get -yqq --force-yes --force-confnew install openssl -t jessie >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+				apt-get -yqq --force-yes -o Dpkg::Options::="--force-confnew" install openssl -t jessie >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 				echo -e " [ ${green}DONE${NC} ]"
 		    ;;
             "openssl-stretch" )
@@ -164,7 +164,7 @@ InstallBasics() {
 				fi
 				
 				echo -n -e "$IDENTATION_LVL_2 ${BBlack}OpenSSL${NC}: Try to install the Stretch Version ... "
-				apt-get -yqq --force-yes --force-confnew install openssl -t stretch >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+				apt-get -yqq --force-yes -o Dpkg::Options::="--force-confnew" install openssl -t stretch >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 				echo -e " [ ${green}DONE${NC} ]"
 		    ;; 
         esac
