@@ -1,8 +1,8 @@
 #---------------------------------------------------------------------
-# Function: InstallWebServer Debian 8
-#    Install and configure Apache2, php + modules
+# Function: InstallLetsEncrypt Debian 8
+#    Install and configure Let's Encrypt
 #---------------------------------------------------------------------
-InstallWebServer() {
+InstallLetsEncrypt() {
   	START_TIME=$SECONDS
 	  if [ $CFG_WEBSERVER == "apache" ]; then
 	  CFG_NGINX=n

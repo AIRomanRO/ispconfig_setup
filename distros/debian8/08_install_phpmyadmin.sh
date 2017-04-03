@@ -2,7 +2,7 @@
 # Function: InstallPhpMyAdmin Debian 8
 #    Install and configure PHPMyAdmin
 #---------------------------------------------------------------------
-InstallMyAdmin() {
+InstallPHPMyAdmin() {
   	START_TIME=$SECONDS
 	
 	echo "STARTMYADMIN"

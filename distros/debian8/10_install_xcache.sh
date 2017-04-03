@@ -1,8 +1,8 @@
 #---------------------------------------------------------------------
-# Function: InstallWebServer Debian 8
-#    Install and configure Apache2, php + modules
+# Function: InstallXCache Debian 8
+#    Install and configure xcache
 #---------------------------------------------------------------------
-InstallWebServer() {
+InstallXCache() {
   	START_TIME=$SECONDS
 	  if [ $CFG_WEBSERVER == "apache" ]; then
 	  CFG_NGINX=n
