@@ -42,7 +42,7 @@ InstallPHP() {
 				echo -n -e "$IDENTATION_LVL_1 Install PHP version ${BBlack} 5.6 ${NC} .... "
 				echo
 				echo -n -e "$IDENTATION_LVL_2 Prepare PHP Modules list .... "
-				PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES/PHP_SELECTED_VERSION/$PHP_VERSION_ENABLED}"
+				PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES//PHP_SELECTED_VERSION/$PHP_VERSION_ENABLED}"
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo
@@ -54,18 +54,18 @@ InstallPHP() {
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo .... "
-				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/5.6/fpm/php.ini
+				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/5.6/fpm/php.ini  > /dev/null 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest.... "
-				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/5.6/fpm/php.ini
+				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/5.6/fpm/php.ini  > /dev/null 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 		    ;;
             "php7.0" )
 				echo -n -e "$IDENTATION_LVL_1 Install PHP version ${BBlack} 7.0 ${NC} .... "
 				echo
 				echo -n -e "$IDENTATION_LVL_2 Prepare PHP Modules list .... "
-				PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES/PHP_SELECTED_VERSION/$PHP_VERSION_ENABLED}"
+				PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES//PHP_SELECTED_VERSION/$PHP_VERSION_ENABLED}"
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo
@@ -77,18 +77,18 @@ InstallPHP() {
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo .... "
-				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.0/fpm/php.ini
+				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.0/fpm/php.ini  > /dev/null 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest.... "
-				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/7.0/fpm/php.ini
+				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/7.0/fpm/php.ini  > /dev/null 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 		    ;;
             "php7.1" )
 				echo -n -e "$IDENTATION_LVL_1 Install PHP version ${BBlack} 7.1 ${NC} .... "
 				echo
 				echo -n -e "$IDENTATION_LVL_2 Prepare PHP Modules list .... "
-				PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES/PHP_SELECTED_VERSION/$PHP_VERSION_ENABLED}"
+				PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES//PHP_SELECTED_VERSION/$PHP_VERSION_ENABLED}"
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo
@@ -100,11 +100,11 @@ InstallPHP() {
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo .... "
-				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.1/fpm/php.ini
+				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.1/fpm/php.ini  > /dev/null 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest.... "
-				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/7.1/fpm/php.ini
+				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/7.1/fpm/php.ini  > /dev/null 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 		    ;;            
             "none" )
