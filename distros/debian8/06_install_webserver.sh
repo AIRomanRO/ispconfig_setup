@@ -3,7 +3,7 @@
 #    Install and configure Apache2 / NGINX
 #---------------------------------------------------------------------
 InstallWebServer() { 
-  	START_TIME=$SECONDS
+  	START_TIME=$SECONDS 
 	
 	echo -n -e "$IDENTATION_LVL_0 Installing WEB Server... \n"	
 	echo -n -e "$IDENTATION_LVL_2 Selected web Server: "
