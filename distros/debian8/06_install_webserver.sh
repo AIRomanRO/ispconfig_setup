@@ -107,7 +107,7 @@ InstallWebServer() {
 		update-rc.d -f apache2 remove > /dev/null 2>&1
 		echo -e "[ ${green}DONE${NC} ]"
 		
-		echo -n -e "$IDENTATION_LVL_2 Remove Apache2 via ${BBlack}apt${NC}: "
+		echo -n -e "$IDENTATION_LVL_2 Remove Apache2 from ${BBlack}apt${NC}: "
 		apt-get -yqq remove --purge apache2 > /dev/null 2>&1
 		echo -e "[ ${green}DONE${NC} ]"
 
