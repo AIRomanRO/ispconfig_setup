@@ -28,7 +28,7 @@ InstallWebServer() {
 			echo -e "$IDENTATION_LVL_2 Version: ${green} Custom - With OpenSSL 1.1 and ChaCha20-Poly1305 ${NC}"
 		fi
 	else
-		echo -e "${BBlack} NGINX {NC}"
+		echo -e "${red} None {NC}"
 	fi
 	
 	if [ $CFG_WEBSERVER == "apache" ]; then
@@ -88,7 +88,7 @@ InstallWebServer() {
 		service apache2 restart > /dev/null 2>&1
 		echo -e "[ ${green}DONE${NC} ]"
 		
-	else
+	elif [ $CFG_WEBSERVER == "nginx" ]; then
 		
 	    CFG_NGINX=y
 		CFG_APACHE=n
@@ -111,7 +111,8 @@ InstallWebServer() {
 		apt-get -yqq remove --purge apache2 > /dev/null 2>&1
 		echo -e "[ ${green}DONE${NC} ]"
 
-		echo -n -e "$IDENTATION_LVL_1 Installing NGINX and Modules... \n "
+		echo -n -e "$IDENTATION_LVL_1 Installing NGINX and Modules... "
+		echo
 		
 		if [ $CFG_NGINX_VERSION == "default" ]; then
 		
