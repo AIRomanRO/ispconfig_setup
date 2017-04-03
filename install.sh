@@ -93,7 +93,6 @@ CheckLinux
 CheckIPV6
 CheckWhiptailAndInstallIfNeed
 
-echo
 echo -e "$IDENTATION_LVL_0 ${BWhite}System Checking [${NC} ${green}COMPLETED${NC} ${BWhite}]${NC} "
 
 echo -n -e "$IDENTATION_LVL_0 ${BWhite}Please give us five seconds before continue ${NC} ... "
@@ -241,28 +240,33 @@ if [ -f /etc/debian_version ]; then
     InstallBasics 
     InstallSQLServer 
 	
-    if [ "$CFG_SETUP_WEB" == "yes" ] || [ "$CFG_MULTISERVER" == "no" ]; then
+    if [ "$CFG_SETUP_WEB" == "yes" ] || [ "$CFG_MULTISERVER" == "no" ];
+	then
         InstallWebServer
 		
 		InstallPHP
 		
-		InstallMyAdmin
+		InstallPHPMyAdmin
 		
         InstallFTP 
 		
-        if [ "$CFG_QUOTA" == "yes" ]; then
+        if [ "$CFG_QUOTA" == "yes" ]; 
+		then
     	    InstallQuota 
         fi
 		
-        if [ "$CFG_JKIT" == "yes" ]; then
+        if [ "$CFG_JKIT" == "yes" ]; 
+		then
     	    InstallJailkit 
         fi
 		
-        if [ "$CFG_HHVM" == "yes" ]; then
+        if [ "$CFG_HHVM" == "yes" ]; 
+		then
     	    InstallHHVM
         fi
 		
-        if [ "$CFG_METRONOM" == "yes" ]; then
+        if [ "$CFG_METRONOM" == "yes" ]; 
+		then
     	    InstallMetronom 
         fi
 		
