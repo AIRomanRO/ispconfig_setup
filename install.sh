@@ -92,6 +92,7 @@ CheckLinux
 CheckIPV6
 CheckWhiptailAndInstallIfNeed
 
+echo
 echo -e "$IDENTATION_LVL_0 ${BWhite}System Checking [${NC} ${green}COMPLETED${NC} ${BWhite}]${NC} "
 
 echo -n -e "$IDENTATION_LVL_0 ${BWhite}Please give us five seconds before continue ${NC} ... "
@@ -241,8 +242,11 @@ if [ -f /etc/debian_version ]; then
 	
     if [ "$CFG_SETUP_WEB" == "yes" ] || [ "$CFG_MULTISERVER" == "no" ]; then
         InstallWebServer
+		
 		InstallPHP
-		InstallPHPMyAdmin
+		
+		InstallPhpMyAdmin
+		
         InstallFTP 
 		
         if [ "$CFG_QUOTA" == "yes" ]; then

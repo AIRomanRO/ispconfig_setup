@@ -1,13 +1,18 @@
 #---------------------------------------------------------------------
-# Function: InstallPHPMyAdmin Debian 8
+# Function: InstallPhpMyAdmin Debian 8
 #    Install and configure PHPMyAdmin
 #---------------------------------------------------------------------
-InstallPHPMyAdmin() {
+InstallPhpMyAdmin() {
   	START_TIME=$SECONDS
 	
+	echo "STARTMYADMIN"
 	echo $CFG_MYSQL_ROOT_PWD
-	    	MeasureTimeDuration $START_TIME
-  exit 1
+	echo
+	
+	MeasureTimeDuration $START_TIME
+	
+  exit 1;
+  
 	# if [ $CFG_PHPMYADMIN == "yes" ]; then
         # while [ "x$CFG_PHPMYADMIN_VERSION" == "x" ]
 	    # do
@@ -25,7 +30,7 @@ InstallPHPMyAdmin() {
 		echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | debconf-set-selections
 		# - DISABLED DUE TO A BUG IN DBCONFIG - echo "phpmyadmin phpmyadmin/dbconfig-install boolean false" | debconf-set-selections
 		echo "dbconfig-common dbconfig-common/dbconfig-install boolean false" | debconf-set-selections
-		
+		fi
 				
 	  if [ $CFG_PHPMYADMIN == "yes" ]; then
 		echo "==========================================================================================="
