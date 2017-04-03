@@ -35,57 +35,57 @@ InstallWebServer() {
 		CFG_NGINX=n
 		CFG_APACHE=y
 		echo -n -e "$IDENTATION_LVL_1 Installing Apache and Modules... "		
-		apt-get -yqq install apache2 apache2.2-common apache2-doc apache2-mpm-prefork apache2-utils libapache2-mod-fastcgi libapache2-mod-fcgid apache2-suexec libapache2-mod-passenger libapache2-mod-python libexpat1 ssl-cert libruby > /dev/null 2>&1  
+		apt-get -yqq install apache2 apache2.2-common apache2-doc apache2-mpm-prefork apache2-utils libapache2-mod-fastcgi libapache2-mod-fcgid apache2-suexec libapache2-mod-passenger libapache2-mod-python libexpat1 ssl-cert libruby >> $PROGRAMS_INSTALL_LOG_FILES 2>&1  
 		echo -e "[ ${green}DONE${NC} ]\n"		
 	  
 		echo -n "$IDENTATION_LVL_1 Activating Apache2 Modules: "
 
 		echo -n -e "$IDENTATION_LVL_2 suexec: "
-		a2enmod suexec > /dev/null 2>&1
+		a2enmod suexec >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		echo -e "[ ${green}DONE${NC} ] "
 
 		echo -n -e "$IDENTATION_LVL_2 rewrite: "
-		a2enmod rewrite > /dev/null 2>&1
+		a2enmod rewrite >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		echo -e "[ ${green}DONE${NC} ] "
 
 		echo -n -e "$IDENTATION_LVL_2 ssl: "
-		a2enmod ssl > /dev/null 2>&1
+		a2enmod ssl >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		echo -e "[ ${green}DONE${NC} ] "
 
 		echo -n -e "$IDENTATION_LVL_2 actions: "
-		a2enmod actions > /dev/null 2>&1
+		a2enmod actions >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		echo -e "[ ${green}DONE${NC} ] "
 
 		echo -n -e "$IDENTATION_LVL_2 include: "
-		a2enmod include > /dev/null 2>&1
+		a2enmod include >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		echo -e "[ ${green}DONE${NC} ] "
 
 		echo -n -e "$IDENTATION_LVL_2 dav_fs: "
-		a2enmod dav_fs > /dev/null 2>&1
+		a2enmod dav_fs >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		echo -e "[ ${green}DONE${NC} ] "
 
 		echo -n -e "$IDENTATION_LVL_2 dav: "
-		a2enmod dav > /dev/null 2>&1
+		a2enmod dav >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		echo -e "[ ${green}DONE${NC} ] "
 
 		echo -n -e "$IDENTATION_LVL_2 auth_digest: "
-		a2enmod auth_digest > /dev/null 2>&1
+		a2enmod auth_digest >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		echo -e "[ ${green}DONE${NC} ] "
 
 		echo -n -e "$IDENTATION_LVL_2 fastcgi: "
-		a2enmod fastcgi > /dev/null 2>&1
+		a2enmod fastcgi >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		echo -e "[ ${green}DONE${NC} ] "
 
 		echo -n -e "$IDENTATION_LVL_2 alias: "
-		a2enmod alias > /dev/null 2>&1
+		a2enmod alias >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		echo -e "[ ${green}DONE${NC} ] "
 
 		echo -n -e "$IDENTATION_LVL_2 fcgid: "
-		a2enmod fcgid > /dev/null 2>&1
+		a2enmod fcgid >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		echo -e "[ ${green}DONE${NC} ] "
 
 		echo -n -e "$IDENTATION_LVL_1 Restart Apache Service... "
-		service apache2 restart > /dev/null 2>&1
+		service apache2 restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		echo -e "[ ${green}DONE${NC} ]"
 		
 	elif [ $CFG_WEBSERVER == "nginx" ]; then
@@ -96,19 +96,19 @@ InstallWebServer() {
 		echo -n -e "$IDENTATION_LVL_1 Stop And Remove Apache ... \n"
 		
 		echo -n -e "$IDENTATION_LVL_2 Stop Apache2 Service: "
-		service apache2 stop > /dev/null 2>&1
+		service apache2 stop >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		echo -e "[ ${green}DONE${NC} ]"
 		
 		echo -n -e "$IDENTATION_LVL_2 Disable Apache2 Service from ${BBlack}systemctl${NC}: "
-		systemctl disable apache2 > /dev/null 2>&1
+		systemctl disable apache2 >> $PROGRAMS_INSTALL_LOG_FILES 2>&1 
 		echo -e "[ ${green}DONE${NC} ]"
 		
 		echo -n -e "$IDENTATION_LVL_2 Remove Apache2 Service from ${BBlack}rc.d${NC}: "
-		update-rc.d -f apache2 remove > /dev/null 2>&1
+		update-rc.d -f apache2 remove >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		echo -e "[ ${green}DONE${NC} ]"
 		
 		echo -n -e "$IDENTATION_LVL_2 Remove Apache2 from ${BBlack}apt${NC}: "
-		apt-get -yqq remove --purge apache2 > /dev/null 2>&1
+		apt-get -yqq remove --purge apache2 >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		echo -e "[ ${green}DONE${NC} ]"
 
 		echo -n -e "$IDENTATION_LVL_1 Installing NGINX and Modules... "
@@ -117,13 +117,13 @@ InstallWebServer() {
 		if [ $CFG_NGINX_VERSION == "default" ]; then
 		
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green} OS Default ${NC}"
-			apt-get -yqq --force-yes install nginx -t stable > /dev/null 2>&1
+			apt-get -yqq --force-yes install nginx -t stable >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			echo -e "[ ${green}DONE${NC} ]"
 			
 		elif [ $CFG_NGINX_VERSION == "nginx" ]; then
 		
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green} Official - nginx.org ${NC}"
-			apt-get -yqq --force-yes install nginx > /dev/null 2>&1
+			apt-get -yqq --force-yes install nginx >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			echo -e "[ ${green}DONE${NC} ]"
 			
 		elif [ $CFG_NGINX_VERSION == "dotdeb" ]; then
@@ -131,21 +131,21 @@ InstallWebServer() {
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green} DotDeb.org - with 'full' HTTP2 ${NC}"
 			
 			echo -n -e "$IDENTATION_LVL_3 ${BBlack}Build Dependencies${NC}"
-			apt-get build-dep nginx nginx-full -t jessie-nginx-http2 > /dev/null 2>&1
+			apt-get build-dep nginx nginx-full -t jessie-nginx-http2 >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			echo -e " [ ${green}DONE${NC} ]"
 			
 			echo -n -e "$IDENTATION_LVL_3 ${BBlack}Install ${BWhite}libssl1.0.0${BBlack} from ${BWhite}jessie-backports ${NC}"
-			apt-get install libssl1.0.0/jessie-backports libssl-dev/jessie-backports openssl/jessie-backports > /dev/null 2>&1
+			apt-get install libssl1.0.0/jessie-backports libssl-dev/jessie-backports openssl/jessie-backports >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			echo -e " [ ${green}DONE${NC} ]"
 			
 			echo -n -e "$IDENTATION_LVL_3 ${BBlack}Install ${BWhite}nginx${BBlack} & ${BWhite}nginx-full${NC}"
-			apt-get -yqq --force-yes install nginx nginx-full -t jessie-nginx-http2 > /dev/null 2>&1
+			apt-get -yqq --force-yes install nginx nginx-full -t jessie-nginx-http2 >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			echo -e " [ ${green}DONE${NC} ]"
 			
 		elif [ $CFG_NGINX_VERSION == "stretch" ]; then
 		
 			echo -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green} Debian Stretch - with HTTP2 ${NC}"
-			apt-get -yqq --force-yes install nginx -t stretch > /dev/null 2>&1
+			apt-get -yqq --force-yes install nginx -t stretch >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			echo -e " [ ${green}DONE${NC} ]"
 			
 		elif [ $CFG_NGINX_VERSION == "custom" ]; then
@@ -157,11 +157,11 @@ InstallWebServer() {
 			echo -e " [ ${green}DONE${NC} ]"
 			
 			echo -n -e "$IDENTATION_LVL_2 Install OpenSSL v1.1"
-			apt-get -yqq --force-yes install openssl libssl-dev -t stretch > /dev/null 2>&1			
+			apt-get -yqq --force-yes install openssl libssl-dev -t stretch >> $PROGRAMS_INSTALL_LOG_FILES 2>&1			
 			echo -e " [ ${green}DONE${NC} ]"
 			
 			echo -n -e "$IDENTATION_LVL_2 Get NGINX sources"
-			apt-get source nginx > /dev/null 2>&1			
+			apt-get source nginx >> $PROGRAMS_INSTALL_LOG_FILES 2>&1			
 			echo -e "[ ${green}DONE${NC} ]"
 			
 			echo -n -e "$IDENTATION_LVL_2 Untar Nginx Sources"
@@ -177,7 +177,7 @@ InstallWebServer() {
 			echo -e " [ ${green}DONE${NC} ]"
 			
 			echo -n -e "$IDENTATION_LVL_2 Debuild Nginx Sources"
-			debuild -uc -us > /dev/null 2>&1		
+			debuild -uc -us >> $PROGRAMS_INSTALL_LOG_FILES 2>&1		
 			echo -e " [ ${green}DONE${NC} ]"
 			
 			echo -n -e "$IDENTATION_LVL_2 Go to main Nginx Sources folder"
@@ -185,7 +185,7 @@ InstallWebServer() {
 			echo -e " [ ${green}DONE${NC} ]"
 			
 			echo -n -e "$IDENTATION_LVL_2 Install the builded Version"
-			dpkg -i nginx_*.deb > /dev/null 2>&1	
+			dpkg -i nginx_*.deb >> $PROGRAMS_INSTALL_LOG_FILES 2>&1	
 			echo -e " [ ${green}DONE${NC} ]"
 			
 			echo -n -e "$IDENTATION_LVL_2 Go back to previous working directory"
@@ -213,7 +213,7 @@ InstallWebServer() {
 		echo -e "[ ${green}DONE${NC} ]"
 		
 		echo -n -e "$IDENTATION_LVL_1 Restart Nginx Service... "
-		service nginx restart > /dev/null 2>&1
+		service nginx restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		echo -e "[ ${green}DONE${NC} ]"
 	fi
 	

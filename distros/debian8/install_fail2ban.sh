@@ -4,7 +4,7 @@
 #---------------------------------------------------------------------
 InstallFail2ban() {
   echo -n "Installing fail2ban... "
-  apt-get -y install fail2ban > /dev/null 2>&1
+  apt-get -y install fail2ban >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 
 
   case $CFG_MTA in
@@ -108,7 +108,7 @@ EOF
 
 echo "ignoreregex =" >> /etc/fail2ban/filter.d/postfix-sasl.conf
 
-  service fail2ban restart > /dev/null 2>&1
+  service fail2ban restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
   echo -e "[${green}DONE${NC}]\n"
 }
 

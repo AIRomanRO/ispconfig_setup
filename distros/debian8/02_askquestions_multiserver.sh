@@ -5,7 +5,7 @@
 
 AskQuestionsMultiserver(){
   	echo "Installing pre-required packages"
-	  [ -f /bin/whiptail ] && echo -e "whiptail found: ${green}OK${NC}\n"  || apt-get -y install whiptail > /dev/null 2>&1
+	  [ -f /bin/whiptail ] && echo -e "whiptail found: ${green}OK${NC}\n"  || apt-get -y install whiptail >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 
 	  while [ "x$CFG_SQLSERVER" == "x" ]
           do

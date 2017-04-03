@@ -62,6 +62,7 @@ IDENTATION_LVL_3="       *"
 echo -n -e "$IDENTATION_LVL_0 ${BWhite}Setup Logging${NC}"
 exec > >(tee -i /var/log/ispconfig_setup.log)
 exec 2>&1
+PROGRAMS_INSTALL_LOG_FILES=/var/log/ispconfig_setup_programs.log
 echo -e " [ ${green}DONE${NC} ] "
 
 

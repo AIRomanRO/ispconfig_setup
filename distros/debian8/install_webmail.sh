@@ -21,7 +21,7 @@ InstallWebmail() {
 	    echo "deb-src http://http.debian.net/debian/ jessie-backports main contrib non-free" >> /etc/apt/sources.list
 	  fi
 	  apt-get -qq update
-	  apt-get -yqq -t jessie-backports install roundcube roundcube-mysql roundcube-plugins > /dev/null 2>&1
+	  apt-get -yqq -t jessie-backports install roundcube roundcube-mysql roundcube-plugins >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 	  if [ $CFG_WEBSERVER == "apache" ]; then
 		mv /etc/roundcube/apache.conf /etc/roundcube/apache.conf.default
 		cat << "EOF" > /etc/roundcube/apache.conf
@@ -206,7 +206,7 @@ EOF
 	"squirrelmail")
 	  if [ $CFG_WEBSERVER == "apache" ]; then
 	    echo "dictionaries-common dictionaries-common/default-wordlist select american (American English)" | debconf-set-selections
-	    apt-get -yqq install squirrelmail wamerican > /dev/null 2>&1
+	    apt-get -yqq install squirrelmail wamerican >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 	    ln -s /etc/squirrelmail/apache.conf /etc/apache2/conf-available/squirrelmail.conf
 	    a2enconf squirrelmail
 	    sed -i 1d /etc/squirrelmail/apache.conf
@@ -236,9 +236,9 @@ EOF
 	;;
   esac
   if [ $CFG_WEBSERVER == "apache" ]; then
-	  service apache2 restart > /dev/null 2>&1
+	  service apache2 restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
   else
-	  service nginx restart > /dev/null 2>&1
+	  service nginx restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
   fi
   echo -e "[${green}DONE${NC}]\n"
 }

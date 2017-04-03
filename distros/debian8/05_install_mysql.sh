@@ -12,7 +12,7 @@ InstallSQLServer() {
 		
 			echo "mysql-server-5.5 mysql-server/root_password password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
 			echo "mysql-server-5.5 mysql-server/root_password_again password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
-			apt-get -y install mysql-client mysql-server > /dev/null 2>&1
+			apt-get -y install mysql-client mysql-server >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			sed -i 's/bind-address		= 127.0.0.1/#bind-address		= 127.0.0.1/' /etc/mysql/my.cnf	
 			echo "
 	* This is neccesary for ISPConfig installation
@@ -35,22 +35,22 @@ InstallSQLServer() {
 			echo "mysql-apt-config mysql-apt-config/select-preview select Disabled" | debconf-set-selections
 			echo -e " [ ${green}DONE${NC} ] "
 
-			#wget https://repo.mysql.com/mysql-apt-config_0.8.3-1_all.deb && dpkg -i mysql-apt-config_0.8.3-1_all.deb > /dev/null		
-			#apt-get -qq update > /dev/null 2>&1
+			#wget https://repo.mysql.com/mysql-apt-config_0.8.3-1_all.deb && dpkg -i mysql-apt-config_0.8.3-1_all.deb >> $PROGRAMS_INSTALL_LOG_FILES		
+			#apt-get -qq update >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			
 			echo -n -e "$IDENTATION_LVL_1 Run the MySql APT Config ... "
-			dpkg -i mysql-apt-config-all.deb > /dev/null 2>&1	
+			dpkg -i mysql-apt-config-all.deb >> $PROGRAMS_INSTALL_LOG_FILES 2>&1	
 			echo -e " [ ${green}DONE${NC} ] "
 			
 			echo -n -e "$IDENTATION_LVL_1 Update the Packages List ... "
-			apt-get -qq update > /dev/null 2>&1
+			apt-get -qq update >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			echo -e " [ ${green}DONE${NC} ] "		
 			
 			echo "mysql-community-server mysql-community-server/root-pass password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
 			echo "mysql-community-server mysql-community-server/re-root-pass password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
 			
 			echo -n -e "$IDENTATION_LVL_1 Install MySQL Server & Client ... "
-			apt-get -qq install mysql-server mysql-client > /dev/null
+			apt-get -qq install mysql-server mysql-client >> $PROGRAMS_INSTALL_LOG_FILES
 			echo -e " [ ${green}DONE${NC} ] "
 			
 			echo "[mysqld]
@@ -75,11 +75,11 @@ InstallSQLServer() {
 			echo -e " [ ${green}DONE${NC} ] "
 			
 			echo -n -e "$IDENTATION_LVL_1 Run the MySql APT Config ... "
-			dpkg -i mysql-apt-config-all.deb > /dev/null 2>&1	
+			dpkg -i mysql-apt-config-all.deb >> $PROGRAMS_INSTALL_LOG_FILES 2>&1	
 			echo -e " [ ${green}DONE${NC} ]"
 			
 			echo -n -e "$IDENTATION_LVL_1 Update the Packages List ... "
-			apt-get -qq update > /dev/null 2>&1
+			apt-get -qq update >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			echo -e " [ ${green}DONE${NC} ] "
 			
 			echo -n -e "$IDENTATION_LVL_1 Set the selected MySQL Password to MySQL Installer ... "
@@ -88,7 +88,7 @@ InstallSQLServer() {
 			echo -e " [ ${green}DONE${NC} ] "
 			
 			echo -n -e "$IDENTATION_LVL_1 Install MySQL Server & Client ... "
-			apt-get -yqq install mysql-server mysql-client > /dev/null
+			apt-get -yqq install mysql-server mysql-client >> $PROGRAMS_INSTALL_LOG_FILES
 			echo -e " [ ${green}DONE${NC} ] "
 			
 			echo -n -e "$IDENTATION_LVL_1 Change the SQL MODE ... "
@@ -103,7 +103,7 @@ InstallSQLServer() {
 		fi
 		
 		echo -n -e "$IDENTATION_LVL_1 Restart the MySQL Service ... "
-		service mysql restart > /dev/null
+		service mysql restart >> $PROGRAMS_INSTALL_LOG_FILES
 		echo -e "[${green}DONE${NC}] "
   
     elif [ $CFG_SQLSERVER == "MariaDB" ]; then
@@ -111,7 +111,7 @@ InstallSQLServer() {
 		echo -n "$IDENTATION_LVL_0 Installing MariaDB... "
 		echo "mysql-server-5.5 mysql-server/root_password password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
 		echo "mysql-server-5.5 mysql-server/root_password_again password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
-		apt-get -y install mariadb-client mariadb-server > /dev/null 2>&1
+		apt-get -y install mariadb-client mariadb-server >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		sed -i 's/bind-address		= 127.0.0.1/#bind-address		= 127.0.0.1/' /etc/mysql/my.cnf
 		service mysql restart /dev/null 2>&1
 		echo -e "[${green}DONE${NC}]\n"

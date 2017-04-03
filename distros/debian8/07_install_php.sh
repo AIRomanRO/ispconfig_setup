@@ -43,15 +43,15 @@ InstallPHP() {
 				echo -e " [ ${green}DONE${NC} ] "
 
 				echo -n -e "$IDENTATION_LVL_2 Install PHP Modules list ... "
-				apt-get -yqq --force-yes install $PARSED_PHP_MODULE_LIST > /dev/null 2>&1
+				apt-get -yqq --force-yes install $PARSED_PHP_MODULE_LIST >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo ... "
-				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/5.6/fpm/php.ini > /dev/null 2>&1
+				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/5.6/fpm/php.ini >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest ... "
-				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/5.6/fpm/php.ini > /dev/null 2>&1
+				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/5.6/fpm/php.ini >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				ANY_VERSION_INSTALLED=true
@@ -64,15 +64,15 @@ InstallPHP() {
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Install PHP Modules list ... "
-				apt-get -yqq --force-yes install $PARSED_PHP_MODULE_LIST > /dev/null 2>&1
+				apt-get -yqq --force-yes install $PARSED_PHP_MODULE_LIST >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo ... "
-				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.0/fpm/php.ini > /dev/null 2>&1
+				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.0/fpm/php.ini >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest ... "
-				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/7.0/fpm/php.ini > /dev/null 2>&1
+				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/7.0/fpm/php.ini >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				ANY_VERSION_INSTALLED=true
@@ -85,15 +85,15 @@ InstallPHP() {
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Install PHP Modules list ... "
-				apt-get -yqq --force-yes install $PARSED_PHP_MODULE_LIST > /dev/null 2>&1
+				apt-get -yqq --force-yes install $PARSED_PHP_MODULE_LIST >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo ... "
-				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.1/fpm/php.ini > /dev/null 2>&1
+				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.1/fpm/php.ini >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest ... "
-				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/7.1/fpm/php.ini > /dev/null 2>&1
+				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/7.1/fpm/php.ini >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				ANY_VERSION_INSTALLED=true
@@ -102,9 +102,9 @@ InstallPHP() {
 				if [ $ANY_VERSION_INSTALLED == false ]; then
 					echo -n "$IDENTATION_LVL_1 Installing basic php modules for ispconfig ... "
 					if [ $CFG_WEBSERVER == "apache" ]; then
-						apt-get -yqq install php7.0 libapache2-mod-php7.0 php7.0-cli php7.0-mysql php7.0-mcrypt > /dev/null 2>&1
+						apt-get -yqq install php7.0 libapache2-mod-php7.0 php7.0-cli php7.0-mysql php7.0-mcrypt >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 					elif [ $CFG_WEBSERVER == "nginx" ]; then
-						apt-get -yqq install php7.0-fpm php7.0-cli php7.0-mysql php7.0-mcrypt > /dev/null 2>&1
+						apt-get -yqq install php7.0-fpm php7.0-cli php7.0-mysql php7.0-mcrypt >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 					fi
 					echo -e " [ ${green}DONE${NC} ]"
 				fi
@@ -114,7 +114,7 @@ InstallPHP() {
 
 	
 	echo -n "$IDENTATION_LVL_1 Install needed Programs for PHP and Web Server ... "
-	apt-get -yqq install --force-yes $RAW_ADITIONAL_PROGRAMS > /dev/null 2>&1
+	apt-get -yqq install --force-yes $RAW_ADITIONAL_PROGRAMS >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 	echo -e " [ ${green}DONE${NC} ]"
   
   
@@ -123,19 +123,19 @@ InstallPHP() {
 	if [ $CFG_WEBSERVER == "apache" ]; then
 	
 		echo -n -e "$IDENTATION_LVL_2 Restart Apache2 Web Server ... "
-		service apache2 restart > /dev/null 2>&1		
+		service apache2 restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1		
 		echo -e " [ ${green}DONE${NC} ] "
 		
 	elif [ $CFG_WEBSERVER == "nginx" ]; then
 	
 		echo -n -e "$IDENTATION_LVL_2 Restart NGINX Web Server ... "
-		service nginx restart > /dev/null 2>&1
+		service nginx restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		echo -e " [ ${green}DONE${NC} ] "
 		
 		echo -n -e "$IDENTATION_LVL_2 Restart PHP-FPM ... "
-		service php5.6-fpm restart > /dev/null 2>&1
-		service php7.0-fpm restart > /dev/null 2>&1
-		service php7.1-fpm restart > /dev/null 2>&1
+		service php5.6-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		service php7.0-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		service php7.1-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		echo -e " [ ${green}DONE${NC} ] "
 		
 	fi

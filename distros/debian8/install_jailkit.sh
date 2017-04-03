@@ -8,14 +8,14 @@ JKV="2.19"  #Jailkit Version -> Maybe this can be automated
 
 InstallJailkit() {
   echo -n "Installing Jailkit... "
-  apt-get -y install build-essential autoconf automake libtool flex bison debhelper binutils > /dev/null 2>&1
+  apt-get -y install build-essential autoconf automake libtool flex bison debhelper binutils >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
   cd /tmp
   wget -q http://olivier.sessink.nl/jailkit/jailkit-$JKV.tar.gz
   tar xfz jailkit-$JKV.tar.gz
   cd jailkit-$JKV
-  ./debian/rules binary > /dev/null 2>&1
+  ./debian/rules binary >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
   cd ..
-  dpkg -i jailkit_$JKV-1_*.deb > /dev/null 2>&1
+  dpkg -i jailkit_$JKV-1_*.deb >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
   rm -rf jailkit-$JKV
   echo -e "[${green}DONE${NC}]\n"
 }

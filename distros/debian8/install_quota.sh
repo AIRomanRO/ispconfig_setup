@@ -4,7 +4,7 @@
 #---------------------------------------------------------------------
 InstallQuota() {
   echo -n "Installing and initializing Quota (this might take while)... "
-  apt-get -qqy install quota quotatool > /dev/null 2>&1
+  apt-get -qqy install quota quotatool >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 
   if ! [ -f /proc/user_beancounters ]; then
 
@@ -15,8 +15,8 @@ InstallQuota() {
 		sed -i '/tmpfs/!s/defaults/defaults,usrjquota=aquota.user,grpjquota=aquota.group,jqfmt=vfsv0/' /etc/fstab
 	  fi
 	  mount -o remount /
-	  quotacheck -avugm > /dev/null 2>&1
-	  quotaon -avug > /dev/null 2>&1
+	  quotacheck -avugm >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+	  quotaon -avug >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 
   fi
   echo -e "[${green}DONE${NC}]\n"
