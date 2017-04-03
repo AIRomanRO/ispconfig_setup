@@ -7,7 +7,6 @@ InstallPHP() {
 	
 	echo -n -e "$IDENTATION_LVL_0 Installing PHP... \n"	
 	echo -n -e "$IDENTATION_LVL_2 Selected Versions: ${green}"$CFG_PHP_VERSION"${NC}\n"
-
 	
 	echo -n -e "$IDENTATION_LVL_1 Build PHP modules raw list ... "
 	PHP_RAW_MODULES="PHP_SELECTED_VERSION-mysql PHP_SELECTED_VERSION-curl PHP_SELECTED_VERSION-mcrypt PHP_SELECTED_VERSION-mbstring PHP_SELECTED_VERSION-sqlite3 PHP_SELECTED_VERSION-soap"
@@ -35,6 +34,7 @@ InstallPHP() {
 	echo $PHP_RAW_MODULES
 	echo
 	
+	ANY_VERSION_INSTALLED=false
 	for PHP_VERSION_ENABLED in ${CFG_PHP_VERSION[@]};
     do
         case $PHP_VERSION_ENABLED in
@@ -44,13 +44,9 @@ InstallPHP() {
 				echo -n -e "$IDENTATION_LVL_2 Prepare PHP Modules list ... "
 				PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES//PHP_SELECTED_VERSION/$PHP_VERSION_ENABLED}"
 				echo -e " [ ${green}DONE${NC} ] "
-				
-				echo
-				echo $PARSED_PHP_MODULE_LIST
-				echo 
-				
+
 				echo -n -e "$IDENTATION_LVL_2 Install PHP Modules list ... "
-				apt-get -yqq --force-yes install "$PARSED_PHP_MODULE_LIST"
+				apt-get -yqq --force-yes install $PARSED_PHP_MODULE_LIST > /dev/null 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo ... "
@@ -60,6 +56,8 @@ InstallPHP() {
 				echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest ... "
 				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/5.6/fpm/php.ini > /dev/null 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
+				
+				ANY_VERSION_INSTALLED=true
 		    ;;
             "php7.0" )
 				echo -n -e "$IDENTATION_LVL_1 Install PHP version ${BBlack} 7.0 ${NC}:"
@@ -68,12 +66,8 @@ InstallPHP() {
 				PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES//PHP_SELECTED_VERSION/$PHP_VERSION_ENABLED}"
 				echo -e " [ ${green}DONE${NC} ] "
 				
-				echo
-				echo $PARSED_PHP_MODULE_LIST
-				echo 
-				
 				echo -n -e "$IDENTATION_LVL_2 Install PHP Modules list ... "
-				apt-get -yqq --force-yes install "$PARSED_PHP_MODULE_LIST"
+				apt-get -yqq --force-yes install $PARSED_PHP_MODULE_LIST > /dev/null 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo ... "
@@ -83,6 +77,8 @@ InstallPHP() {
 				echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest ... "
 				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/7.0/fpm/php.ini > /dev/null 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
+				
+				ANY_VERSION_INSTALLED=true
 		    ;;
             "php7.1" )
 				echo -n -e "$IDENTATION_LVL_1 Install PHP version ${BBlack} 7.1 ${NC}:"
@@ -91,12 +87,8 @@ InstallPHP() {
 				PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES//PHP_SELECTED_VERSION/$PHP_VERSION_ENABLED}"
 				echo -e " [ ${green}DONE${NC} ] "
 				
-				echo
-				echo $PARSED_PHP_MODULE_LIST
-				echo 
-				
 				echo -n -e "$IDENTATION_LVL_2 Install PHP Modules list ... "
-				apt-get -yqq --force-yes install "$PARSED_PHP_MODULE_LIST"
+				apt-get -yqq --force-yes install $PARSED_PHP_MODULE_LIST > /dev/null 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo ... "
@@ -106,29 +98,50 @@ InstallPHP() {
 				echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest ... "
 				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/7.1/fpm/php.ini > /dev/null 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
+				
+				ANY_VERSION_INSTALLED=true
 		    ;;            
             "none" )
-				echo -n "$IDENTATION_LVL_1 Installing basic php modules for ispconfig ... "
-				apt-get -yqq install php7.0-fpm php7.0-cli php7.0-mysql php7.0-mcrypt > /dev/null 2>&1
-				echo -e "[ ${green}DONE${NC} ]"
+				if [ $ANY_VERSION_INSTALLED == false ]; then
+					echo -n "$IDENTATION_LVL_1 Installing basic php modules for ispconfig ... "
+					if [ $CFG_WEBSERVER == "apache" ]; then
+						apt-get -yqq install php7.0 libapache2-mod-php7.0 php7.0-cli php7.0-mysql php7.0-mcrypt > /dev/null 2>&1
+					elif [ $CFG_WEBSERVER == "nginx" ]; then
+						apt-get -yqq install php7.0-fpm php7.0-cli php7.0-mysql php7.0-mcrypt > /dev/null 2>&1
+					fi
+					echo -e " [ ${green}DONE${NC} ]"
+				fi
 		    ;;
         esac
     done
-	
 
-			#service php7.0-fpm reload
 	
+	echo -n "$IDENTATION_LVL_1 Install needed Programs for PHP and Web Server ... "
+	apt-get -yqq install --force-yes $RAW_ADITIONAL_PROGRAMS > /dev/null 2>&1
+	echo -e " [ ${green}DONE${NC} ]"
+  
+  
+	echo -n -e "$IDENTATION_LVL_1 Restart Web Server and PHP ... "
+	echo
+	if [ $CFG_WEBSERVER == "apache" ]; then
 	
+		echo -n -e "$IDENTATION_LVL_2 Restart Apache2 Web Server ... "
+		service apache2 restart > /dev/null 2>&1		
+		echo -e " [ ${green}DONE${NC} ] "
+		
+	elif [ $CFG_WEBSERVER == "nginx" ]; then
 	
-	 #echo -n "Installing needed Programs for PHP and Apache... "
-  #apt-get -yqq install --force-yes  RAW_ADITIONAL_PROGRAMS  > /dev/null 2>&1
-  #echo -e "[${green}DONE${NC}]\n"
- 
-  #phpenmod mcrypt
-  #phpenmod mbstring
-
-
+		echo -n -e "$IDENTATION_LVL_2 Restart NGINX Web Server ... "
+		service nginx restart > /dev/null 2>&1
+		echo -e " [ ${green}DONE${NC} ] "
+		
+		echo -n -e "$IDENTATION_LVL_2 Restart PHP-FPM ... "
+		service php5.6-fpm restart > /dev/null 2>&1
+		service php7.0-fpm restart > /dev/null 2>&1
+		service php7.1-fpm restart > /dev/null 2>&1
+		echo -e " [ ${green}DONE${NC} ] "
+		
+	fi
+	
   	MeasureTimeDuration $START_TIME
-	
-	exit 1;
 }
