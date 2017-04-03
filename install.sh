@@ -13,6 +13,8 @@
 #
 #---------------------------------------------------------------------
 
+SCRIPT_EXECUTION_START_TIME=$SECONDS
+
 clear
 echo "Welcome to ISPConfig Setup Script v.2.3"
 echo "This software was initially developed by Temporini Matteo"
@@ -94,7 +96,9 @@ echo -e "$IDENTATION_LVL_0 ${BWhite}System Checking [${NC} ${green}COMPLETED${NC
 
 echo -n -e "$IDENTATION_LVL_0 ${BWhite}Please give us five seconds before continue ${NC} ... "
 sleep 5
-echo -e " [${NC} ${green}Thanks!${NC} ${BWhite}]"
+echo -e " [${NC} ${green}Thanks !${NC} ${BWhite}] "
+
+MeasureTimeDuration $SCRIPT_EXECUTION_START_TIME
 
 #---------------------------------------------------------------------
 # Main program [ main() ]
@@ -102,15 +106,15 @@ echo -e " [${NC} ${green}Thanks!${NC} ${BWhite}]"
 #---------------------------------------------------------------------
 
 echo -e -n "$IDENTATION_LVL_0 ${BWhite}Confirm if we detected the correct Informations:${NC} "
-echo
 
+echo
 if [ -n "$PRETTY_NAME" ]; then
 	echo -n -e "$IDENTATION_LVL_1 Linux Distribution is: ${green}" $PRETTY_NAME "${NC}"
 else
 	echo -n -e "$IDENTATION_LVL_1 Linux Distribution is: ${green}" $ID-$VERSION_ID "${NC}"
 fi
-echo
 
+echo
 if [ $IPV6_ENABLED == true ]; then
     echo -n -e "$IDENTATION_LVL_1 IPV6 enabled: ${green} YES ${NC}"
 	echo
@@ -122,14 +126,14 @@ else
 	echo
 	echo -n -e "$IDENTATION_LVL_1 IPV4: ${green} $CFG_IPV4 ${NC} - is possible to be incorrect - we don't use it anywhere in configuration"
 fi
-echo
 
+echo
 echo -n -e "$IDENTATION_LVL_1 Host Name FQDN: ${green} $CFG_HOSTNAME_FQDN ${NC}"
-echo
 
+echo
 echo -n -e "$IDENTATION_LVL_1 DISTRO: ${green} $DISTRO ${NC}"
-echo
 
+echo
 if [ -n "$DISTRO" ]; then
 	echo -e -n "$IDENTATION_LVL_0 ${BWhite}Are this Informations Correct ? ${NC}"
 	echo
@@ -282,7 +286,7 @@ if [ -f /etc/debian_version ]; then
     InstallISPConfig
     InstallFix
 	
-    echo -e "${green}Well done ISPConfig installed and configured correctly :D ${NC}"
+    echo -e "${green}Well done ISPConfig seems installed and configured correctly :D ${NC}"
     echo
 	
 	echo "Now you can connect to your ISPConfig installation at https://$CFG_HOSTNAME_FQDN:$CFG_ISPONCFIG_PORT or https://IP_ADDRESS:$CFG_ISPONCFIG_PORT"
