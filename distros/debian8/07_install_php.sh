@@ -9,7 +9,7 @@ InstallPHP() {
 	echo -n -e "$IDENTATION_LVL_2 Selected Versions: ${green}"$CFG_PHP_VERSION"${NC}\n"
 
 	
-	echo -n -e "$IDENTATION_LVL_1 Build PHP modules raw list .... "
+	echo -n -e "$IDENTATION_LVL_1 Build PHP modules raw list ... "
 	PHP_RAW_MODULES="PHP_SELECTED_VERSION-mysql PHP_SELECTED_VERSION-curl PHP_SELECTED_VERSION-mcrypt PHP_SELECTED_VERSION-mbstring PHP_SELECTED_VERSION-sqlite3 PHP_SELECTED_VERSION-soap"
 	PHP_RAW_MODULES="$PHP_RAW_MODULES PHP_SELECTED_VERSION-xml PHP_SELECTED_VERSION-cgi	PHP_SELECTED_VERSION-xsl PHP_SELECTED_VERSION-zip PHP_SELECTED_VERSION-recode"
 	PHP_RAW_MODULES="$PHP_RAW_MODULES PHP_SELECTED_VERSION-pspell PHP_SELECTED_VERSION-tidy PHP_SELECTED_VERSION-xmlrpc PHP_SELECTED_VERSION-snmp PHP_SELECTED_VERSION-mysqlnd"
@@ -18,12 +18,12 @@ InstallPHP() {
 	echo -e " [ ${green}DONE${NC} ]"
 
 	
-	echo -n -e "$IDENTATION_LVL_1 Build aditional programs raw list .... "
+	echo -n -e "$IDENTATION_LVL_1 Build aditional programs raw list ... "
 	RAW_ADITIONAL_PROGRAMS="fcgiwrap php-pear php-auth php-gd php-apcu php-redis redis-server memcached php-memcache php-imagick php-gettext mcrypt imagemagick libruby curl snmp tidy"
 	echo -e " [ ${green}DONE${NC} ] "
 	
 	
-	echo -n -e "$IDENTATION_LVL_1 Add PHP according with selected web server .... "
+	echo -n -e "$IDENTATION_LVL_1 Add PHP according with selected web server ... "
 	if [ $CFG_WEBSERVER == "apache" ]; then
 		PHP_RAW_MODULES="PHP_SELECTED_VERSION libapache2-mod-PHP_SELECTED_VERSION $PHP_RAW_MODULES "
 	elif [ $CFG_WEBSERVER == "nginx" ]; then
@@ -39,9 +39,9 @@ InstallPHP() {
     do
         case $PHP_VERSION_ENABLED in
             "php5.6" )
-				echo -n -e "$IDENTATION_LVL_1 Install PHP version ${BBlack} 5.6 ${NC} .... "
+				echo -n -e "$IDENTATION_LVL_1 Install PHP version ${BBlack} 5.6 ${NC}:"
 				echo
-				echo -n -e "$IDENTATION_LVL_2 Prepare PHP Modules list .... "
+				echo -n -e "$IDENTATION_LVL_2 Prepare PHP Modules list ... "
 				PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES//PHP_SELECTED_VERSION/$PHP_VERSION_ENABLED}"
 				echo -e " [ ${green}DONE${NC} ] "
 				
@@ -49,22 +49,22 @@ InstallPHP() {
 				echo $PARSED_PHP_MODULE_LIST
 				echo 
 				
-				echo -n -e "$IDENTATION_LVL_2 Install PHP Modules list .... "
-				apt-get -yqq --force-yes install "$PARSED_PHP_MODULE_LIST"  > /dev/null 2>&1
+				echo -n -e "$IDENTATION_LVL_2 Install PHP Modules list ... "
+				apt-get -yqq --force-yes install "$PARSED_PHP_MODULE_LIST"
 				echo -e " [ ${green}DONE${NC} ] "
 				
-				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo .... "
-				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/5.6/fpm/php.ini  > /dev/null 2>&1
+				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo ... "
+				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/5.6/fpm/php.ini > /dev/null 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 				
-				echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest.... "
-				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/5.6/fpm/php.ini  > /dev/null 2>&1
+				echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest ... "
+				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/5.6/fpm/php.ini > /dev/null 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 		    ;;
             "php7.0" )
-				echo -n -e "$IDENTATION_LVL_1 Install PHP version ${BBlack} 7.0 ${NC} .... "
+				echo -n -e "$IDENTATION_LVL_1 Install PHP version ${BBlack} 7.0 ${NC}:"
 				echo
-				echo -n -e "$IDENTATION_LVL_2 Prepare PHP Modules list .... "
+				echo -n -e "$IDENTATION_LVL_2 Prepare PHP Modules list ... "
 				PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES//PHP_SELECTED_VERSION/$PHP_VERSION_ENABLED}"
 				echo -e " [ ${green}DONE${NC} ] "
 				
@@ -72,22 +72,22 @@ InstallPHP() {
 				echo $PARSED_PHP_MODULE_LIST
 				echo 
 				
-				echo -n -e "$IDENTATION_LVL_2 Install PHP Modules list .... "
-				apt-get -yqq --force-yes install "$PARSED_PHP_MODULE_LIST"  > /dev/null 2>&1
+				echo -n -e "$IDENTATION_LVL_2 Install PHP Modules list ... "
+				apt-get -yqq --force-yes install "$PARSED_PHP_MODULE_LIST"
 				echo -e " [ ${green}DONE${NC} ] "
 				
-				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo .... "
-				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.0/fpm/php.ini  > /dev/null 2>&1
+				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo ... "
+				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.0/fpm/php.ini > /dev/null 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 				
-				echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest.... "
-				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/7.0/fpm/php.ini  > /dev/null 2>&1
+				echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest ... "
+				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/7.0/fpm/php.ini > /dev/null 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 		    ;;
             "php7.1" )
-				echo -n -e "$IDENTATION_LVL_1 Install PHP version ${BBlack} 7.1 ${NC} .... "
+				echo -n -e "$IDENTATION_LVL_1 Install PHP version ${BBlack} 7.1 ${NC}:"
 				echo
-				echo -n -e "$IDENTATION_LVL_2 Prepare PHP Modules list .... "
+				echo -n -e "$IDENTATION_LVL_2 Prepare PHP Modules list ... "
 				PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES//PHP_SELECTED_VERSION/$PHP_VERSION_ENABLED}"
 				echo -e " [ ${green}DONE${NC} ] "
 				
@@ -95,20 +95,20 @@ InstallPHP() {
 				echo $PARSED_PHP_MODULE_LIST
 				echo 
 				
-				echo -n -e "$IDENTATION_LVL_2 Install PHP Modules list .... "
-				apt-get -yqq --force-yes install "$PARSED_PHP_MODULE_LIST"  > /dev/null 2>&1
+				echo -n -e "$IDENTATION_LVL_2 Install PHP Modules list ... "
+				apt-get -yqq --force-yes install "$PARSED_PHP_MODULE_LIST"
 				echo -e " [ ${green}DONE${NC} ] "
 				
-				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo .... "
-				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.1/fpm/php.ini  > /dev/null 2>&1
+				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo ... "
+				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.1/fpm/php.ini > /dev/null 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 				
-				echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest.... "
-				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/7.1/fpm/php.ini  > /dev/null 2>&1
+				echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest ... "
+				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/7.1/fpm/php.ini > /dev/null 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 		    ;;            
             "none" )
-				echo -n "$IDENTATION_LVL_1 Installing basic php modules for ispconfig..."
+				echo -n "$IDENTATION_LVL_1 Installing basic php modules for ispconfig ... "
 				apt-get -yqq install php7.0-fpm php7.0-cli php7.0-mysql php7.0-mcrypt > /dev/null 2>&1
 				echo -e "[ ${green}DONE${NC} ]"
 		    ;;
