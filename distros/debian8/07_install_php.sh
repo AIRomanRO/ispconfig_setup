@@ -7,124 +7,127 @@ InstallPHP() {
 	
 	echo -n -e "$IDENTATION_LVL_0 Installing PHP... \n"	
 	echo -n -e "$IDENTATION_LVL_2 Selected Versions: ${green}"$CFG_PHP_VERSION"${NC}\n"
-	
-	exit 1;
-	
-	  if [ $CFG_WEBSERVER == "apache" ]; then
-	  CFG_NGINX=n
-	  CFG_APACHE=y
-	  echo -n "Installing Apache and Modules... "
-		echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | debconf-set-selections
-		# - DISABLED DUE TO A BUG IN DBCONFIG - echo "phpmyadmin phpmyadmin/dbconfig-install boolean false" | debconf-set-selections
-		echo "dbconfig-common dbconfig-common/dbconfig-install boolean false" | debconf-set-selections
-		apt-get -yqq install apache2 apache2.2-common apache2-doc apache2-mpm-prefork apache2-utils libapache2-mod-php5 libapache2-mod-fastcgi libapache2-mod-fcgid apache2-suexec libapache2-mod-passenger libapache2-mod-python libexpat1 ssl-cert libruby > /dev/null 2>&1  
-		echo -e "[${green}DONE${NC}]\n"
-		echo -n "Installing PHP and Modules... "
-		apt-get -yqq install php7.0 php7.0-common php7.0-fpm php7.0-mysql php7.0-curl php7.0-imap php7.0-mcrypt php7.0-mbstring php7.0-sqlite3 php7.0-soap php7.0-xml php7.0-xsl php7.0-zip php7.0-recode php7.0-tidy php7.0-xmlrpc php7.0-snmp php7.0-cli  > /dev/null 2>&1
-		echo -e "[${green}DONE${NC}]\n"
-		echo -n "Installing needed Programs for PHP and Apache... "
-		apt-get -yqq install mcrypt imagemagick memcached curl tidy snmp > /dev/null 2>&1
-			echo -e "[${green}DONE${NC}]\n"
-		
-	  if [ $CFG_PHPMYADMIN == "yes" ]; then
-		echo "==========================================================================================="
-		echo "Attention: When asked 'Configure database for phpmyadmin with dbconfig-common?' select 'NO'"
-		echo "Due to a bug in dbconfig-common, this can't be automated."
-		echo "==========================================================================================="
-		echo "Press ENTER to continue... "
-		read DUMMY
-		echo -n "Installing phpMyAdmin... "
-		apt-get -y install phpmyadmin
-		echo -e "[${green}DONE${NC}]\n"
-	  fi
-		
-	  if [ "$CFG_XCACHE" == "yes" ]; then
-		echo -n "Installing XCache... "
-		apt-get -yqq install php7.0-xcache > /dev/null 2>&1
-		echo -e "[${green}DONE${NC}]\n"
-	  fi
-		
-		echo -n "Activating Apache2 Modules... "
-		a2enmod suexec > /dev/null 2>&1
-		a2enmod rewrite > /dev/null 2>&1
-		a2enmod ssl > /dev/null 2>&1
-		a2enmod actions > /dev/null 2>&1
-		a2enmod include > /dev/null 2>&1
-		a2enmod dav_fs > /dev/null 2>&1
-		a2enmod dav > /dev/null 2>&1
-		a2enmod auth_digest > /dev/null 2>&1
-		a2enmod fastcgi > /dev/null 2>&1
-		a2enmod alias > /dev/null 2>&1
-		a2enmod fcgid > /dev/null 2>&1
-		service apache2 restart > /dev/null 2>&1
-		echo -e "[${green}DONE${NC}]\n"
-		
-		echo -n "Installing Lets Encrypt... "	
-		apt-get -yqq install python-certbot-apache -t jessie-backports
-		certbot &
-		echo -e "[${green}DONE${NC}]\n"
-	  
-	  else
-		
-	  CFG_NGINX=y
-	  CFG_APACHE=n
-		echo -n "Installing NGINX and Modules... \n"
-		service apache2 stop
-		systemctl disable apache2 > /dev/null 2>&1
-		update-rc.d -f apache2 remove > /dev/null 2>&1
-		apt-get -yqq remove --purge apache2
-		echo -n "Remove of Apache completed... \n"
 
-		apt-get -yqq install nginx nginx-common nginx-full > /dev/null 2>&1
-		
-		if [ ! -d "/etc/nginx/sites-available" ]; then
-		   mkdir /etc/nginx/sites-available
-		fi
-		
-		if [ ! -d "/etc/nginx/sites-enabled" ]; then
-		   mkdir /etc/nginx/sites-enabled
-		fi
-		
-		#Force install of nginx if no IPV6 enabled
-		if [ $IPV6_ENABLED == false ]; then
-			sed -i "s/listen \[::\]:80/###-No IPV6### listen [::]:80/" /etc/nginx/sites-available/default
-			apt-get -yqq install nginx nginx-common nginx-full > /dev/null 2>&1
-		fi
-		
-		service nginx start 
-		echo -n "Install of NGINx completed... \n"
+	
+	echo -n -e "$IDENTATION_LVL_1 Build PHP modules raw list .... "
+	PHP_RAW_MODULES="PHP_SELECTED_VERSION-mysql PHP_SELECTED_VERSION-curl PHP_SELECTED_VERSION-mcrypt PHP_SELECTED_VERSION-mbstring PHP_SELECTED_VERSION-sqlite3 PHP_SELECTED_VERSION-soap"
+	PHP_RAW_MODULES="$PHP_RAW_MODULES PHP_SELECTED_VERSION-xml PHP_SELECTED_VERSION-cgi	PHP_SELECTED_VERSION-xsl PHP_SELECTED_VERSION-zip PHP_SELECTED_VERSION-recode"
+	PHP_RAW_MODULES="$PHP_RAW_MODULES PHP_SELECTED_VERSION-pspell PHP_SELECTED_VERSION-tidy PHP_SELECTED_VERSION-xmlrpc PHP_SELECTED_VERSION-snmp PHP_SELECTED_VERSION-mysqlnd"
+	PHP_RAW_MODULES="$PHP_RAW_MODULES PHP_SELECTED_VERSION-gd PHP_SELECTED_VERSION-imap PHP_SELECTED_VERSION-cli PHP_SELECTED_VERSION-intl PHP_SELECTED_VERSION-opcache"
+	PHP_RAW_MODULES="$PHP_RAW_MODULES PHP_SELECTED_VERSION-readline PHP_SELECTED_VERSION-bz2"
+	echo -e " [ ${green}DONE${NC} ]"
 
-		apt-get -yqq install php7.0-fpm php7.0-mysql php7.0-curl php7.0-imap php7.0-mcrypt php7.0-mbstring php7.0-sqlite3 php7.0-soap php7.0-xml php7.0-xsl php7.0-zip php7.0-recode php7.0-tidy php7.0-xmlrpc php7.0-snmp php7.0-cli > /dev/null 2>&1
-		sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.0/fpm/php.ini
-		sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/7.0/fpm/php.ini
-		echo -n "Install of PHP7.0 completed... \n"
-		
-		echo -n "Installing needed Programs for PHP and NGINX... "
-		apt-get -yqq install mcrypt imagemagick memcached curl tidy snmp > /dev/null 2>&1
-		#sed -i "s/#/;/" /etc/php5/conf.d/ming.ini
-		apt-get -yqq install fcgiwrap
-		service php7.0-fpm reload
-	  
-	  if [ $CFG_PHPMYADMIN == "yes" ]; then
-		echo "==========================================================================================="
-		echo "Attention: When asked 'Configure database for phpmyadmin with dbconfig-common?' select 'NO'"
-		echo "Due to a bug in dbconfig-common, this can't be automated."
-		echo "==========================================================================================="
-		echo "Press ENTER to continue... "
-		read DUMMY
-		echo -n "Installing phpMyAdmin... "
-		apt-get -y install phpmyadmin
-		echo -e "[${green}DONE${NC}]\n"
-	  fi
-	  
-		echo -n "Installing Lets Encrypt... "	
-		apt-get -yqq install certbot python-certbot -t jessie-backports
-		certbot &
-		echo -e "[${green}DONE${NC}]\n"
-	  
-	  fi
-	  echo -e "[${green}DONE${NC}]\n"
-  
+	
+	echo -n -e "$IDENTATION_LVL_1 Build aditional programs raw list .... "
+	RAW_ADITIONAL_PROGRAMS="fcgiwrap php-pear php-auth php-gd php-apcu php-redis redis-server memcached php-memcache php-imagick php-gettext mcrypt imagemagick libruby curl snmp tidy"
+	echo -e " [ ${green}DONE${NC} ] "
+	
+	
+	echo -n -e "$IDENTATION_LVL_1 Add PHP according with selected web server .... "
+	if [ $CFG_WEBSERVER == "apache" ]; then
+		PHP_RAW_MODULES="PHP_SELECTED_VERSION libapache2-mod-PHP_SELECTED_VERSION $PHP_SELECTED_VERSION "
+	elif [ $CFG_WEBSERVER == "nginx" ]; then
+		PHP_RAW_MODULES="PHP_SELECTED_VERSION-fpm $PHP_SELECTED_VERSION"
+	fi
+	echo -e " [ ${green}DONE${NC} ] "
+	
+	echo
+	echo $PHP_RAW_MODULES
+	echo
+	
+	for PHP_VERSION_ENABLED in ${CFG_PHP_VERSION[@]};
+    do
+        case $PHP_VERSION_ENABLED in
+            "php5.6" )
+				echo -n -e "$IDENTATION_LVL_1 Install PHP version ${BBlack} 5.6 ${NC} .... "
+				
+				echo -n -e "$IDENTATION_LVL_2 Prepare PHP Modules list .... "
+				PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES/PHP_SELECTED_VERSION/$PHP_VERSION_ENABLED}"
+				echo -e " [ ${green}DONE${NC} ] "
+				
+				echo
+				echo $PARSED_PHP_MODULE_LIST
+				echo 
+				
+				echo -n -e "$IDENTATION_LVL_2 Install PHP Modules list .... "
+				apt-get -yqq --force-yes install "$PARSED_PHP_MODULE_LIST"  > /dev/null 2>&1
+				echo -e " [ ${green}DONE${NC} ] "
+				
+				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo .... "
+				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/5.6/fpm/php.ini
+				echo -e " [ ${green}DONE${NC} ] "
+				
+				echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest.... "
+				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/5.6/fpm/php.ini
+				echo -e " [ ${green}DONE${NC} ] "
+		    ;;
+            "php7.0" )
+				echo -n -e "$IDENTATION_LVL_1 Install PHP version ${BBlack} 7.0 ${NC} .... "
+				
+				echo -n -e "$IDENTATION_LVL_2 Prepare PHP Modules list .... "
+				PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES/PHP_SELECTED_VERSION/$PHP_VERSION_ENABLED}"
+				echo -e " [ ${green}DONE${NC} ] "
+				
+				echo
+				echo $PARSED_PHP_MODULE_LIST
+				echo 
+				
+				echo -n -e "$IDENTATION_LVL_2 Install PHP Modules list .... "
+				apt-get -yqq --force-yes install "$PARSED_PHP_MODULE_LIST"  > /dev/null 2>&1
+				echo -e " [ ${green}DONE${NC} ] "
+				
+				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo .... "
+				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.0/fpm/php.ini
+				echo -e " [ ${green}DONE${NC} ] "
+				
+				echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest.... "
+				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/7.0/fpm/php.ini
+				echo -e " [ ${green}DONE${NC} ] "
+		    ;;
+            "php7.1" )
+				echo -n -e "$IDENTATION_LVL_1 Install PHP version ${BBlack} 7.1 ${NC} .... "
+				
+				echo -n -e "$IDENTATION_LVL_2 Prepare PHP Modules list .... "
+				PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES/PHP_SELECTED_VERSION/$PHP_VERSION_ENABLED}"
+				echo -e " [ ${green}DONE${NC} ] "
+				
+				echo
+				echo $PARSED_PHP_MODULE_LIST
+				echo 
+				
+				echo -n -e "$IDENTATION_LVL_2 Install PHP Modules list .... "
+				apt-get -yqq --force-yes install "$PARSED_PHP_MODULE_LIST"  > /dev/null 2>&1
+				echo -e " [ ${green}DONE${NC} ] "
+				
+				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo .... "
+				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.1/fpm/php.ini
+				echo -e " [ ${green}DONE${NC} ] "
+				
+				echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest.... "
+				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/7.1/fpm/php.ini
+				echo -e " [ ${green}DONE${NC} ] "
+		    ;;            
+            "none" )
+				echo -n "$IDENTATION_LVL_1 Installing basic php modules for ispconfig..."
+				apt-get -yqq install php7.0-fpm php7.0-cli php7.0-mysql php7.0-mcrypt > /dev/null 2>&1
+				echo -e "[ ${green}DONE${NC} ]"
+		    ;;
+        esac
+    done
+	
+
+			#service php7.0-fpm reload
+	
+	
+	
+	 #echo -n "Installing needed Programs for PHP and Apache... "
+  #apt-get -yqq install --force-yes  RAW_ADITIONAL_PROGRAMS  > /dev/null 2>&1
+  #echo -e "[${green}DONE${NC}]\n"
+ 
+  #phpenmod mcrypt
+  #phpenmod mbstring
+
+
   	MeasureTimeDuration $START_TIME
 	
 	exit 1;
