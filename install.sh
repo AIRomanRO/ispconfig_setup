@@ -172,6 +172,9 @@ source $PWD/distros/$DISTRO/04_install_basics.sh
 source $PWD/distros/$DISTRO/05_install_mysql.sh
 source $PWD/distros/$DISTRO/06_install_webserver.sh
 source $PWD/distros/$DISTRO/07_install_php.sh
+source $PWD/distros/$DISTRO/08_install_phpmyadmin.sh
+source $PWD/distros/$DISTRO/09_install_letsencrypt.sh
+source $PWD/distros/$DISTRO/10_install_xcache.sh
 source $PWD/distros/$DISTRO/install_postfix.sh
 source $PWD/distros/$DISTRO/install_mta.sh
 source $PWD/distros/$DISTRO/install_antivirus.sh
