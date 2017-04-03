@@ -9,19 +9,13 @@ This is the support button for the original repo ( https://github.com/servisys/i
 THIS is a fork of https://github.com/servisys/ispconfig_setup , focused on debian part of the script.
 It is possible that this fork to not be synced with the source repo.
 
-v.2.2
+v.2.3
 
 This is a system to automate the installation of ISPConfig 3 control Panel ( http://www.ispconfig.org/page/home.html ).
 
 Tested on:
 
 - Debian 8 Jessie ([Servisys VPS](https://www.servisys.it/), VmWare Esxi, Amazon AWS, Virtualbox, OVH VPS)
-- Debian 7 Wheezy ([Servisys VPS](https://www.servisys.it/), VmWare Esxi, Amazon AWS, Virtualbox, OVH VPS)
-- Ubuntu 14.04 Trusty ([Servisys VPS](https://www.servisys.it/), VmWare Esxi, Amazon AWS, Virtualbox, OVH VPS)
-- Ubuntu 15.10 Willy ([Servisys VPS](https://www.servisys.it/), VmWare Esxi, Amazon AWS, Virtualbox, OVH VPS)
-- Ubuntu 16.04 Xenial Xerus ( [Servisys VPS](https://www.servisys.it/), VmWare Esxi, Amazon AWS, Virtualbox, OVH VPS)
-- Centos 7 ([Servisys VPS](https://www.servisys.it/), Vitualbox)
-- ISPConfig 3.*
 
 For now it is tested and developed only on Debian systems.
 
