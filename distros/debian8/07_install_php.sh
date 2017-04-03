@@ -29,10 +29,7 @@ InstallPHP() {
 		PHP_RAW_MODULES="PHP_SELECTED_VERSION-fpm $PHP_RAW_MODULES"
 	fi
 	echo -e " [ ${green}DONE${NC} ] "
-	
-	echo
-	echo $PHP_RAW_MODULES
-	echo
+
 	
 	ANY_VERSION_INSTALLED=false
 	for PHP_VERSION_ENABLED in ${CFG_PHP_VERSION[@]};
