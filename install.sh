@@ -89,7 +89,12 @@ source $PWD/functions/04_measure_duration_and_echo.sh
 CheckLinux
 CheckIPV6
 CheckWhiptailAndInstallIfNeed
-echo -e "$IDENTATION_LVL_0 ${BWhite}System Checking [${NC} ${green}DONE${NC} ${BWhite}]${NC} "
+
+echo -e "$IDENTATION_LVL_0 ${BWhite}System Checking [${NC} ${green}COMPLETED${NC} ${BWhite}]${NC} "
+
+echo -n -e "$IDENTATION_LVL_0 ${BWhite}Please give us five seconds before continue ${NC} ... "
+sleep 5
+echo -e " [${NC} ${green}Thanks!${NC} ${BWhite}]"
 
 #---------------------------------------------------------------------
 # Main program [ main() ]
