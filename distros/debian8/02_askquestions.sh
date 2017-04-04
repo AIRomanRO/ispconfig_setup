@@ -133,7 +133,7 @@ AskQuestions() {
         while [ "x$CFG_PHPMYADMIN_VERSION" == "x" ]
 	    do
 		    CFG_PHPMYADMIN_VERSION=$(whiptail --title "Install phpMyAdmin" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
-			"What version of phpMyAdmin do you want to install?" 10 60 4 \
+			"What version of phpMyAdmin do you want to install?" 10 70 4 \
 			"default"         "Current OS Version" ON \
 			"jessie"          "from jessie backports - possible newer" OFF \
 			"stretch"         "from stretch version - newer" OFF \
