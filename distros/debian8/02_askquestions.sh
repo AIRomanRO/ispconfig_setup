@@ -137,7 +137,7 @@ AskQuestions() {
 			"default"         "Current OS Version" ON \
 			"jessie"          "from jessie backports - possible newer" OFF \
 			"stretch"         "from stretch version - newer" OFF \
-			"latest stable"   "from phpMyAdmin.net" OFF 3>&1 1>&2 2>&3)
+			"latest-stable"   "from phpMyAdmin.net" OFF 3>&1 1>&2 2>&3)
 	    done
 		echo -n -e "$IDENTATION_LVL_1 ${BBlack}PhpMyAdmin Version${NC}: ${green}$CFG_PHPMYADMIN_VERSION${NC}\n"
 	fi
