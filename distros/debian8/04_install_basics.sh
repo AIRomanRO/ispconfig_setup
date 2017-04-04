@@ -148,7 +148,7 @@ InstallBasics() {
 				
 				# Disabled for the moment because it install a clean version, so analyze and see if replace or not the original conf and see how can improve the new one
 				#UCF_FORCE_CONFFNEW=yes LANG=C DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confnew"  -q -y install openssh-server -t stretch >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-				echo -e " [ ${red}SKIPPED / DISABLED ${NC} - ${green} - Disabled by Author ${NC} ]"
+				echo -e " [ ${red}SKIPPED / DISABLED ${NC} - ${green} Disabled by Author | Reason: need more research for proper configuration ${NC} ]"
 		    ;;
 			"openssl-stable" )
 				#Check for openssl
