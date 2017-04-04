@@ -189,10 +189,10 @@ AskQuestions() {
             "nano"                     "NANO - text editor" ON \
             "haveged"                  "HAVEGED - A simple entropy daemon" ON \
             "ssh"                      "SSH - Secure Shell" ON \
+			"openssl-stable"           "OpenSSL - toolkit with full-strength cryptography" OFF \
+            "openssl-stretch"          "OpenSSL - version from stretch branch - usually newer" ON \
             "openssh-server"           "OpenSSH Server - collection of tools for control and transfer of data" OFF \
 			"openssh-server-stretch"   "OpenSSH Server - version from stretch branch - usually newer" ON \
-            "openssl-stable"           "OpenSSL - toolkit with full-strength cryptography" OFF \
-            "openssl-stretch"          "OpenSSL - version from stretch branch - usually newer" ON \
 			"none"                     "Not install any thing from the above list" OFF \
 	    3>&1 1>&2 2>&3)
 	done 
