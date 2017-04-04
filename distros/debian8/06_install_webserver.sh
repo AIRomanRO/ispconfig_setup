@@ -5,7 +5,7 @@
 InstallWebServer() { 
   	START_TIME=$SECONDS 
 	
-	echo -n -e "$IDENTATION_LVL_0 Installing WEB Server... \n"	
+	echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing WEB Server... ${NC} \n"	
 	echo -n -e "$IDENTATION_LVL_2 Selected web Server: "
 	
 	if [ $CFG_WEBSERVER == "apache" ]; then
@@ -195,13 +195,13 @@ InstallWebServer() {
 		
 		echo -n -e "$IDENTATION_LVL_1 Verify NGINX Available Sites Folder... "
 		if [ ! -d "/etc/nginx/sites-available" ]; then
-		   mkdir /etc/nginx/sites-available
+		   mkdir /etc/nginx/sites-available >> $PROGRAMS_INSTALL_LOG_FILES 2>&1	
 		fi
 		echo -e "[ ${green}DONE${NC} ]"
 		
 		echo -n -e "$IDENTATION_LVL_1 Verify NGINX Enabled Sites Folder... "
 		if [ ! -d "/etc/nginx/sites-enabled" ]; then
-		   mkdir /etc/nginx/sites-enabled
+		   mkdir /etc/nginx/sites-enabled >> $PROGRAMS_INSTALL_LOG_FILES 2>&1	
 		fi
 		echo -e "[ ${green}DONE${NC} ]"
 		
