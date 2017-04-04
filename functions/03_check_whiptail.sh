@@ -7,7 +7,7 @@ CheckWhiptailAndInstallIfNeed() {
 
 	#Check for whiptail
 	if [ -f /bin/whiptail ] || [ -f /usr/bin/whiptail ]; then
-     	echo -n -e "$IDENTATION_LVL_1 ${BBlack}Whiptail${NC}: ${green}FOUND${NC}"
+     	echo -n -e "$IDENTATION_LVL_1 ${BBlack}Whiptail${NC}: ${green}FOUND${NC} \n"
 		echo "Whiptail Found-> Let's Start" 1 > $PROGRAMS_INSTALL_LOG_FILES
     else
 	    echo -n -e "$IDENTATION_LVL_1 ${BBlack}Whiptail${NC}: ${red}NOT FOUND${NC} - start and install it ... "
