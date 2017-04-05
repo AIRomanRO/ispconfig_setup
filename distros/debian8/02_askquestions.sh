@@ -25,9 +25,9 @@ AskQuestions() {
         do
 			CFG_MYSQL_VERSION=$(whiptail --title "MySQL" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
 			    "Select MySQL Version" 10 60 3 \
-			    "default" "OS Current Version" ON \
-			    "5.6" "MySQL-5.6" OFF \
-			    "5.7" "MySQL-5.7" OFF 3>&1 1>&2 2>&3)
+			    "default"  "OS Current Version" ON \
+			    "5.6"      "MySQL-5.6" OFF \
+			    "5.7"      "MySQL-5.7" OFF 3>&1 1>&2 2>&3)
         done
 		echo -n -e "$IDENTATION_LVL_1 ${BBlack}SQL Server Version${NC}: ${green}$CFG_MYSQL_VERSION${NC}\n"
 	fi
@@ -63,7 +63,7 @@ AskQuestions() {
 		"Select webserver type" 10 60 3 \
 		"apache" "Apache" OFF \
 		"nginx"  "Nginx (default)" ON \
-		"none" "No Install" OFF 3>&1 1>&2 2>&3)
+		"none"   "No Install" OFF 3>&1 1>&2 2>&3)
 	done
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}Web Server${NC}: ${green}$CFG_WEBSERVER${NC}\n"
 	
@@ -71,7 +71,7 @@ AskQuestions() {
 	    while [ "x$CFG_NGINX_VERSION" == "x" ]
 		do
 	        CFG_NGINX_VERSION=$(whiptail --title "WEBSERVER" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
-			"Select Nginx Version" 10 60 5 \
+			"Select Nginx Version" 12 65 5 \ 
 			"default" "OS Default" ON \
 			"nginx"   "NGINX Official - nginx.org" OFF \
 			"dotdeb"  "DotDeb.org - with 'full' HTTP2" OFF \
