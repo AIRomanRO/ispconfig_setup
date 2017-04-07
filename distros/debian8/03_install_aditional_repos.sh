@@ -48,7 +48,7 @@ deb-src http://ftp.debian.org/debian/ stretch-updates main contrib non-free
 	echo "###############################################################" >> /etc/apt/sources.list.d/php-deb-sury.list
     echo -e " [ ${green}DONE${NC} ]"
 	
-	mkdir /etc/apt/trusted.custom.d >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+	mkdir -p /etc/apt/trusted.custom.d >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		
     echo -n -e "$IDENTATION_LVL_1 ${BBlack}Deb Sury PHP [ packages.sury.org ] Repository GnuPG Key${NC} ... "
     wget -q -O /etc/apt/trusted.custom.d/php-packages-sury-org.gpg https://packages.sury.org/php/apt.gpg && sudo apt-key add /etc/apt/trusted.custom.d/php-packages-sury-org.gpg >> $PROGRAMS_INSTALL_LOG_FILES 2>&1 

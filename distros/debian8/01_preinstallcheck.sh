@@ -41,5 +41,3 @@ PreInstallCheck() {
 	
 	MeasureTimeDuration $START_TIME
 }
-
-

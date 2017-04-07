@@ -6,7 +6,7 @@ InstallISPConfigBeta() {
     apt-get update
     apt-get -yqq install hhvm
     echo -e "Installing Lets Encrypt"
-    mkdir /opt/certbot
+    mkdir -p /opt/certbot
     wget https://dl.eff.org/certbot-auto -O /opt/certbot/certbot-auto
     chmod a+x /opt/certbot/certbot-auto
     /opt/certbot/certbot-auto

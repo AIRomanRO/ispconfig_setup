@@ -11,7 +11,7 @@ InstallWebServer() {
 	if [ $CFG_WEBSERVER == "apache" ]; then
 		echo -e "${BBlack} Apache2 ${NC}"
 	elif [ $CFG_WEBSERVER == "nginx" ]; then		
-		if [ $CFG_NGINX_VERSION == "default" ]; then
+		if [ $CFG_NGINX_VERSION == "os-default" ]; then
 			echo -e "${BBlack} NGINX ${NC} "
 			echo -e "$IDENTATION_LVL_2 Version: ${green} OS Default ${NC}"
 		elif [ $CFG_NGINX_VERSION == "nginx" ]; then
@@ -114,7 +114,7 @@ InstallWebServer() {
 		echo -n -e "$IDENTATION_LVL_1 Installing NGINX and Modules... "
 		echo
 		
-		if [ $CFG_NGINX_VERSION == "default" ]; then
+		if [ $CFG_NGINX_VERSION == "os-default" ]; then
 		
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green} OS Default ${NC}"
 			apt-get -yqq --force-yes install nginx -t stable >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
@@ -153,7 +153,7 @@ InstallWebServer() {
 			
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Version: ${green} Custom - With OpenSSL 1.1 and ChaCha20-Poly1305 ${NC} \n"
 			echo -n -e "$IDENTATION_LVL_2 Make the Local src folder "
-			mkdir /usr/local/src -p && cd /usr/local/src
+			mkdir -p /usr/local/src -p && cd /usr/local/src
 			echo -e " [ ${green}DONE${NC} ]"
 			
 			echo -n -e "$IDENTATION_LVL_2 Install OpenSSL v1.1"
@@ -195,13 +195,13 @@ InstallWebServer() {
 		
 		echo -n -e "$IDENTATION_LVL_1 Verify NGINX Available Sites Folder... "
 		if [ ! -d "/etc/nginx/sites-available" ]; then
-		   mkdir /etc/nginx/sites-available >> $PROGRAMS_INSTALL_LOG_FILES 2>&1	
+		   mkdir -p /etc/nginx/sites-available >> $PROGRAMS_INSTALL_LOG_FILES 2>&1	
 		fi
 		echo -e "[ ${green}DONE${NC} ]"
 		
 		echo -n -e "$IDENTATION_LVL_1 Verify NGINX Enabled Sites Folder... "
 		if [ ! -d "/etc/nginx/sites-enabled" ]; then
-		   mkdir /etc/nginx/sites-enabled >> $PROGRAMS_INSTALL_LOG_FILES 2>&1	
+		   mkdir -p /etc/nginx/sites-enabled >> $PROGRAMS_INSTALL_LOG_FILES 2>&1	
 		fi
 		echo -e "[ ${green}DONE${NC} ]"
 		

@@ -63,7 +63,7 @@ AskQuestions() {
 		"Select webserver type" 10 60 3 \
 		"apache" "Apache" OFF \
 		"nginx"  "Nginx (default)" ON \
-		"none"   "No Install" OFF 3>&1 1>&2 2>&3)
+		"none"   "No Install" OFF 3>&1 1>&2 2>&3 )
 	done
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}Web Server${NC}: ${green}$CFG_WEBSERVER${NC}\n"
 	
@@ -72,11 +72,11 @@ AskQuestions() {
 		do
 	        CFG_NGINX_VERSION=$(whiptail --title "WEBSERVER" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
 			"Select Nginx Version" 12 65 5 \ 
-			"default" "OS Default" ON \
-			"nginx"   "NGINX Official - nginx.org" OFF \
-			"dotdeb"  "DotDeb.org - with 'full' HTTP2" OFF \
-			"stretch" "Debian Stretch - with HTTP2" OFF \
-            "custom"  "With OpenSSL 1.1 and ChaCha20-Poly1305" OFF 3>&1 1>&2 2>&3)
+			"os-default" "OS Default" ON \
+			"nginx"      "NGINX Official - nginx.org" OFF \
+			"dotdeb"     "DotDeb.org - with 'full' HTTP2" OFF \
+			"stretch"    "Debian Stretch - with HTTP2" OFF \
+            "custom"     "With OpenSSL 1.1 and ChaCha20-Poly1305" OFF 3>&1 1>&2 2>&3)
 	    done
 		echo -n -e "$IDENTATION_LVL_1 ${BBlack}Nginx Web Server Version${NC}: ${green}$CFG_NGINX_VERSION${NC}\n"
 	fi
