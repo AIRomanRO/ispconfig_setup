@@ -85,8 +85,35 @@ InstallPHPMyAdmin() {
 			echo -n -e "$IDENTATION_LVL_2 Remove the downloaded file ... "
 			rm -rf /tmp/phpmyadmin/phpMyAdmin-latest.tar.gz
 			echo -e " [ ${green}DONE${NC} ] "
-
 			
+			echo -n -e "$IDENTATION_LVL_2 Make destination folder ... "
+			mkdir -p /usr/local/share/phpmyadmin
+			echo -e " [ ${green}DONE${NC} ] "
+
+			echo -n -e "$IDENTATION_LVL_2 Ensure that the destination folder is empty ... "
+			rm -rf /usr/local/share/phpmyadmin/*
+			echo -e " [ ${green}DONE${NC} ] "
+			
+			echo -n -e "$IDENTATION_LVL_2 Copy current phpMyAdmin files to destination folder ... "
+			cp -Rpf /tmp/phpmyadmin/*/* /usr/local/share/phpmyadmin
+			echo -e " [ ${green}DONE${NC} ] "
+			
+			echo -n -e "$IDENTATION_LVL_2 Create the phpMyAdmin config file from sample ... "
+			cp /usr/local/share/phpmyadmin/{config.sample.inc.php,config.inc.php}
+			echo -e " [ ${green}DONE${NC} ] "
+			
+			echo -n -e "$IDENTATION_LVL_2 Remove the temporary folder ... "
+			rm -rf /tmp/phpmyadmin
+			echo -e " [ ${green}DONE${NC} ] "
+			
+			echo -n -e "$IDENTATION_LVL_2 Generate random blowfish string ... "
+            LENGTH="32"
+            MATRIX="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+            while [ "${n:=1}" -le "$LENGTH" ]; do
+                BLOWFISH="$BLOWFISH${MATRIX:$(($RANDOM%${#MATRIX})):1}"
+                let n+=1
+            done
+			echo -e " [ ${green}DONE${NC} ] - ${red}$BLOWFISH{$NC}"
 		fi
 		
 		unset DEBIAN_FRONTEND	
