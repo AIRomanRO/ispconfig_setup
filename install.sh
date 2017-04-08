@@ -138,7 +138,7 @@ echo
 if [ -n "$DISTRO" ]; then
 	echo -e -n "$IDENTATION_LVL_0 ${BWhite}Are this Informations Correct ? ${NC}"
 	echo
-	echo -e -n "$IDENTATION_LVL_0 ${BWhite}Please answer with y/n: ${NC} "
+	echo -e -n "$IDENTATION_LVL_0 ${BWhite}Please answer with y / n: ${NC} "
 	read -n 1 RESPONSE
 	
 	if [[ ! $RESPONSE =~ ^[Yy]$ ]]; then

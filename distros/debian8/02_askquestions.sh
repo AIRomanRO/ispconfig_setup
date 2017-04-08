@@ -86,7 +86,7 @@ AskQuestions() {
             "n-custom"     "With OpenSSL 1.1 and ChaCha20-Poly1305" OFF 3>&1 1>&2 2>&3)
 	    done
 		
-		echo -n -e "$IDENTATION_LVL_1 ${BBlack}Nginx Web Server Version${NC}: ${green}$CFG_NGINX_VERSION${NC} "
+		echo -n -e "$IDENTATION_LVL_2 ${BBlack}Nginx Version${NC}: ${green}$CFG_NGINX_VERSION${NC} "
 	    echo
 	fi
 	
@@ -153,7 +153,7 @@ AskQuestions() {
 			"stretch"         "from stretch version - newer" OFF \
 			"latest-stable"   "from phpMyAdmin.net" OFF 3>&1 1>&2 2>&3)
 	    done
-		echo -n -e "$IDENTATION_LVL_1 ${BBlack}PhpMyAdmin Version${NC}: ${green}$CFG_PHPMYADMIN_VERSION${NC} "
+		echo -n -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green}$CFG_PHPMYADMIN_VERSION${NC} "
 	    echo
 	fi
 	  
@@ -220,6 +220,8 @@ AskQuestions() {
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}Install Aditional Software(s)${NC}: ${green}"$CFG_INSTALL_ADITIONAL_SOFTWARE"${NC} "
 	echo
 	
+	echo -n -e "$IDENTATION_LVL_1 ${BBlack}ISPConfig Configuration: ${NC}"
+	echo
 	while [ "x$CFG_ISPC" == "x" ]
 	do
       	CFG_ISPC=$(whiptail --title "ISPConfig Setup" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
@@ -227,7 +229,7 @@ AskQuestions() {
 		"standard" "Yes (default)" ON \
 		"expert"   "No, i want to configure" OFF 3>&1 1>&2 2>&3)
     done
-	echo -n -e "$IDENTATION_LVL_1 ${BBlack}ISPConfig Install Mode${NC}: ${green}$CFG_ISPC${NC} "
+	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Install Mode${NC}: ${green}" $CFG_ISPC "${NC} "
 	echo
 	
 	# while [ "x$CFG_ISPONCFIG_PORT" == "x" ]
@@ -240,9 +242,8 @@ AskQuestions() {
 		CFG_ISPONCFIG_PORT=8081
 	fi
 	
-	echo -n -e "$IDENTATION_LVL_1 ${BBlack}ISPConfig Port${NC}: ${green}$CFG_ISPONCFIG_PORT${NC} "
-	echo
-	
+	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Port${NC}: ${green}" $CFG_ISPONCFIG_PORT "${NC} "
+	echo	
 	
 	while [ "x$CFG_ISPCONFIG_DB_PASS_AUTO" == "x" ]
 	do
@@ -251,10 +252,10 @@ AskQuestions() {
 			"false" "NO, i have IT OR i want to choose one" OFF \
 			"true"  "YES, autogenerate it" ON 3>&1 1>&2 2>&3)
 	done
-	echo -n -e "$IDENTATION_LVL_1 ${BBlack}Auto Generate ISPConfig DB pass for advanced${NC}: ${green}$CFG_ISPCONFIG_DB_PASS_AUTO${NC} "
-	echo
-	
+	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Auto Generate DB pass for advanced${NC}: ${green}$CFG_ISPCONFIG_DB_PASS_AUTO${NC} "
+	echo	
 
+	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Retrieve DB pass for advanced${NC}: "
 	if [ $CFG_ISPCONFIG_DB_PASS_AUTO == false ]; then
 	    #We should receive a password
 	    while [ "x$CFG_ISPCONFIG_DB_PASS" == "x" ]
@@ -266,26 +267,34 @@ AskQuestions() {
 		#We generate a random 32 Chars Length
 		CFG_ISPCONFIG_DB_PASS=$(< /dev/urandom tr -dc 'A-Z-a-z-0-9~!@#$%^&*_=-' | head -c${1:-32})
 	fi	
-	
+	echo -e " [ ${green}DONE${NC} ] "
 
-	SSL_COUNTRY=$(whiptail --title "SSL Country Code" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - Country Code (2 letter code - ex. EN)" --nocancel 10 60 3>&1 1>&2 2>&3)
-	echo -n -e "$IDENTATION_LVL_1 ${BBlack}SSL Country${NC}: ${green}" $SSL_COUNTRY "${NC} "
+	echo -n -e "$IDENTATION_LVL_1 ${BBlack}SSL Configuration:${NC} "
 	echo
 	
-    SSL_STATE=$(whiptail --title "SSL State or Province Name" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - STATE or Province Name (full name - ex. Romania)" --nocancel 10 60 3>&1 1>&2 2>&3)
-	echo -n -e "$IDENTATION_LVL_1 ${BBlack}SSL State${NC}: ${green}" $SSL_STATE "${NC} "
+	SSL_COUNTRY=$(whiptail --title "SSL Country Code" --backtitle "$WT_BACKTITLE" \
+	                --inputbox "SSL Configuration - Country Code (2 letter code - ex. EN)" --nocancel 10 60 3>&1 1>&2 2>&3)
+	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Country${NC}: ${green}" $SSL_COUNTRY "${NC} "
 	echo
 	
-    SSL_LOCALITY=$(whiptail --title "SSL Locality" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - Locality (ex. Craiova)" --nocancel 10 60 3>&1 1>&2 2>&3)
-	echo -n -e "$IDENTATION_LVL_1 ${BBlack}SSL Locality${NC}: ${green}" $SSL_LOCALITY "${NC} "
+    SSL_STATE=$(whiptail --title "SSL State or Province Name" --backtitle "$WT_BACKTITLE" \
+                    --inputbox "SSL Configuration - STATE or Province Name (full name - ex. Romania)" --nocancel 10 60 3>&1 1>&2 2>&3)
+	echo -n -e "$IDENTATION_LVL_2 ${BBlack}State${NC}: ${green}" $SSL_STATE "${NC} "
 	echo
 	
-    SSL_ORGANIZATION=$(whiptail --title "SSL Organization" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - Organization (ex. Company L.t.d.)" --nocancel 10 60 3>&1 1>&2 2>&3)
-	echo -n -e "$IDENTATION_LVL_1 ${BBlack}SSL Organization${NC}: ${green}" $SSL_ORGANIZATION "${NC} "
+    SSL_LOCALITY=$(whiptail --title "SSL Locality" --backtitle "$WT_BACKTITLE" \
+                    --inputbox "SSL Configuration - Locality (ex. Craiova)" --nocancel 10 60 3>&1 1>&2 2>&3)
+	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Locality${NC}: ${green}" $SSL_LOCALITY "${NC} "
 	echo
 	
-    SSL_ORGUNIT=$(whiptail --title "SSL Organization Unit" --backtitle "$WT_BACKTITLE" --inputbox "SSL Configuration - Organization Unit (ex. IT)" --nocancel 10 60 3>&1 1>&2 2>&3)
-	echo -n -e "$IDENTATION_LVL_1 ${BBlack}SSL Unit${NC}: ${green}" $SSL_ORGUNIT "${NC} "
+    SSL_ORGANIZATION=$(whiptail --title "SSL Organization" --backtitle "$WT_BACKTITLE" \
+                    --inputbox "SSL Configuration - Organization (ex. Company L.t.d.)" --nocancel 10 60 3>&1 1>&2 2>&3)
+	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Organization${NC}: ${green}" $SSL_ORGANIZATION "${NC} "
+	echo
+	
+    SSL_ORGUNIT=$(whiptail --title "SSL Organization Unit" --backtitle "$WT_BACKTITLE" \
+                    --inputbox "SSL Configuration - Organization Unit (ex. IT)" --nocancel 10 60 3>&1 1>&2 2>&3)
+	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Unit${NC}: ${green}" $SSL_ORGUNIT "${NC} "
 	echo
 
 	MeasureTimeDuration $START_TIME
