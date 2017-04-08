@@ -11,19 +11,19 @@ InstallWebServer() {
 	if [ $CFG_WEBSERVER == "apache" ]; then
 		echo -e "${BBlack} Apache2 ${NC}"
 	elif [ $CFG_WEBSERVER == "nginx" ]; then		
-		if [ $CFG_NGINX_VERSION == "os-default" ]; then
+		if [ $CFG_NGINX_VERSION == "n-os-default" ]; then
 			echo -e "${BBlack} NGINX ${NC} "
 			echo -e "$IDENTATION_LVL_2 Version: ${green} OS Default ${NC}"
-		elif [ $CFG_NGINX_VERSION == "nginx" ]; then
+		elif [ $CFG_NGINX_VERSION == "n-nginx" ]; then
 			echo -e "${BBlack} NGINX ${NC} "
 			echo -e "$IDENTATION_LVL_2 Version: ${green} Official - nginx.org ${NC}"
-		elif [ $CFG_NGINX_VERSION == "dotdeb" ]; then
+		elif [ $CFG_NGINX_VERSION == "n-dotdeb" ]; then
 			echo -e "${BBlack} NGINX ${NC} "
 			echo -e "$IDENTATION_LVL_2 Version: ${green} DotDeb.org - with 'full' HTTP2 ${NC}"
-		elif [ $CFG_NGINX_VERSION == "stretch" ]; then
+		elif [ $CFG_NGINX_VERSION == "n-stretch" ]; then
 			echo -e "${BBlack} NGINX ${NC} "
 			echo -e "$IDENTATION_LVL_2 Version: ${green} Debian Stretch - with HTTP2 ${NC}"
-		elif [ $CFG_NGINX_VERSION == "custom" ]; then
+		elif [ $CFG_NGINX_VERSION == "n-custom" ]; then
 			echo -e "${BBlack} NGINX ${NC} "
 			echo -e "$IDENTATION_LVL_2 Version: ${green} Custom - With OpenSSL 1.1 and ChaCha20-Poly1305 ${NC}"
 		fi
@@ -114,19 +114,19 @@ InstallWebServer() {
 		echo -n -e "$IDENTATION_LVL_1 Installing NGINX and Modules... "
 		echo
 		
-		if [ $CFG_NGINX_VERSION == "os-default" ]; then
+		if [ $CFG_NGINX_VERSION == "n-os-default" ]; then
 		
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green} OS Default ${NC}"
 			apt-get -yqq --force-yes install nginx -t stable >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			echo -e "[ ${green}DONE${NC} ]"
 			
-		elif [ $CFG_NGINX_VERSION == "nginx" ]; then
+		elif [ $CFG_NGINX_VERSION == "n-nginx" ]; then
 		
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green} Official - nginx.org ${NC}"
 			apt-get -yqq --force-yes install nginx >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			echo -e "[ ${green}DONE${NC} ]"
 			
-		elif [ $CFG_NGINX_VERSION == "dotdeb" ]; then
+		elif [ $CFG_NGINX_VERSION == "n-dotdeb" ]; then
 		
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green} DotDeb.org - with 'full' HTTP2 ${NC}"
 			
@@ -142,13 +142,13 @@ InstallWebServer() {
 			apt-get -yqq --force-yes install nginx nginx-full -t jessie-nginx-http2 >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			echo -e " [ ${green}DONE${NC} ]"
 			
-		elif [ $CFG_NGINX_VERSION == "stretch" ]; then
+		elif [ $CFG_NGINX_VERSION == "n-stretch" ]; then
 		
 			echo -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green} Debian Stretch - with HTTP2 ${NC}"
 			apt-get -yqq --force-yes install nginx -t stretch >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			echo -e " [ ${green}DONE${NC} ]"
 			
-		elif [ $CFG_NGINX_VERSION == "custom" ]; then
+		elif [ $CFG_NGINX_VERSION == "n-custom" ]; then
 			CWD=$(pwd);
 			
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Version: ${green} Custom - With OpenSSL 1.1 and ChaCha20-Poly1305 ${NC} \n"

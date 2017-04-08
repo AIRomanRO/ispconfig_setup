@@ -178,7 +178,7 @@ InstallBasics() {
     done
 	
 	
-	if [ $CFG_NGINX_VERSION == "custom" ]; then
+	if [ $CFG_NGINX_VERSION == "n-custom" ]; then
 		echo -n -e "$IDENTATION_LVL_1 Check and install the needed Packages for build the NGINX with OpenSSL 1.1 \n"
 		
 		#Check for DPKG DEV
