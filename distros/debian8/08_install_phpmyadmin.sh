@@ -107,13 +107,16 @@ InstallPHPMyAdmin() {
 			echo -e " [ ${green}DONE${NC} ] "
 			
 			echo -n -e "$IDENTATION_LVL_2 Generate random blowfish string ... "
-            LENGTH="32"
+            LENGTH="48"
             MATRIX="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
             while [ "${n:=1}" -le "$LENGTH" ]; do
                 BLOWFISH="$BLOWFISH${MATRIX:$(($RANDOM%${#MATRIX})):1}"
                 let n+=1
             done
-			echo -e " [ ${green}DONE${NC} ] - ${red}$BLOWFISH{$NC}"
+			echo -e " [ ${green}DONE${NC} ] - ${red} $BLOWFISH {$NC}"
+			
+			echo $(< /dev/urandom tr -dc 'A-Z-a-z-0-9~!@#$%^&*_=-' | head -c${1:-48})
+			echo $(< /dev/urandom tr -dc 'A-Z-a-z-0-9~!@#$%^&*_=-' | head -c${1:-48})
 		fi
 		
 		unset DEBIAN_FRONTEND	
