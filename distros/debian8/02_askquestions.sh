@@ -86,20 +86,20 @@ AskQuestions() {
             "n-custom"     "With OpenSSL 1.1 and ChaCha20-Poly1305" OFF 3>&1 1>&2 2>&3)
 	    done
 		
-		echo -n -e "$IDENTATION_LVL_2 ${BBlack}Nginx Version${NC}: ${green}$CFG_NGINX_VERSION${NC} "
+		echo -n -e "$IDENTATION_LVL_2 ${BBlack}Nginx Version${NC}: ${green}" $CFG_NGINX_VERSION "${NC} "
 	    echo
 	fi
 	
 	while [ "x$CFG_PHP_VERSION" == "x" ]
 	do
 		CFG_PHP_VERSION=$(whiptail --title "Choose PHP Version(s)" --backtitle "$WT_BACKTITLE" --nocancel --separate-output --checklist \
-		    "Choose PHP Version do you want to install" 10 65 5 \
+		    "Choose PHP Version do you want to install" 20 75 5 \
             "php5.6"    "Latest Available from 5.6" ON \
             "php7.0"    "Latest Available from 7.0" ON \
             "php7.1"    "Latest Available from 7.1" ON \
-			"none"      "Not install" OFF 3>&1 1>&2 2>&3)
+			"none"      "No install" OFF 3>&1 1>&2 2>&3)
 	done 
-	echo -n -e "$IDENTATION_LVL_1 ${BBlack}PHP Version(s)${NC}: ${green}"$CFG_PHP_VERSION"${NC} "
+	echo -n -e "$IDENTATION_LVL_1 ${BBlack}PHP Version(s)${NC}: ${green}" $CFG_PHP_VERSION "${NC} "
 	echo
 
 	while [ "x$CFG_CERTBOT_VERSION" == "x" ]
