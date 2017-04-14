@@ -10,9 +10,7 @@ InstallPHPMyAdmin() {
 	echo $CFG_MYSQL_ROOT_PWD
 	echo
 	
-
 	MeasureTimeDuration $START_TIME
- 
   
 	if [ $CFG_PHPMYADMIN == "yes" ]; then
 		
@@ -21,8 +19,8 @@ InstallPHPMyAdmin() {
 		export DEBIAN_FRONTEND=noninteractive
 		
 		echo "==========================================================================================="
-		echo "Attention: When asked 'Configure database for phpmyadmin with dbconfig-common?' select 'NO'"
-		echo "Due to a bug in dbconfig-common, this can't be automated."
+		echo "Attention: If you will be asked '${green}Configure database for phpmyadmin with dbconfig-common?${NC}' select '${red}NO${NC}'"
+		echo "Due to a bug in dbconfig-common, it is possible that this can't be automated."
 		echo "==========================================================================================="
 		echo "Press ENTER to continue... "
 		read DUMMY
@@ -41,7 +39,9 @@ InstallPHPMyAdmin() {
 		echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | debconf-set-selections	
 		echo -e " [ ${green}DONE${NC} ] "
 		
-		APP_DB_PASS=1234
+		echo -n -e "$IDENTATION_LVL_1 Generate phpMyAdmin db password ... "
+		APP_DB_PASS=$(< /dev/urandom tr -dc 'A-Z-a-z-0-9~!@#$%^&*_=-' | head -c${1:-32})
+		echo -e " [ ${green}DONE${NC} ] "
 		
 		echo -n -e "$IDENTATION_LVL_1 Set passwords ... "	
 		echo "phpmyadmin phpmyadmin/mysql/app-pass password $APP_DB_PASS" | debconf-set-selections
@@ -107,19 +107,18 @@ InstallPHPMyAdmin() {
 			echo -e " [ ${green}DONE${NC} ] "
 			
 			echo -n -e "$IDENTATION_LVL_2 Generate random blowfish string ... "
-			$ATime1=$SECONDS
 
-            LENGTH=48
+            LENGTH=64
             MATRIX="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~!@#$%^&*_=-"
             while [ "${n:=1}" -le $LENGTH ]; do
                 BLOWFISH="$BLOWFISH${MATRIX:$(($RANDOM%${#MATRIX})):1}"
                 let n+=1
             done
-			MeasureTimeDuration $ATime1
+
 			echo -e " [ ${green}DONE${NC} ] - ${red} $BLOWFISH {$NC}"
 			
-			echo $(< /dev/urandom tr -dc 'A-Z-a-z-0-9~!@#$%^&*_=-' | head -c${1:-48})
-			echo $(< /dev/urandom tr -dc 'A-Z-a-z-0-9~!@#$%^&*_=-' | head -c${1:-48})
+			echo $(< /dev/urandom tr -dc 'A-Z-a-z-0-9~!@#$%^&*_=-' | head -c${1:-64})
+			echo $(< /dev/urandom tr -dc 'A-Z-a-z-0-9~!@#$%^&*_=-' | head -c${1:-64})
 		fi
 		
 		unset DEBIAN_FRONTEND	
