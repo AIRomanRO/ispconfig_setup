@@ -19,7 +19,7 @@ InstallPHPMyAdmin() {
 		export DEBIAN_FRONTEND=noninteractive
 		
 		echo "==========================================================================================="
-		echo "Attention: If you will be asked '${green}Configure database for phpmyadmin with dbconfig-common?${NC}' select '${red}NO${NC}'"
+		echo "Attention: If you will be asked ${green}'Configure database for phpmyadmin with dbconfig-common?'${NC} select ${red}'NO'${NC}"
 		echo "Due to a bug in dbconfig-common, it is possible that this can't be automated."
 		echo "==========================================================================================="
 		echo "Press ENTER to continue... "
@@ -133,7 +133,7 @@ InstallPHPMyAdmin() {
 }
 
 
-# config-db.php
+# config-db.php - /etc/phpMyAdmin
 # <?php
 # ##
 # ## database access settings in php format
@@ -155,7 +155,7 @@ InstallPHPMyAdmin() {
 # $dbtype='mysql';
 
 
-
+#/etc/phpmyadmin/config.inc.php
 # <?php
 # /**
  # * Debian local configuration file
