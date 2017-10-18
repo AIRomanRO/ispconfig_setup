@@ -97,6 +97,27 @@ InstallPHP() {
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				ANY_VERSION_INSTALLED=true
+		    ;;      
+		    "php7.2" )
+				echo -n -e "$IDENTATION_LVL_1 Install PHP version ${BBlack} 7.2 ${NC}:"
+				echo
+				echo -n -e "$IDENTATION_LVL_2 Prepare PHP Modules list ... "
+				PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES//PHP_SELECTED_VERSION/$PHP_VERSION_ENABLED}"
+				echo -e " [ ${green}DONE${NC} ] "
+				
+				echo -n -e "$IDENTATION_LVL_2 Install PHP Modules list ... "
+				apt-get -yqq --force-yes install $PARSED_PHP_MODULE_LIST >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+				echo -e " [ ${green}DONE${NC} ] "
+				
+				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo ... "
+				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.2/fpm/php.ini >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+				echo -e " [ ${green}DONE${NC} ] "
+				
+				echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest ... "
+				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/7.2/fpm/php.ini >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+				echo -e " [ ${green}DONE${NC} ] "
+				
+				ANY_VERSION_INSTALLED=true
 		    ;;            
             "none" )
 				if [ $ANY_VERSION_INSTALLED == false ]; then
@@ -136,6 +157,7 @@ InstallPHP() {
 		service php5.6-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		service php7.0-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		service php7.1-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		service php7.2-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		echo -e " [ ${green}DONE${NC} ] "
 		
 	fi
