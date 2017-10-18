@@ -61,8 +61,11 @@ InstallSQLServer() {
 			
 		elif [ $CFG_MYSQL_VERSION == "5.7" ]; then
 		
-			echo -n -e "$IDENTATION_LVL_1 Downloading the MySQL APT Config [${BBlack}Version 0.8.3.1${NC}] ... "
-			wget -q -O "mysql-apt-config-all.deb" "https://repo.mysql.com/mysql-apt-config_0.8.3-1_all.deb"
+			MYSQLAPTVER="`wget -q -O - https://repo.mysql.com/|grep -E -o 'mysql-apt-config_([0-9]|[\.-])+_all\.deb' | tail -1`"
+
+			echo -n -e "$IDENTATION_LVL_1 Downloading the MySQL APT Config [${BBlack}Version $MYSQLAPTVER ${NC}] ... "
+			wget -q -O "mysql-apt-config-all.deb" "https://repo.mysql.com/{$MYSQLAPTVER}"
+			
 			echo -e " [ ${green}DONE${NC} ] "
 			
 			export DEBIAN_FRONTEND=noninteractive

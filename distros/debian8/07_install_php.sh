@@ -18,7 +18,7 @@ InstallPHP() {
 
 	
 	echo -n -e "$IDENTATION_LVL_1 Build aditional programs raw list ... "
-	RAW_ADITIONAL_PROGRAMS="fcgiwrap php-tcpdf php-pear php-auth php-gd php-apcu php-redis redis-server memcached php-memcache php-imagick php-gettext mcrypt imagemagick libruby curl snmp tidy"
+	RAW_ADITIONAL_PROGRAMS="fcgiwrap php-tcpdf php-pear php-auth php-gd php-apcu php-redis redis-server memcached php-memcached php-imagick php-gettext mcrypt imagemagick libruby curl snmp tidy"
 	echo -e " [ ${green}DONE${NC} ] "
 	
 	
