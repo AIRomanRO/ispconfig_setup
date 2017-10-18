@@ -59,13 +59,13 @@ InstallSQLServer() {
 
 			unset DEBIAN_FRONTEND
 			
-		elif [ $CFG_MYSQL_VERSION == "5.7" ]; then
+		elif [ $CFG_MYSQL_VERSION == "5.7" ] || [ $CFG_MYSQL_VERSION == "8.0" ];  then
 		
 			MYSQLAPTVER="`wget -q -O - https://repo.mysql.com/|grep -E -o 'mysql-apt-config_([0-9]|[\.-])+_all\.deb' | tail -1`"
 
 			echo -n -e "$IDENTATION_LVL_1 Downloading the MySQL APT Config [${BBlack}Version $MYSQLAPTVER ${NC}] ... "
 			wget -q -O "mysql-apt-config-all.deb" "https://repo.mysql.com/{$MYSQLAPTVER}"
-			
+
 			echo -e " [ ${green}DONE${NC} ] "
 			
 			export DEBIAN_FRONTEND=noninteractive
@@ -73,7 +73,7 @@ InstallSQLServer() {
 			echo -n -e "$IDENTATION_LVL_1 Set Selections on debconf ... "
 			echo "mysql-apt-config mysql-apt-config/select-preview select Disabled" | debconf-set-selections
 			echo "mysql-apt-config mysql-apt-config/select-tools select  Enabled" | debconf-set-selections
-			echo "mysql-apt-config mysql-apt-config/select-server select mysql-5.7" | debconf-set-selections
+			echo "mysql-apt-config mysql-apt-config/select-server select mysql-$CFG_SQLSERVER" | debconf-set-selections
 			#echo "mysql-apt-config mysql-apt-config/select-product select Ok" | debconf-set-selections
 			echo -e " [ ${green}DONE${NC} ] "
 			

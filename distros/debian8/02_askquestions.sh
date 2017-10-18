@@ -29,7 +29,8 @@ AskQuestions() {
 			    "Select MySQL Version" 10 60 3 \
 			    "default"  "OS Current Version" ON \
 			    "5.6"      "MySQL-5.6" OFF \
-			    "5.7"      "MySQL-5.7" OFF 3>&1 1>&2 2>&3)
+			    "5.7"      "MySQL-5.7" OFF \
+			    "8.0"      "MySQL-8.0" OFF 3>&1 1>&2 2>&3)
         done
 		echo -n -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green}$CFG_MYSQL_VERSION${NC} "
 	    echo
@@ -125,7 +126,7 @@ AskQuestions() {
 	
 	while [ "x$CFG_XCACHE" == "x" ]
 	do
-	    CFG_XCACHE=$(whiptail --title "Install XCache" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
+	    CFG_XCACHE=$(whiptail --title "Install XCache / Memcached" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
 		"You want to install XCache during install? ATTENTION: If XCache is installed, Ioncube Loaders will not work !!" 10 50 2 \
 		"yes" "" OFF \
 		"no"  "(default)" ON 3>&1 1>&2 2>&3)
