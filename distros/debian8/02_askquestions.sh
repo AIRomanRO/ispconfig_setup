@@ -108,13 +108,13 @@ AskQuestions() {
 
 	while [ "x$CFG_CERTBOT_VERSION" == "x" ]
 	do
-		CFG_CERTBOT_VERSION=$(whiptail --title "Install CertBot" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
+		CFG_CERTBOT_VERSION=$(whiptail --title "Install LetsEncrypt CertBot" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
 		"Select CertBot Version" 10 60 3 \
 		"none"    "No installation" OFF \
 		"default" "Yes, from jessie backports" ON \
 		"stretch" "Yes, from stretch backports" OFF 3>&1 1>&2 2>&3)
 	done
-	echo -n -e "$IDENTATION_LVL_1 ${BBlack}CertBot Version${NC}: ${green}$CFG_CERTBOT_VERSION${NC} "
+	echo -n -e "$IDENTATION_LVL_1 ${BBlack}LetsEncrypt CertBot Version${NC}: ${green}$CFG_CERTBOT_VERSION${NC} "
 	echo
 		
 	while [ "x$CFG_HHVM" == "x" ]
@@ -126,17 +126,7 @@ AskQuestions() {
     done
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}Install HHVM${NC}: ${green}$CFG_HHVM${NC} "
 	echo
-	
-	while [ "x$CFG_XCACHE" == "x" ]
-	do
-	    CFG_XCACHE=$(whiptail --title "Install XCache / Memcached" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
-		"You want to install XCache during install? ATTENTION: If XCache is installed, Ioncube Loaders will not work !!" 10 50 2 \
-		"yes" "" OFF \
-		"no"  "(default)" ON 3>&1 1>&2 2>&3)
-	done
-	echo -n -e "$IDENTATION_LVL_1 ${BBlack}Install XCACHE${NC}: ${green}$CFG_XCACHE${NC} "
-	echo
-		
+				
 	while [ "x$CFG_PHPMYADMIN" == "x" ]
 	do
 		CFG_PHPMYADMIN=$(whiptail --title "Install phpMyAdmin" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
@@ -159,6 +149,8 @@ AskQuestions() {
 	    done
 		echo -n -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green}$CFG_PHPMYADMIN_VERSION${NC} "
 	    echo
+    else
+    	CFG_PHPMYADMIN_VERSION='none'
 	fi
 	  
 	while [ "x$CFG_MTA" == "x" ]
