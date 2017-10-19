@@ -153,6 +153,18 @@ AskQuestions() {
     	CFG_PHPMYADMIN_VERSION='none'
 	fi
 	  
+  	while [ "x$CFG_FTP" == "x" ]
+	do
+		CFG_FTP=$(whiptail --title "FTP Server" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
+		"Install and configure FTP SERVER ?" 10 60 3 \
+		"onlyFTP" "Yes, only with FTP" OFF \
+		"onlyTLS" "Yes, only with TLS" ON \
+		"FTPandTLS" "Yes, with FTP and TLS" OFF \
+		"none" "No, don't install it" OFF 3>&1 1>&2 2>&3)
+	done
+	echo -n -e "$IDENTATION_LVL_1 ${BBlack}Install and Configure FTP Server${NC}: ${green}$CFG_FTP${NC} "
+	echo
+
 	while [ "x$CFG_MTA" == "x" ]
 	do
 		CFG_MTA=$(whiptail --title "Mail Server" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
