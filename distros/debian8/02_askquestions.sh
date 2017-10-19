@@ -89,6 +89,8 @@ AskQuestions() {
 		
 		echo -n -e "$IDENTATION_LVL_2 ${BBlack}Nginx Version${NC}: ${green}" $CFG_NGINX_VERSION "${NC} "
 	    echo
+    else
+    	CFG_NGINX_VERSION='none'
 	fi
 	
 	while [ "x$CFG_PHP_VERSION" == "x" ]
