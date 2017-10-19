@@ -18,11 +18,11 @@ InstallPHPMyAdmin() {
 		
 		export DEBIAN_FRONTEND=noninteractive
 		
-		echo "==========================================================================================="
-		echo "Attention: If you will be asked ${green}'Configure database for phpmyadmin with dbconfig-common?'${NC} select ${red}'NO'${NC}"
-		echo "Due to a bug in dbconfig-common, it is possible that this can't be automated."
-		echo "==========================================================================================="
-		echo "Press ENTER to continue... "
+		echo -e "==========================================================================================="
+		echo -e "Attention: If you will be asked ${green} 'Configure database for phpmyadmin with dbconfig-common?' ${NC} select ${red} 'NO' ${NC}"
+		echo -e "Due to a bug in dbconfig-common, it is possible that this can't be automated."
+		echo -e "==========================================================================================="
+		echo -e "Press ENTER to continue... "
 		read DUMMY
 		
 		echo -n -e "$IDENTATION_LVL_1 Set Reconfigure WebServer on debconf as ${BBlack}$CFG_WEBSERVER${NC} ... "
