@@ -88,6 +88,7 @@ InstallPHPMyAdmin() {
 			
 			echo -n -e "$IDENTATION_LVL_2 Make destination folder ... "
 			mkdir -p /usr/share/phpmyadmin
+			mkdir -p /etc/phpmyadmin
 			echo -e " [ ${green}DONE${NC} ] "
 
 			echo -n -e "$IDENTATION_LVL_2 Ensure that the destination folder is empty ... "
@@ -99,7 +100,7 @@ InstallPHPMyAdmin() {
 			echo -e " [ ${green}DONE${NC} ] "
 			
 			echo -n -e "$IDENTATION_LVL_2 Create the phpMyAdmin config file from sample ... "
-			cp /usr/share/phpmyadmin/{config.sample.inc.php,config.inc.php}
+			cp /usr/share/phpmyadmin/config.sample.inc.php /etc/phpmyadmin/config.inc.php
 			echo -e " [ ${green}DONE${NC} ] "
 			
 			echo -n -e "$IDENTATION_LVL_2 Remove the temporary folder ... "
@@ -110,14 +111,15 @@ InstallPHPMyAdmin() {
 
 			#soft generation of blowfish, instead of using /dev/urandom method
             LENGTH=64
-            MATRIX="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~!@#$%^&*_=-"
+            MATRIX="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
             while [ "${n:=1}" -le $LENGTH ]; do
                 BLOWFISH="$BLOWFISH${MATRIX:$(($RANDOM%${#MATRIX})):1}"
                 let n+=1
             done
 
-			sed -i "s/blowfish_secret'] = ''/blowfish_secret'] = '$BLOWFISH'/"  /usr/share/phpmyadmin/config.inc.php
-			echo -e " [ ${green}DONE${NC} ] - ${red} $BLOWFISH {$NC}"
+			sed -i "s/blowfish_secret'] = ''/blowfish_secret'] = '$BLOWFISH'/"  /etc/phpmyadmin/config.inc.php
+			sed -i "s/define('CONFIG_DIR', '')/define('CONFIG_DIR', '\/etc\/phpmyadmin\/')/"  /usr/share/phpmyadmin/libraries/vendor_config.php
+			echo -e " [ ${green}DONE${NC} ] - ${red} $BLOWFISH ${NC}"
 			
 			echo -n -e "$IDENTATION_LVL_2 Remove the test folder ... "
 			rm -rf /usr/share/phpmyadmin/test
@@ -126,6 +128,32 @@ InstallPHPMyAdmin() {
 			echo -n -e "$IDENTATION_LVL_2 Remove the setup folder ... "
 			rm -rf /usr/share/phpmyadmin/setup
 			echo -e " [ ${green}DONE${NC} ] "
+
+			echo -n -e "$IDENTATION_LVL_2 Generate phpMyAdmin tables ... "
+			mysql -u root -p$CFG_MYSQL_ROOT_PWD < /usr/share/phpmyadmin/sql/create_tables.sql >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			echo -e " [ ${green}DONE${NC} ] "
+
+			echo -n -e "$IDENTATION_LVL_2 Generate phpMyAdmin User Password ... "
+			MATRIXPASS=$MATRIX"{}|;:-!@#$%^&*"
+			while [ "${n:=1}" -le 16 ]; do
+                PMA_U_P="$PMA_U_P${MATRIXPASS:$(($RANDOM%${#MATRIXPASS})):1}"
+                let n+=1
+            done
+			echo -e " [ ${green}DONE${NC} ] -- $PMA_U_P"
+
+			echo -n -e "$IDENTATION_LVL_2 Insert phpMyAdmin User ... "
+			SQL_CREATE_USER="GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'phpmyadminU'@'localhost' ; FLUSH PRIVILEGES;"
+			#echo "$SQL_CREATE_USER" | mysql -u root -p$CFG_MYSQL_ROOT_PWD >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+
+			mysql -u root -p$CFG_MYSQL_ROOT_PWD << EOF
+				CREATE USER 'phpmyadminU'@'localhost' IDENTIFIED BY '$PMA_U_P';
+				GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'phpmyadminU'@'localhost';
+				FLUSH PRIVILEGES;
+			EOF
+
+			echo -e " [ ${green}DONE${NC} ] "
+
+			
 		fi
 		
 		unset DEBIAN_FRONTEND	
