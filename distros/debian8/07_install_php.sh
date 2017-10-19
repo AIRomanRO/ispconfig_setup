@@ -104,8 +104,8 @@ InstallPHP() {
 				echo -n -e "$IDENTATION_LVL_2 Prepare PHP Modules list ... "
 				PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES//PHP_SELECTED_VERSION/$PHP_VERSION_ENABLED}"
 				#The mcrypt is removed on 7.2
-				PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES%mcrypt}"
-				echo -n -e "${PARSED_PHP_MODULE_LIST} \n"
+				PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST%PHP_SELECTED_VERSION-mcrypt}"
+				echo -n -e "$PARSED_PHP_MODULE_LIST \n"
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Install PHP Modules list ... "
