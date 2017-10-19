@@ -6,8 +6,6 @@ InstallPHPMyAdmin() {
   	START_TIME=$SECONDS
 	
 	echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing PHPMyAdmin... ${NC}\n"	
-		
-	MeasureTimeDuration $START_TIME
   
 	if [ $CFG_PHPMYADMIN == "yes" ]; then
 		

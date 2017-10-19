@@ -6,8 +6,6 @@ InstallLetsEncrypt() {
   	START_TIME=$SECONDS
 	
 	echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing LetsEncrypt Certbot... ${NC}\n"	
-		
-	MeasureTimeDuration $START_TIME
 
 	if [ $CFG_CERTBOT_VERSION == "default" ]; then
 		if [ $CFG_WEBSERVER == "apache" ]; then
