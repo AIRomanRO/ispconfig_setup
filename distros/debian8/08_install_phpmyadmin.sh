@@ -6,10 +6,7 @@ InstallPHPMyAdmin() {
   	START_TIME=$SECONDS
 	
 	echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing PHPMyAdmin... ${NC}\n"	
-	
-	echo $CFG_MYSQL_ROOT_PWD
-	echo
-	
+		
 	MeasureTimeDuration $START_TIME
   
 	if [ $CFG_PHPMYADMIN == "yes" ]; then
@@ -45,21 +42,21 @@ InstallPHPMyAdmin() {
 		
 		echo -n -e "$IDENTATION_LVL_1 Set passwords ... "	
 		echo "phpmyadmin phpmyadmin/mysql/app-pass password $APP_DB_PASS" | debconf-set-selections
-		echo "phpmyadmin phpmyadmin/app-password-confirm password $APP_PASS" | debconf-set-selections
+		echo "phpmyadmin phpmyadmin/app-password-confirm password $APP_DB_PASS" | debconf-set-selections
 		echo "phpmyadmin phpmyadmin/mysql/admin-pass password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
 		echo -e " [ ${green}DONE${NC} ] "
 		
 		if [ $CFG_PHPMYADMIN_VERSION == "default" ]; then
 			echo -n -e "$IDENTATION_LVL_1 Install Default Version ... "
-			apt-get -y install phpmyadmin -t stable
+			apt-get -y install phpmyadmin -t stable >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			echo -e " [ ${green}DONE${NC} ] "
 		elif [ $CFG_PHPMYADMIN_VERSION == "jessie" ]; then
 			echo -n -e "$IDENTATION_LVL_1 Install Jessie Backports Version ... "
-			apt-get -y install phpmyadmin -t jessie-backports
+			apt-get -y install phpmyadmin -t jessie-backports >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			echo -e " [ ${green}DONE${NC} ] "
 		elif [ $CFG_PHPMYADMIN_VERSION == "stretch" ]; then
 			echo -n -e "$IDENTATION_LVL_1 Install Stretch Version ... "
-			apt-get -y install phpmyadmin -t stretch
+			apt-get -y install phpmyadmin -t stretch >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			echo -e " [ ${green}DONE${NC} ] "
 		elif [ $CFG_PHPMYADMIN_VERSION == "latest-stable" ]; then
 			echo -n -e "$IDENTATION_LVL_1 Install Latest Stable Version ... "
@@ -104,22 +101,53 @@ InstallPHPMyAdmin() {
 			echo -e " [ ${green}DONE${NC} ] "
 			
 			echo -n -e "$IDENTATION_LVL_2 Remove the temporary folder ... "
-			rm -rf /tmp/phpmyadmin
+		    rm -rf /tmp/phpmyadmin
 			echo -e " [ ${green}DONE${NC} ] "
 			
-			echo -n -e "$IDENTATION_LVL_2 Generate random blowfish string ... "
+			echo -n -e "$IDENTATION_LVL_2 Generate phpMyAdmin tables ... "
+		    mysql -u root -p$CFG_MYSQL_ROOT_PWD < /usr/share/phpmyadmin/sql/create_tables.sql >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			echo -e " [ ${green}DONE${NC} ] "
 
-			#soft generation of blowfish, instead of using /dev/urandom method
-            LENGTH=64
-            MATRIX="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-            while [ "${n:=1}" -le $LENGTH ]; do
-                BLOWFISH="$BLOWFISH${MATRIX:$(($RANDOM%${#MATRIX})):1}"
-                let n+=1
-            done
+			echo -n -e "$IDENTATION_LVL_2 Insert phpMyAdmin user and password ... "
+		    echo "CREATE USER 'phpmyadmin'@'localhost' IDENTIFIED BY '"$APP_DB_PASS"';" > tmpSQL.sql
+            echo "GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'phpmyadmin'@'localhost';" >> tmpSQL.sql
+            echo "FLUSH PRIVILEGES;" >> tmpSQL.sql
+            mysql -u root -p$CFG_MYSQL_ROOT_PWD < tmpSQL.sql >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+            rm -f tmpSQL.sql
+			echo -e " [ ${green}DONE${NC} ] -->"$APP_DB_PASS
 
-			sed -i "s/blowfish_secret'] = ''/blowfish_secret'] = '$BLOWFISH'/"  /etc/phpmyadmin/config.inc.php
+			echo -n -e "$IDENTATION_LVL_2 Generate and set random blowfish string ... "
+			BLOWFISH=$(< /dev/urandom tr -dc 'A-Z-a-z-0-9' | head -c${1:-64})
+			sed -i "s/blowfish_secret'] = ''/blowfish_secret'] = '$BLOWFISH'/" /etc/phpmyadmin/config.inc.php
+			echo -e " [ ${green}DONE${NC} ] "
+
+			echo -n -e "$IDENTATION_LVL_2 Update configs ... "
 			sed -i "s/define('CONFIG_DIR', '')/define('CONFIG_DIR', '\/etc\/phpmyadmin\/')/"  /usr/share/phpmyadmin/libraries/vendor_config.php
-			echo -e " [ ${green}DONE${NC} ] - ${red} $BLOWFISH ${NC}"
+
+			sed  -i "/controluser/c\$cfg['Servers'][\$i]['controluser']='phpmyadmin'/" /etc/phpmyadmin/config.inc.php;
+			sed  -i "/controlpass/c\$cfg['Servers'][\$i]['controlpass']='$APP_DB_PASS'/" /etc/phpmyadmin/config.inc.php;
+
+			sed  -i "/^\/\/.*'pmadb'/s/^\/\///g" /etc/phpmyadmin/config.inc.php;
+			sed  -i "/^\/\/.*'bookmarktable'/s/^\/\///g" /etc/phpmyadmin/config.inc.php;
+			sed  -i "/^\/\/.*'relation'/s/^\/\///g" /etc/phpmyadmin/config.inc.php;
+			sed  -i "/^\/\/.*'table_info'/s/^\/\///g" /etc/phpmyadmin/config.inc.php;
+			sed  -i "/^\/\/.*'table_coords'/s/^\/\///g" /etc/phpmyadmin/config.inc.php;
+			sed  -i "/^\/\/.*'pdf_pages'/s/^\/\///g" /etc/phpmyadmin/config.inc.php;
+			sed  -i "/^\/\/.*'column_info'/s/^\/\///g" /etc/phpmyadmin/config.inc.php;
+			sed  -i "/^\/\/.*'history'/s/^\/\///g" /etc/phpmyadmin/config.inc.php;
+			sed  -i "/^\/\/.*'table_uiprefs'/s/^\/\///g" /etc/phpmyadmin/config.inc.php;
+			sed  -i "/^\/\/.*'tracking'/s/^\/\///g" /etc/phpmyadmin/config.inc.php;
+			sed  -i "/^\/\/.*'userconfig'/s/^\/\///g" /etc/phpmyadmin/config.inc.php;
+			sed  -i "/^\/\/.*'recent'/s/^\/\///g" /etc/phpmyadmin/config.inc.php;
+			sed  -i "/^\/\/.*'favorite'/s/^\/\///g" /etc/phpmyadmin/config.inc.php;
+			sed  -i "/^\/\/.*'users'/s/^\/\///g" /etc/phpmyadmin/config.inc.php;
+			sed  -i "/^\/\/.*'usergroups'/s/^\/\///g" /etc/phpmyadmin/config.inc.php;
+			sed  -i "/^\/\/.*'navigationhiding'/s/^\/\///g" /etc/phpmyadmin/config.inc.php;
+			sed  -i "/^\/\/.*'savedsearches'/s/^\/\///g" /etc/phpmyadmin/config.inc.php;
+			sed  -i "/^\/\/.*'central_columns'/s/^\/\///g" /etc/phpmyadmin/config.inc.php;
+			sed  -i "/^\/\/.*'designer_settings'/s/^\/\///g" /etc/phpmyadmin/config.inc.php;
+			sed  -i "/^\/\/.*'export_templates'/s/^\/\///g" /etc/phpmyadmin/config.inc.php;
+			echo -e " [ ${green}DONE${NC} ] "
 			
 			echo -n -e "$IDENTATION_LVL_2 Remove the test folder ... "
 			rm -rf /usr/share/phpmyadmin/test
@@ -128,31 +156,6 @@ InstallPHPMyAdmin() {
 			echo -n -e "$IDENTATION_LVL_2 Remove the setup folder ... "
 			rm -rf /usr/share/phpmyadmin/setup
 			echo -e " [ ${green}DONE${NC} ] "
-
-			echo -n -e "$IDENTATION_LVL_2 Generate phpMyAdmin tables ... "
-			mysql -u root -p$CFG_MYSQL_ROOT_PWD < /usr/share/phpmyadmin/sql/create_tables.sql >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-			echo -e " [ ${green}DONE${NC} ] "
-
-			echo -n -e "$IDENTATION_LVL_2 Generate phpMyAdmin User Password ... "
-			MATRIXPASS=$MATRIX"{}|;:-!@#$%^&*"
-			while [ "${n:=1}" -le 16 ]; do
-                PMA_U_P="$PMA_U_P${MATRIXPASS:$(($RANDOM%${#MATRIXPASS})):1}"
-                let n+=1
-            done
-			echo -e " [ ${green}DONE${NC} ] -- $PMA_U_P"
-
-			echo -n -e "$IDENTATION_LVL_2 Insert phpMyAdmin User ... "
-			SQL_CREATE_USER="GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'phpmyadminU'@'localhost' ; FLUSH PRIVILEGES;"
-			#echo "$SQL_CREATE_USER" | mysql -u root -p$CFG_MYSQL_ROOT_PWD >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-
-			mysql -u root -p$CFG_MYSQL_ROOT_PWD << EOF
-				CREATE USER 'phpmyadminU'@'localhost' IDENTIFIED BY '$PMA_U_P';
-				GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'phpmyadminU'@'localhost';
-				FLUSH PRIVILEGES;
-			EOF
-
-			echo -e " [ ${green}DONE${NC} ] "
-
 			
 		fi
 		
@@ -163,196 +166,4 @@ InstallPHPMyAdmin() {
   
 
   	MeasureTimeDuration $START_TIME
-
-	exit 1;
 }
-
-
-# config-db.php - /etc/phpMyAdmin
-# <?php
-# ##
-# ## database access settings in php format
-# ## automatically generated from /etc/dbconfig-common/phpmyadmin.conf
-# ## by /usr/sbin/dbconfig-generate-include
-# ## Wed, 05 Apr 2017 03:31:40 +0300
-# ##
-# ## by default this file is managed via ucf, so you shouldn't have to
-# ## worry about manual changes being silently discarded.  *however*,
-# ## you'll probably also want to edit the configuration file mentioned
-# ## above too.
-# ##
-# $dbuser='phpmyadmin';
-# $dbpass='12345';
-# $basepath='';
-# $dbname='phpmyadmin';
-# $dbserver='';
-# $dbport='';
-# $dbtype='mysql';
-
-
-#/etc/phpmyadmin/config.inc.php
-# <?php
-# /**
- # * Debian local configuration file
- # *
- # * This file overrides the settings made by phpMyAdmin interactive setup
- # * utility.
- # *
- # * For example configuration see
- # *   /usr/share/doc/phpmyadmin/examples/config.sample.inc.php
- # * or
- # *   /usr/share/doc/phpmyadmin/examples/config.manyhosts.inc.php
- # *
- # * NOTE: do not add security sensitive data to this file (like passwords)
- # * unless you really know what you're doing. If you do, any user that can
- # * run PHP or CGI on your webserver will be able to read them. If you still
- # * want to do this, make sure to properly secure the access to this file
- # * (also on the filesystem level).
- # */
-
-# if (!function_exists('check_file_access')) {
-    # function check_file_access($path)
-    # {
-        # if (is_readable($path)) {
-            # return true;
-        # } else {
-            # error_log(
-                # 'phpmyadmin: Failed to load ' . $path
-                # . ' Check group www-data has read access and open_basedir restrictions.'
-            # );
-            # return false;
-        # }
-    # }
-# }
-
-# // Load secret generated on postinst
-# if (check_file_access('/var/lib/phpmyadmin/blowfish_secret.inc.php')) {
-    # require('/var/lib/phpmyadmin/blowfish_secret.inc.php');
-# }
-
-# // Load autoconf local config
-# if (check_file_access('/var/lib/phpmyadmin/config.inc.php')) {
-    # require('/var/lib/phpmyadmin/config.inc.php');
-# }
-
-# /**
- # * Server(s) configuration
- # */
-# $i = 0;
-# // The $cfg['Servers'] array starts with $cfg['Servers'][1].  Do not use $cfg['Servers'][0].
-# // You can disable a server config entry by setting host to ''.
-# $i++;
-
-# /**
- # * Read configuration from dbconfig-common
- # * You can regenerate it using: dpkg-reconfigure -plow phpmyadmin
- # */
-# if (check_file_access('/etc/phpmyadmin/config-db.php')) {
-    # require('/etc/phpmyadmin/config-db.php');
-# }
-
-# /* Configure according to dbconfig-common if enabled */
-# if (!empty($dbname)) {
-    # /* Authentication type */
-    # $cfg['Servers'][$i]['auth_type'] = 'cookie';
-    # /* Server parameters */
-    # if (empty($dbserver)) $dbserver = 'localhost';
-    # $cfg['Servers'][$i]['host'] = $dbserver;
-
-    # if (!empty($dbport) || $dbserver != 'localhost') {
-        # $cfg['Servers'][$i]['connect_type'] = 'tcp';
-        # $cfg['Servers'][$i]['port'] = $dbport;
-    # }
-    # //$cfg['Servers'][$i]['compress'] = false;
-    # /* Select mysqli if your server has it */
-    # $cfg['Servers'][$i]['extension'] = 'mysqli';
-    # /* Optional: User for advanced features */
-
- # /* Optional: User for advanced features */
-    # $cfg['Servers'][$i]['controluser'] = $dbuser;
-    # $cfg['Servers'][$i]['controlpass'] = $dbpass;
-    # /* Optional: Advanced phpMyAdmin features */
-    # $cfg['Servers'][$i]['pmadb'] = $dbname;
-    # $cfg['Servers'][$i]['bookmarktable'] = 'pma__bookmark';
-    # $cfg['Servers'][$i]['relation'] = 'pma__relation';
-    # $cfg['Servers'][$i]['table_info'] = 'pma__table_info';
-    # $cfg['Servers'][$i]['table_coords'] = 'pma__table_coords';
-    # $cfg['Servers'][$i]['pdf_pages'] = 'pma__pdf_pages';
-    # $cfg['Servers'][$i]['column_info'] = 'pma__column_info';
-    # $cfg['Servers'][$i]['history'] = 'pma__history';
-    # $cfg['Servers'][$i]['table_uiprefs'] = 'pma__table_uiprefs';
-    # $cfg['Servers'][$i]['tracking'] = 'pma__tracking';
-    # $cfg['Servers'][$i]['designer_coords'] = 'pma__designer_coords';
-    # $cfg['Servers'][$i]['userconfig'] = 'pma__userconfig';
-    # $cfg['Servers'][$i]['recent'] = 'pma__recent';
-    # $cfg['Servers'][$i]['favorite'] = 'pma__favorite';
-    # $cfg['Servers'][$i]['users'] = 'pma__users';
-    # $cfg['Servers'][$i]['usergroups'] = 'pma__usergroups';
-    # $cfg['Servers'][$i]['navigationhiding'] = 'pma__navigationhiding';
- # $cfg['Servers'][$i]['usergroups'] = 'pma__usergroups';
-    # $cfg['Servers'][$i]['navigationhiding'] = 'pma__navigationhiding';
-    # $cfg['Servers'][$i]['savedsearches'] = 'pma__savedsearches';
-
-    # /* Uncomment the following to enable logging in to passwordless accounts,
-     # * after taking note of the associated security risks. */
-    # // $cfg['Servers'][$i]['AllowNoPassword'] = TRUE;
-
-    # /* Advance to next server for rest of config */
-    # $i++;
-# }
-
-# /* Authentication type */
-# //$cfg['Servers'][$i]['auth_type'] = 'cookie';
-# /* Server parameters */
-# //$cfg['Servers'][$i]['host'] = 'localhost';
-# //$cfg['Servers'][$i]['connect_type'] = 'tcp';
-# //$cfg['Servers'][$i]['compress'] = false;
-# /* Select mysqli if your server has it */
-# //$cfg['Servers'][$i]['extension'] = 'mysql';
-# /* Optional: User for advanced features */
-# // $cfg['Servers'][$i]['controluser'] = 'pma';
-# // $cfg['Servers'][$i]['controlpass'] = 'pmapass';
-
-# /* Storage database and tables */
-# // $cfg['Servers'][$i]['pmadb'] = 'phpmyadmin';
-# // $cfg['Servers'][$i]['bookmarktable'] = 'pma__bookmark';
-# // $cfg['Servers'][$i]['relation'] = 'pma__relation';
-# // $cfg['Servers'][$i]['table_info'] = 'pma__table_info';
-# // $cfg['Servers'][$i]['table_coords'] = 'pma__table_coords';
-# // $cfg['Servers'][$i]['pdf_pages'] = 'pma__pdf_pages';
-# // $cfg['Servers'][$i]['column_info'] = 'pma__column_info';
-# // $cfg['Servers'][$i]['history'] = 'pma__history';
-# // $cfg['Servers'][$i]['table_uiprefs'] = 'pma__table_uiprefs';
-# // $cfg['Servers'][$i]['tracking'] = 'pma__tracking';
-# // $cfg['Servers'][$i]['designer_coords'] = 'pma__designer_coords';
-# // $cfg['Servers'][$i]['userconfig'] = 'pma__userconfig';
-# // $cfg['Servers'][$i]['recent'] = 'pma__recent';
-# // $cfg['Servers'][$i]['favorite'] = 'pma__favorite';
-# // $cfg['Servers'][$i]['recent'] = 'pma__recent';
-# // $cfg['Servers'][$i]['favorite'] = 'pma__favorite';
-# // $cfg['Servers'][$i]['users'] = 'pma__users';
-# // $cfg['Servers'][$i]['usergroups'] = 'pma__usergroups';
-# // $cfg['Servers'][$i]['navigationhiding'] = 'pma__navigationhiding';
-# // $cfg['Servers'][$i]['savedsearches'] = 'pma__savedsearches';
-# /* Uncomment the following to enable logging in to passwordless accounts,
- # * after taking note of the associated security risks. */
-# // $cfg['Servers'][$i]['AllowNoPassword'] = TRUE;
-
-# /*
- # * End of servers configuration
- # */
-
-# /*
- # * Directories for saving/loading files from server
- # */
-# $cfg['UploadDir'] = '';
-# $cfg['SaveDir'] = '';
-
-# /* Support additional configurations */
-# foreach (glob('/etc/phpmyadmin/conf.d/*.php') as $filename)
-# {
-    # include($filename);
-# }
-
-
-
