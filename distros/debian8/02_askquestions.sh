@@ -26,7 +26,7 @@ AskQuestions() {
 		while [ "x$CFG_MYSQL_VERSION" == "x" ]
         do
 			CFG_MYSQL_VERSION=$(whiptail --title "MySQL Version" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
-			    "Select MySQL Version" 10 60 3 \
+			    "Select MySQL Version" 10 60 4 \
 			    "default"  "OS Current Version" ON \
 			    "5.6"      "MySQL-5.6" OFF \
 			    "5.7"      "MySQL-5.7" OFF \
@@ -94,7 +94,7 @@ AskQuestions() {
 	while [ "x$CFG_PHP_VERSION" == "x" ]
 	do
 		CFG_PHP_VERSION=$(whiptail --title "Choose PHP Version(s)" --backtitle "$WT_BACKTITLE" --nocancel --separate-output --checklist \
-		    "Choose PHP Version do you want to install" 20 75 5 \
+		    "Choose PHP Version do you want to install" 20 75 6 \
             "php5.6"    "Latest Available from 5.6" ON \
             "php7.0"    "Latest Available from 7.0" ON \
             "php7.1"    "Latest Available from 7.1" ON \
