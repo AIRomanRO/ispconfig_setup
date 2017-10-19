@@ -116,7 +116,7 @@ InstallPHPMyAdmin() {
                 let n+=1
             done
 
-			sed -i "s/blowfish_secret'] = ''/blowfish_secret'] = \'$BLOWFISH\'/"  /usr/share/phpmyadmin/config.inc.php
+			sed -i "s/blowfish_secret'] = ''/blowfish_secret'] = '$BLOWFISH'/"  /usr/share/phpmyadmin/config.inc.php
 			echo -e " [ ${green}DONE${NC} ] - ${red} $BLOWFISH {$NC}"
 			
 			echo -n -e "$IDENTATION_LVL_2 Remove the test folder ... "
