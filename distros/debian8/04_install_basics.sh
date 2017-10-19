@@ -9,7 +9,7 @@ InstallBasics() {
 	
 	#Check for debconf-utils
 	if [ -f /bin/debconf ] || [ -f /usr/bin/debconf ]; then
-     	echo -n -e "$IDENTATION_LVL_2 ${BBlack}debconf-utils${NC}: ${green}FOUND${NC}\n"
+     	echo -n -e "$IDENTATION_LVL_2 ${BBlack}debconf-utils${NC}: ${green}Already Installed${NC}\n"
     else
 	    echo -n -e "$IDENTATION_LVL_2 ${BBlack}debconf-utils${NC}: ${red}NOT FOUND${NC} - try to install it ... "
         apt-get -yqq install debconf-utils >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
@@ -21,7 +21,7 @@ InstallBasics() {
 
 	#Check for binutils
 	if [ -f /bin/ld ] || [ -f /usr/bin/ld ]; then
-		echo -n -e "$IDENTATION_LVL_2 ${BBlack}BINUTILS${NC}: ${green}FOUND${NC}\n"
+		echo -n -e "$IDENTATION_LVL_2 ${BBlack}BINUTILS${NC}: ${green}Already Installed${NC}\n"
 	else
 		echo -n -e "$IDENTATION_LVL_2 ${BBlack}BINUTILS${NC}: ${red}NOT FOUND${NC} - try to install it ... "
 		apt-get -yqq install binutils >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
@@ -31,7 +31,7 @@ InstallBasics() {
 
 	#Check for sudo
 	if [ -f /bin/sudo ] || [ -f /usr/bin/sudo ]; then
-		echo -n -e "$IDENTATION_LVL_2 ${BBlack}SUDO${NC}: ${green}FOUND${NC}\n"
+		echo -n -e "$IDENTATION_LVL_2 ${BBlack}SUDO${NC}: ${green}Already Installed${NC}\n"
 	else
 		echo -n -e "$IDENTATION_LVL_2 ${BBlack}SUDO${NC}: ${red}NOT FOUND${NC} - try to install it ... "
 		apt-get -yqq install sudo >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
@@ -41,7 +41,7 @@ InstallBasics() {
 
 	#Check for lsb-release
 	if [ -f /bin/lsb_release ] || [ -f /usr/bin/lsb_release ]; then
-		echo -n -e "$IDENTATION_LVL_2 ${BBlack}LSB-RELEASE${NC}: ${green}FOUND${NC}\n"
+		echo -n -e "$IDENTATION_LVL_2 ${BBlack}LSB-RELEASE${NC}: ${green}Already Installed${NC}\n"
 	else
 		echo -n -e "$IDENTATION_LVL_2 ${BBlack}LSB-RELEASE${NC}: ${red}NOT FOUND${NC} - try to install it ... "
 		apt-get -yqq install lsb-release >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
@@ -51,7 +51,7 @@ InstallBasics() {
   
 	#Check for apt-transport-https
 	if [ -f /usr/lib/apt/methods/https ]; then
-		echo -n -e "$IDENTATION_LVL_2 ${BBlack}APT HTTPS Method${NC}: ${green}FOUND${NC}\n"
+		echo -n -e "$IDENTATION_LVL_2 ${BBlack}APT HTTPS Method${NC}: ${green}Already Installed${NC}\n"
 	else
 		echo -n -e "$IDENTATION_LVL_2 ${BBlack}APT HTTPS Method${NC}: ${red}NOT FOUND${NC} - try to install it ... "
 		apt-get -yqq install apt-transport-https >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
@@ -72,7 +72,7 @@ InstallBasics() {
             "htop" )
                 #Check for htop
 	            if [ -f /bin/htop ] || [ -f /usr/bin/htop ]; then
-     	            echo -n -e "$IDENTATION_LVL_2 ${BBlack}HTOP${NC}: ${green}FOUND${NC} \n"
+     	            echo -n -e "$IDENTATION_LVL_2 ${BBlack}HTOP${NC}: ${green}Already Installed${NC} \n"
                 else
 	                echo -n -e "$IDENTATION_LVL_2 ${BBlack}HTOP${NC}: ${red}NOT FOUND${NC} - try to install it ... "
                     apt-get -yqq install htop >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
@@ -183,7 +183,7 @@ InstallBasics() {
 		
 		#Check for DPKG DEV
 		if dpkg --list 2>&1 | grep -qw dpkg-dev; then
-			echo -n -e "$IDENTATION_LVL_2 ${BBlack}DPKG DEV${NC}: ${green}FOUND${NC} \n"
+			echo -n -e "$IDENTATION_LVL_2 ${BBlack}DPKG DEV${NC}: ${green}Already Installed${NC} \n"
 		else
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}DPKG DEV${NC}: ${red}NOT FOUND${NC} - try to install it ... "
 			apt-get -yqq install dpkg-dev >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
@@ -192,7 +192,7 @@ InstallBasics() {
 	
 		#Check for Debian Keyring
 		if dpkg --list 2>&1 | grep -qw debian-keyring; then
-			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Debian Keyring${NC}: ${green}FOUND${NC} \n"
+			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Debian Keyring${NC}: ${green}Already Installed${NC} \n"
 		else
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Debian Keyring${NC}: ${red}NOT FOUND${NC} - try to install it ... "
 			apt-get -yqq install debian-keyring >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
@@ -201,7 +201,7 @@ InstallBasics() {
 	
 		#Check for Dev Scripts
 		if dpkg --list 2>&1 | grep -qw devscripts; then
-			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Dev Scripts${NC}: ${green}FOUND${NC} \n"
+			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Dev Scripts${NC}: ${green}Already Installed${NC} \n"
 		else
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Dev Scripts${NC}: ${red}NOT FOUND${NC} - try to install it ... "
 			apt-get -yqq install devscripts >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
@@ -210,7 +210,7 @@ InstallBasics() {
 	
 	    #Check for Quilt
 		if dpkg --list 2>&1 | grep -qw quilt; then
-		    echo -n -e "$IDENTATION_LVL_2 ${BBlack}Quilt${NC}: ${green}FOUND${NC} \n"
+		    echo -n -e "$IDENTATION_LVL_2 ${BBlack}Quilt${NC}: ${green}Already Installed${NC} \n"
 	    else
 		    echo -n -e "$IDENTATION_LVL_2 ${BBlack}Quilt${NC}: ${red}NOT FOUND${NC} - try to install it ... "
 		    apt-get -yqq install quilt >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
@@ -219,7 +219,7 @@ InstallBasics() {
 		
 		#Check for Lib PCRE3 Dev
 		if dpkg --list 2>&1 | grep -qw libpcre3-dev; then
-		    echo -n -e "$IDENTATION_LVL_2 ${BBlack}Lib PCRE3 Dev${NC}: ${green}FOUND${NC} \n"
+		    echo -n -e "$IDENTATION_LVL_2 ${BBlack}Lib PCRE3 Dev${NC}: ${green}Already Installed${NC} \n"
 	    else
 		    echo -n -e "$IDENTATION_LVL_2 ${BBlack}Lib PCRE3 Dev${NC}: ${red}NOT FOUND${NC} - try to install it ... "
 		    apt-get -yqq --force-yes install libpcre3-dev >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
@@ -228,7 +228,7 @@ InstallBasics() {
 		
 		#Check for Lib Zlib 1g Dev
 		if dpkg --list 2>&1 | grep -qw zlib1g-dev; then
-		    echo -n -e "$IDENTATION_LVL_2 ${BBlack}Lib Zlib 1g Dev${NC}: ${green}FOUND${NC} \n"
+		    echo -n -e "$IDENTATION_LVL_2 ${BBlack}Lib Zlib 1g Dev${NC}: ${green}Already Installed${NC} \n"
 	    else
 		    echo -n -e "$IDENTATION_LVL_2 ${BBlack}Lib Zlib 1g Dev${NC}: ${red}NOT FOUND${NC} - try to install it ... "
 		    apt-get -yqq --force-yes install zlib1g-dev >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
