@@ -3,6 +3,12 @@
 #    Install and configure PureFTPd
 #---------------------------------------------------------------------
 InstallFTP() {
+  START_TIME=$SECONDS
+  
+  echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing LetsEncrypt Certbot... ${NC}\n" 
+    
+  MeasureTimeDuration $START_TIME
+
   echo -n "Installing PureFTPd... "
   echo "pure-ftpd-common pure-ftpd/virtualchroot boolean true" | debconf-set-selections
   apt-get -yqq install pure-ftpd-common pure-ftpd-mysql >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
@@ -14,5 +20,8 @@ InstallFTP() {
   service openbsd-inetd restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
   service pure-ftpd-mysql restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
   echo -e "[${green}DONE${NC}]\n"
+
+  MeasureTimeDuration $START_TIME 
+  exit 1;
 }
 

@@ -175,13 +175,13 @@ source $PWD/distros/$DISTRO/06_install_webserver.sh
 source $PWD/distros/$DISTRO/07_install_php.sh
 source $PWD/distros/$DISTRO/08_install_phpmyadmin.sh
 source $PWD/distros/$DISTRO/09_install_letsencrypt.sh
-source $PWD/distros/$DISTRO/10_install_xcache.sh
+source $PWD/distros/$DISTRO/10_install_ftp.sh
 source $PWD/distros/$DISTRO/install_postfix.sh
 source $PWD/distros/$DISTRO/install_mta.sh
 source $PWD/distros/$DISTRO/install_antivirus.sh
 
 source $PWD/distros/$DISTRO/install_hhvm.sh
-source $PWD/distros/$DISTRO/install_ftp.sh
+
 source $PWD/distros/$DISTRO/install_quota.sh
 source $PWD/distros/$DISTRO/install_bind.sh
 source $PWD/distros/$DISTRO/install_webstats.sh
@@ -247,7 +247,9 @@ if [ -f /etc/debian_version ]; then
 		InstallPHP
 		
 		InstallPHPMyAdmin
-		
+
+		InstallLetsEncrypt
+
         InstallFTP 
 		
         if [ "$CFG_QUOTA" == "yes" ]; 
