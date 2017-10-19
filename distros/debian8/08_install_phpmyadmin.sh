@@ -87,19 +87,19 @@ InstallPHPMyAdmin() {
 			echo -e " [ ${green}DONE${NC} ] "
 			
 			echo -n -e "$IDENTATION_LVL_2 Make destination folder ... "
-			mkdir -p /usr/local/share/phpmyadmin
+			mkdir -p /usr/share/phpmyadmin
 			echo -e " [ ${green}DONE${NC} ] "
 
 			echo -n -e "$IDENTATION_LVL_2 Ensure that the destination folder is empty ... "
-			rm -rf /usr/local/share/phpmyadmin/*
+			rm -rf /usr/share/phpmyadmin/*
 			echo -e " [ ${green}DONE${NC} ] "
 			
 			echo -n -e "$IDENTATION_LVL_2 Copy current phpMyAdmin files to destination folder ... "
-			cp -Rpf /tmp/phpmyadmin/*/* /usr/local/share/phpmyadmin
+			cp -Rpf /tmp/phpmyadmin/*/* /usr/share/phpmyadmin
 			echo -e " [ ${green}DONE${NC} ] "
 			
 			echo -n -e "$IDENTATION_LVL_2 Create the phpMyAdmin config file from sample ... "
-			cp /usr/local/share/phpmyadmin/{config.sample.inc.php,config.inc.php}
+			cp /usr/share/phpmyadmin/{config.sample.inc.php,config.inc.php}
 			echo -e " [ ${green}DONE${NC} ] "
 			
 			echo -n -e "$IDENTATION_LVL_2 Remove the temporary folder ... "
@@ -108,6 +108,7 @@ InstallPHPMyAdmin() {
 			
 			echo -n -e "$IDENTATION_LVL_2 Generate random blowfish string ... "
 
+			#soft generation of blowfish, instead of using /dev/urandom method
             LENGTH=64
             MATRIX="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~!@#$%^&*_=-"
             while [ "${n:=1}" -le $LENGTH ]; do
@@ -115,10 +116,16 @@ InstallPHPMyAdmin() {
                 let n+=1
             done
 
+			sed -i "s/blowfish_secret'] = ''/blowfish_secret'] = \'$BLOWFISH\'/"  /usr/share/phpmyadmin/config.inc.php
 			echo -e " [ ${green}DONE${NC} ] - ${red} $BLOWFISH {$NC}"
 			
-			echo $(< /dev/urandom tr -dc 'A-Z-a-z-0-9~!@#$%^&*_=-' | head -c${1:-64})
-			echo $(< /dev/urandom tr -dc 'A-Z-a-z-0-9~!@#$%^&*_=-' | head -c${1:-64})
+			echo -n -e "$IDENTATION_LVL_2 Remove the test folder ... "
+			rm -rf /usr/share/phpmyadmin/test
+			echo -e " [ ${green}DONE${NC} ] "
+
+			echo -n -e "$IDENTATION_LVL_2 Remove the setup folder ... "
+			rm -rf /usr/share/phpmyadmin/setup
+			echo -e " [ ${green}DONE${NC} ] "
 		fi
 		
 		unset DEBIAN_FRONTEND	
