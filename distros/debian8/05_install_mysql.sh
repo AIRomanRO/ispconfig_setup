@@ -64,7 +64,7 @@ InstallSQLServer() {
 			MYSQLAPTVER="`wget -q -O - https://repo.mysql.com/|grep -E -o 'mysql-apt-config_([0-9]|[\.-])+_all\.deb' | tail -1`"
 
 			echo -n -e "$IDENTATION_LVL_1 Downloading the MySQL APT Config [ ${BBlack}Version $MYSQLAPTVER ${NC}] ... "
-			wget -q -O "mysql-apt-config-all.deb" "https://repo.mysql.com/{$MYSQLAPTVER}"
+			wget -q -O "mysql-apt-config-all.deb" "https://repo.mysql.com/$MYSQLAPTVER"
 
 			echo -e " [ ${green}DONE${NC} ] "
 			
@@ -73,7 +73,7 @@ InstallSQLServer() {
 			echo -n -e "$IDENTATION_LVL_1 Set Selections on debconf ... "
 			echo "mysql-apt-config mysql-apt-config/select-preview select Disabled" | debconf-set-selections
 			echo "mysql-apt-config mysql-apt-config/select-tools select  Enabled" | debconf-set-selections
-			echo "mysql-apt-config mysql-apt-config/select-server select mysql-$CFG_SQLSERVER" | debconf-set-selections
+			echo "mysql-apt-config mysql-apt-config/select-server select mysql-$CFG_MYSQL_VERSION" | debconf-set-selections
 			#echo "mysql-apt-config mysql-apt-config/select-product select Ok" | debconf-set-selections
 			echo -e " [ ${green}DONE${NC} ] "
 			
