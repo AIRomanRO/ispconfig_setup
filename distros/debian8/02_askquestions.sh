@@ -156,7 +156,7 @@ AskQuestions() {
   	while [ "x$CFG_FTP" == "x" ]
 	do
 		CFG_FTP=$(whiptail --title "FTP Server" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
-		"Install and configure FTP SERVER ?" 10 60 3 \
+		"Install and configure FTP SERVER ?" 10 60 4 \
 		"onlyFTP" "Yes, only with FTP" OFF \
 		"onlyTLS" "Yes, only with TLS" ON \
 		"FTPandTLS" "Yes, with FTP and TLS" OFF \

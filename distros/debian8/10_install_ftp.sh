@@ -19,15 +19,15 @@ InstallFTP() {
     sed -i 's/ftp/\#ftp/' /etc/inetd.conf >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
     echo -e " [ ${green}DONE${NC} ] "
 
-    echo -n -e "$IDENTATION_LVL_1 Configure PureFTPd to accept "
+    echo -n -e "$IDENTATION_LVL_1 Configure PureFTPd to accept"
     if [ $CFG_FTP == "onlyFTP" ]; then
-      echo -e " ${red} Only FTP ${NC}"
+      echo -n -e " ${red} Only FTP ${NC}"
       echo 0 > /etc/pure-ftpd/conf/TLS
     elif [ $CFG_FTP == "onlyTLS" ]; then
-      echo -e " ${red} Only TLS ${NC}"
+      echo -n -e " ${red} Only TLS ${NC}"
       echo 2 > /etc/pure-ftpd/conf/TLS
-    elif [ $CFG_FTP == "FTPandTLS" ]; then
-      echo -e " ${red} Both FTP and TLS ${NC}"
+    else
+      echo -n -e " ${red} Both FTP and TLS ${NC}"
       echo 1 > /etc/pure-ftpd/conf/TLS
     fi
     echo -e "connections [ ${green}DONE${NC} ] "
@@ -44,8 +44,6 @@ InstallFTP() {
     echo -e " [ ${green}DONE${NC} ] "
   fi
 
-  MeasureTimeDuration $START_TIME 
-
-  exit 1;
+  MeasureTimeDuration $START_TIME
 }
 
