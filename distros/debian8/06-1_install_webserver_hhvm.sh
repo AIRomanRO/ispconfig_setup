@@ -8,7 +8,7 @@ InstallHHVM() {
 	
 	echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing HHVM Server${NC} \n"
 
-  	if [ $CFG_SETUP_WEB = "yes" ]; then
+  	if [ $CFG_HHVM = "yes" ]; then
 	    echo -n -e "$IDENTATION_LVL_1 Add hhvm keys and sources ... "
 	    sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449 >> $PROGRAMS_INSTALL_LOG_FILES 2>&1  
 	    echo deb http://dl.hhvm.com/debian jessie main | sudo tee /etc/apt/sources.list.d/hhvm.list >> $PROGRAMS_INSTALL_LOG_FILES 2>&1  

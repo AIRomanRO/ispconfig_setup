@@ -131,14 +131,14 @@ InstallWebServer() {
 			
 		elif [ $CFG_NGINX_VERSION == "n-dotdeb" ]; then
 		
-			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green} DotDeb.org - with 'full' HTTP2 ${NC}"
+			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green} DotDeb.org - with 'full' HTTP2 ${NC}\n"
 			
 			echo -n -e "$IDENTATION_LVL_3 ${BBlack}Build Dependencies${NC}"
-			apt-get build-dep nginx nginx-full -t jessie-nginx-http2 >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			apt-get -yqq --force-yes build-dep nginx nginx-full -t jessie-nginx-http2 >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			echo -e " [ ${green}DONE${NC} ]"
 			
 			echo -n -e "$IDENTATION_LVL_3 ${BBlack}Install ${BWhite}libssl1.0.0${BBlack} from ${BWhite}jessie-backports ${NC}"
-			apt-get install libssl1.0.0/jessie-backports libssl-dev/jessie-backports openssl/jessie-backports >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			apt-get -yqq --force-yes install libssl1.0.0/jessie-backports libssl-dev/jessie-backports openssl/jessie-backports >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			echo -e " [ ${green}DONE${NC} ]"
 			
 			echo -n -e "$IDENTATION_LVL_3 ${BBlack}Install ${BWhite}nginx${BBlack} & ${BWhite}nginx-full${NC}"
