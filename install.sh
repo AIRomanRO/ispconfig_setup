@@ -176,19 +176,20 @@ source $PWD/distros/$DISTRO/07_install_php.sh
 source $PWD/distros/$DISTRO/08_install_phpmyadmin.sh
 source $PWD/distros/$DISTRO/09_install_letsencrypt.sh
 source $PWD/distros/$DISTRO/10_install_ftp.sh
+source $PWD/distros/$DISTRO/11_install_quota.sh
+source $PWD/distros/$DISTRO/12_install_jailkit.sh
 source $PWD/distros/$DISTRO/install_postfix.sh
 source $PWD/distros/$DISTRO/install_mta.sh
 source $PWD/distros/$DISTRO/install_antivirus.sh
 
 source $PWD/distros/$DISTRO/install_hhvm.sh
 
-source $PWD/distros/$DISTRO/install_quota.sh
 source $PWD/distros/$DISTRO/install_bind.sh
 source $PWD/distros/$DISTRO/install_webstats.sh
-source $PWD/distros/$DISTRO/install_jailkit.sh
+
 source $PWD/distros/$DISTRO/install_fail2ban.sh
 source $PWD/distros/$DISTRO/install_webmail.sh
-#source $PWD/distros/$DISTRO/install_metronom.sh
+
 source $PWD/distros/$DISTRO/install_ispconfig.sh
 source $PWD/distros/$DISTRO/install_fix.sh
 
@@ -265,11 +266,6 @@ if [ -f /etc/debian_version ]; then
         if [ "$CFG_HHVM" == "yes" ]; 
 		then
     	    InstallHHVM
-        fi
-		
-        if [ "$CFG_METRONOM" == "yes" ]; 
-		then
-    	    InstallMetronom 
         fi
 		
         InstallWebmail 
