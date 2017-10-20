@@ -41,11 +41,16 @@ InstallJailkit() {
 
   echo -n -e "$IDENTATION_LVL_1 ${BWhite}Cleanup ... ${NC}"
   rm -rf jailkit-$JKV
+<<<<<<< HEAD
   rm -f /tmp/jailkit-$JKV.tar.gz
   rm -rf /tmp/jailkit-$JKV
   echo -e " [ ${green}DONE${NC} ] "
 
   MeasureTimeDuration $START_TIME
 
+=======
+  echo -e " [ ${green}DONE${NC} ] "
+
+>>>>>>> e5f4063952cf0f34decf706e334304934a1d4486
   exit 1;
 }
