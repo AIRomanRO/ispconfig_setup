@@ -43,6 +43,7 @@ InstallJailkit() {
   rm -rf jailkit-$JKV
   rm -f /tmp/jailkit-$JKV.tar.gz
   rm -rf /tmp/jailkit-$JKV
+  rm -f /tmp/jailkit_$JKV-1_*.deb
   echo -e " [ ${green}DONE${NC} ] "
 
   MeasureTimeDuration $START_TIME

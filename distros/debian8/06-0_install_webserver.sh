@@ -2,6 +2,9 @@
 # Function: InstallWebServer Debian 8
 #    Install and configure Apache2 / NGINX
 #---------------------------------------------------------------------
+
+source $PWD/distros/$DISTRO/06-1_install_webserver_hhvm.sh
+
 InstallWebServer() { 
   	START_TIME=$SECONDS 
 	
@@ -218,4 +221,6 @@ InstallWebServer() {
 	fi
 	
   	MeasureTimeDuration $START_TIME
+
+  	InstallHHVM
 }
