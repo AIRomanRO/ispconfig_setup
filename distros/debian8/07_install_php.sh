@@ -159,10 +159,21 @@ InstallPHP() {
 		echo -e " [ ${green}DONE${NC} ] "
 		
 		echo -n -e "$IDENTATION_LVL_2 Restart PHP-FPM ... "
-		service php5.6-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-		service php7.0-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-		service php7.1-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-		service php7.2-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		case $PHP_VERSION_ENABLED in
+            "php5.6" )
+				service php5.6-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			;;
+            "php7.0" )
+				service php7.0-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			;;
+            "php7.1" )
+				service php7.1-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			;;      
+		    "php7.2" )
+				service php7.2-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			;;
+        esac
+
 		echo -e " [ ${green}DONE${NC} ] "
 		
 	fi
