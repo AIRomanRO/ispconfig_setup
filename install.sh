@@ -179,14 +179,11 @@ source $PWD/distros/$DISTRO/10_install_ftp.sh
 source $PWD/distros/$DISTRO/11_install_quota.sh
 source $PWD/distros/$DISTRO/12_install_jailkit.sh
 source $PWD/distros/$DISTRO/13_install_webmail.sh
+source $PWD/distros/$DISTRO/14_install_postfix.sh
+source $PWD/distros/$DISTRO/15_install_mta.sh
+source $PWD/distros/$DISTRO/16_install_antivirus.sh
+source $PWD/distros/$DISTRO/17_install_bind.sh
 
-source $PWD/distros/$DISTRO/install_postfix.sh
-source $PWD/distros/$DISTRO/install_mta.sh
-source $PWD/distros/$DISTRO/install_antivirus.sh
-
-
-
-source $PWD/distros/$DISTRO/install_bind.sh
 source $PWD/distros/$DISTRO/install_webstats.sh
 
 source $PWD/distros/$DISTRO/install_fail2ban.sh
@@ -268,10 +265,6 @@ if [ -f /etc/debian_version ]; then
         InstallWebmail 
     fi
 	
-	if [ "$CFG_PHP_VERSION" == "none"]; then
-        InstallBasePhp
-    fi  
-	
     if [ "$CFG_SETUP_MAIL" == "yes" ] || [ "$CFG_MULTISERVER" == "no" ]; then
         InstallPostfix 
         InstallMTA 
@@ -284,12 +277,16 @@ if [ -f /etc/debian_version ]; then
 	
 	InstallWebStats
     InstallFail2ban
-	
+		
+	if [ "$CFG_PHP_VERSION" == "none"]; then
+        InstallBasePhp
+    fi  
+
     if [ "$CFG_ISPCVERSION" == "Beta" ]; then
 		source $PWD/distros/$DISTRO/install_ispconfigbeta.sh
 		InstallISPConfigBeta
     fi
-	
+
     InstallISPConfig
     InstallFix
 	
@@ -305,7 +302,7 @@ if [ -f /etc/debian_version ]; then
 	
 	if [ "$CFG_WEBMAIL" == "roundcube" ]; then
         if [ "$DISTRO" != "debian8" ]; then
-		    echo -e "${red}You had to edit user/pass /var/lib/roundcube/plugins/ispconfig3_account/config/config.inc.php of roudcube user, as the one you inserted in ISPconfig ${NC}"
+		    echo -e "${red}You had to edit user/pass /var/lib/roundcube/plugins/ispconfig3_account/config/config.inc.php of roundcube user, as the one you inserted in ISPconfig ${NC}"
 	    fi
     fi
 	

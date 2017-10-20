@@ -97,10 +97,10 @@ AskQuestions() {
 	do
 		CFG_PHP_VERSION=$(whiptail --title "Choose PHP Version(s)" --backtitle "$WT_BACKTITLE" --nocancel --separate-output --checklist \
 		    "Choose PHP Version do you want to install" 20 75 6 \
-            "php5.6"    "Latest Available from 5.6" ON \
-            "php7.0"    "Latest Available from 7.0" ON \
+            "php5.6"    "Latest Available from 5.6" OFF \
+            "php7.0"    "Latest Available from 7.0" OFF \
             "php7.1"    "Latest Available from 7.1" ON \
-            "php7.2"    "Latest Available from 7.2" ON \
+            "php7.2"    "Latest Available from 7.2" OFF \
 			"none"      "No install" OFF 3>&1 1>&2 2>&3)
 	done 
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}PHP Version(s)${NC}: ${green}" $CFG_PHP_VERSION "${NC} "

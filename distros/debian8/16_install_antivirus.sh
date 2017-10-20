@@ -3,20 +3,35 @@
 #    Install Amavisd, Spamassassin, ClamAV
 #---------------------------------------------------------------------
 InstallAntiVirus() {
-  echo -n "Installing Anti-Virus utilities... (This take some time. Don't abort it ...) "
+  START_TIME=$SECONDS
+  
+  echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing AntiVirus${NC}\n"
+
+  echo -n -e "$IDENTATION_LVL_1 Installing AntiVirus utilities (This take some time. Don't abort it! ) ... "
   apt-get -yqq install amavisd-new spamassassin clamav clamav-daemon zoo unzip bzip2 arj nomarch lzop cabextract apt-listchanges libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl rkhunter systemd unrar-free p7zip rpm2cpio tnef >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+  echo -e " [ ${green}DONE${NC} ] "
+
+  echo -n -e "$IDENTATION_LVL_1 Configure AntiVirus ... "
   sed -i "s/AllowSupplementaryGroups false/AllowSupplementaryGroups true/" /etc/clamav/clamd.conf
-  echo -n "Stopping Spamassassin ... "
+  echo -e " [ ${green}DONE${NC} ] "
+
+  echo -n -e "$IDENTATION_LVL_1 Stopping Spamassassin ... "
   service spamassassin stop
-  echo -e "[${green}DONE${NC}]\n"
-  echo -n "Disable Spamassassin ... "
+  echo -e " [ ${green}DONE${NC} ] "
+
+  echo -n -e "$IDENTATION_LVL_1 Disable Spamassassin ... "
   systemctl disable spamassassin
-  echo -e "[${green}DONE${NC}]\n"
+  echo -e " [ ${green}DONE${NC} ] "
+
   if [ $CFG_AVUPDATE == "yes" ]; then
-	echo -n "Updating ClamAV. Please Wait ... "
-	freshclam
+    echo -n -e "$IDENTATION_LVL_1 Updating ClamAV. ( Please Wait. Don't abort it! ) ... "
+    freshclam
+    echo -e " [ ${green}DONE${NC} ] "
   fi
-  echo -n "Restarting ClamAV... "
+
+  echo -n -e "$IDENTATION_LVL_1 Restarting ClamAV ... "
   service clamav-daemon restart
   echo -e "[${green}DONE${NC}]\n"
+
+  MeasureTimeDuration $START_TIME
 }

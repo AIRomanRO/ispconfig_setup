@@ -5,7 +5,7 @@
 InstallPHP() {
   	START_TIME=$SECONDS
 	
-	echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing PHP${NC}... \n"	
+	echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing PHP${NC}\n"	
 	echo -n -e "$IDENTATION_LVL_2 Selected Versions: ${green}"$CFG_PHP_VERSION"${NC}\n"
 	
 	echo -n -e "$IDENTATION_LVL_1 Build PHP modules raw list ... "

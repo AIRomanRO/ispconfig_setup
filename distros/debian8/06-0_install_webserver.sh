@@ -8,7 +8,7 @@ source $PWD/distros/$DISTRO/06-1_install_webserver_hhvm.sh
 InstallWebServer() { 
   	START_TIME=$SECONDS 
 	
-	echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing WEB Server... ${NC} \n"	
+	echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing WEB Server${NC} \n"	
 	echo -n -e "$IDENTATION_LVL_2 Selected web Server: "
 	
 	if [ $CFG_WEBSERVER == "apache" ]; then

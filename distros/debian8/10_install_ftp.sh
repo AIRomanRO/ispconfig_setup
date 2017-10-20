@@ -5,7 +5,7 @@
 InstallFTP() {
   START_TIME=$SECONDS
 
-  echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing PureFTPd... ${NC}\n" 
+  echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing PureFTPd${NC}\n" 
 
   if [ $CFG_FTP == "none" ]; then
     echo -n -e "$IDENTATION_LVL_1 SKIP INSTALL - Reason: ${red}Your Choice ${NC}\n"

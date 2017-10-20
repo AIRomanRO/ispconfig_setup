@@ -5,11 +5,11 @@
 InstallQuota() {
 	START_TIME=$SECONDS
 
- 	echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing Quota... ${NC} \n" 
+ 	echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing Quota${NC} \n" 
 
 	apt-get -qqy install quota quotatool >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 
-	echo -n -e "$IDENTATION_LVL_1 ${BWhite}Initializing Quota (this might take while) ... ${NC}" 
+	echo -n -e "$IDENTATION_LVL_1 Initializing Quota (this might take while) ... " 
 
 	if ! [ -f /proc/user_beancounters ]; then
 		if [ `cat /etc/fstab | grep ',usrjquota=aquota.user,grpjquota=aquota.group,jqfmt=vfsv0' | wc -l` -eq 0 ]; then

@@ -5,7 +5,7 @@
 InstallSQLServer() {
 	START_TIME=$SECONDS
 	if [ $CFG_SQLSERVER == "MySQL" ]; then
-		echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing MySQL... ${NC}\n"	
+		echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing MySQL${NC}\n"	
 		echo -n -e "$IDENTATION_LVL_1 Selected version: ${BBlack}$CFG_MYSQL_VERSION${NC}\n"
 		
 		if [ $CFG_MYSQL_VERSION == "default" ]; then
@@ -102,7 +102,6 @@ InstallSQLServer() {
 			
 		else
 			echo -n "$IDENTATION_LVL_0 MySQL version NOT SUPPORTED"
-			exit 1
 		fi
 		
 		echo -n -e "$IDENTATION_LVL_1 Restart the MySQL Service ... "
