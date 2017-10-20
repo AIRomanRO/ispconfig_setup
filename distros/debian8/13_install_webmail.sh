@@ -10,7 +10,7 @@ InstallWebmail() {
   	case $CFG_WEBMAIL in
 		"roundcube")
 			
-			echo -n -e "$IDENTATION_LVL_1 Installing ${red} RoundCube ${NC} WebMail Client... " 
+			echo -n -e "$IDENTATION_LVL_1 Installing ${red} RoundCube ${NC} WebMail Client...\n" 
 
 			echo -n -e "$IDENTATION_LVL_2 Configure Roundcube ... "
 			CFG_ROUNDCUBE_PWD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c16)
