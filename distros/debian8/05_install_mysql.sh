@@ -50,7 +50,7 @@ InstallSQLServer() {
 			echo "mysql-community-server mysql-community-server/re-root-pass password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
 			
 			echo -n -e "$IDENTATION_LVL_1 Install MySQL Server & Client ... "
-			apt-get -qq install mysql-server mysql-client >> $PROGRAMS_INSTALL_LOG_FILES
+			apt-get -yqq install mysql-server mysql-client >> $PROGRAMS_INSTALL_LOG_FILES
 			echo -e " [ ${green}DONE${NC} ] "
 			
 			echo "[mysqld]

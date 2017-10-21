@@ -157,7 +157,7 @@ EOF
 	        cat << "EOF" > /etc/nginx/sites-available/roundcube.vhost
 server {
    # SSL configuration
-   listen 443 ssl h2;
+   listen 443 ssl http2;
 
    ssl on;
    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;

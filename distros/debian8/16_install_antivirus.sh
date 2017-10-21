@@ -16,21 +16,21 @@ InstallAntiVirus() {
   echo -e " [ ${green}DONE${NC} ] "
 
   echo -n -e "$IDENTATION_LVL_1 Stopping Spamassassin ... "
-  service spamassassin stop
+  service spamassassin stop  >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
   echo -e " [ ${green}DONE${NC} ] "
 
   echo -n -e "$IDENTATION_LVL_1 Disable Spamassassin ... "
-  systemctl disable spamassassin
+  systemctl disable spamassassin >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
   echo -e " [ ${green}DONE${NC} ] "
 
   if [ $CFG_AVUPDATE == "yes" ]; then
     echo -n -e "$IDENTATION_LVL_1 Updating ClamAV. ( Please Wait. Don't abort it! ) ... "
-    freshclam
+    freshclam >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
     echo -e " [ ${green}DONE${NC} ] "
   fi
 
   echo -n -e "$IDENTATION_LVL_1 Restarting ClamAV ... "
-  service clamav-daemon restart
+  service clamav-daemon restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
   echo -e "[${green}DONE${NC}]\n"
 
   MeasureTimeDuration $START_TIME
