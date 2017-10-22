@@ -130,13 +130,24 @@ sql-mode='NO_ENGINE_SUBSTITUTION'
 
     elif [ $CFG_SQLSERVER == "MariaDB" ]; then
   
-		echo -n "$IDENTATION_LVL_0 Installing MariaDB... "
+		echo -n "$IDENTATION_LVL_0 Installing MariaDB... \n"
+
+		echo -n -e "$IDENTATION_LVL_1 Set Selections on debconf ... "
 		echo "mysql-server-5.5 mysql-server/root_password password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
 		echo "mysql-server-5.5 mysql-server/root_password_again password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
+		echo -e " [ ${green}DONE${NC} ] "
+
+		echo -n -e "$IDENTATION_LVL_1 Install MySQL Server & Client ... "
 		apt-get -y install mariadb-client mariadb-server >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		echo -e " [ ${green}DONE${NC} ] "
+
+		echo -n -e "$IDENTATION_LVL_1 Make some basic configs ... "
 		sed -i 's/bind-address		= 127.0.0.1/#bind-address		= 127.0.0.1/' /etc/mysql/my.cnf
+		echo -e " [ ${green}DONE${NC} ] "
+
+		echo -n -e "$IDENTATION_LVL_1 Restart the MySQL Service ... "
 		service mysql restart /dev/null 2>&1
-		echo -e "[${green}DONE${NC}]\n"
+		echo -e " [ ${green}DONE${NC} ] "
 	
     else
   
