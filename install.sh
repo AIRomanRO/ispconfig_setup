@@ -184,8 +184,7 @@ source $PWD/distros/$DISTRO/15_install_mta.sh
 source $PWD/distros/$DISTRO/16_install_antivirus.sh
 source $PWD/distros/$DISTRO/17_install_bind.sh
 source $PWD/distros/$DISTRO/18_install_webstats.sh
-
-source $PWD/distros/$DISTRO/install_fail2ban.sh
+source $PWD/distros/$DISTRO/19_install_fail2ban.sh
 
 
 source $PWD/distros/$DISTRO/install_ispconfig.sh
@@ -199,15 +198,7 @@ echo -n -e "$IDENTATION_LVL_0 ${BWhite}Gathering the ISPConfig Version which you
 echo
 if [ "$DISTRO" == "debian8" ]; then
 
-	while [ "x$CFG_ISPCVERSION" == "x" ]
-	do
-		CFG_ISPCVERSION=$(whiptail --backtitle "$WT_BACKTITLE" --title "ISPConfig Version" --nocancel --radiolist \
-				"Select ISPConfig Version you want to install" 10 50 2 \
-				"Stable" "Latest Stable" ON \
-				"Beta"   "Beta Version" OFF \
-			3>&1 1>&2 2>&3 )
-	done
-	echo -n -e "$IDENTATION_LVL_1 ${BBlack}ISPConfig Version${NC}: ${green}$CFG_ISPCVERSION${NC}\n"
+	echo -n -e "$IDENTATION_LVL_1 ${BBlack}ISPConfig Version${NC}: ${green}Latest Stable${NC}\n"
 	
 	while [ "x$CFG_MULTISERVER" == "x" ]
 	do
@@ -279,23 +270,15 @@ if [ -f /etc/debian_version ]; then
 		
 	if [ "$CFG_PHP_VERSION" == "none"]; then
         InstallBasePhp
-    fi  
-
-    if [ "$CFG_ISPCVERSION" == "Beta" ]; then
-		source $PWD/distros/$DISTRO/install_ispconfigbeta.sh
-		InstallISPConfigBeta
     fi
 
     InstallISPConfig
     InstallFix
 	
     echo -e "${green}Well done ISPConfig seems installed and configured correctly :D ${NC}"
-    echo
-	
-	echo "Now you can connect to your ISPConfig installation at https://$CFG_HOSTNAME_FQDN:$CFG_ISPONCFIG_PORT or https://$CFG_IPV4:$CFG_ISPONCFIG_PORT"
 	echo
-	
     echo "You can visit my GitHub profile at https://github.com/a1ur3l/ispconfig_setup"
+    echo '-----------------------------------------------------------------------------'
     echo "Original version of this script can be found on GitHub at	https://github.com/servisys/ispconfig_setup/"
     echo
 	
@@ -304,36 +287,40 @@ if [ -f /etc/debian_version ]; then
 		    echo -e "${red}You had to edit user/pass /var/lib/roundcube/plugins/ispconfig3_account/config/config.inc.php of roundcube user, as the one you inserted in ISPconfig ${NC}"
 	    fi
     fi
-	
+
+    echo
+	echo "Now you can connect to your ISPConfig installation at https://$CFG_HOSTNAME_FQDN:$CFG_ISPONCFIG_PORT or https://$CFG_IPV4:$CFG_ISPONCFIG_PORT"
+
     if [ "$CFG_WEBSERVER" == "nginx" ]; then
   	    if [ "$CFG_PHPMYADMIN" == "yes" ]; then
   		    echo "Phpmyadmin is accessibile at  http://$CFG_HOSTNAME_FQDN:8081/phpmyadmin or http://$CFG_IPV4:8081/phpmyadmin";
 	    fi
-		
+
 	    if [ "$DISTRO" == "debian8" ] && [ "$CFG_WEBMAIL" == "roundcube" ]; then
 		    echo "Webmail is accessibile at  https://$CFG_HOSTNAME_FQDN/webmail or https://$CFG_IPV4/webmail";
 	    else
 		    echo "Webmail is accessibile at  http://$CFG_HOSTNAME_FQDN:8081/webmail or http://$CFG_IPV4:8081/webmail";
 	    fi
     fi
-	
-    if [ "$DISTRO" == "debian8" ]; then	
+
+    if [ "$DISTRO" == "debian8" ]; then
 
     	if [ $CFG_MYSQL_ROOT_PWD_AUTO == true ] || [ $CFG_ISPCONFIG_DB_PASS_AUTO == true ]; then
     		echo -n -e "You Have choosed to autogenerate the following PASSWORDS \n"
-		    echo -n -e "Please copy and keep them safe \n"
+		    echo -n -e "Please copy (Only ${red}red text${NC}) and keep them safe \n"
 		fi
 
 	    if [ $CFG_MYSQL_ROOT_PWD_AUTO == true ]; then		    
-		    echo -n -e "MySQL GENERATED PASS (Copy only ${red}red text${NC}): ${red}$CFG_MYSQL_ROOT_PWD${NC} \n"
+		    echo -n -e "MySQL ROOT: ${red}$CFG_MYSQL_ROOT_PWD${NC} \n"
 		fi
-		
+
 		if [ $CFG_ISPCONFIG_DB_PASS_AUTO == true ]; then
-		    echo -n -e "ISPConfig DB GENERATED PASS (Copy only ${red}red text${NC}): ${red}$CFG_ISPCONFIG_DB_PASS${NC} \n"
+		    echo -n -e "ISPConfig DB: ${red}$CFG_ISPCONFIG_DB_PASS${NC} \n"
 		fi
 	fi
-	
+
 else 
+
 	echo "${red}Unsupported linux distribution.${NC} \n"
 	echo -n -e "For other distributions please visit the ${red}Original version of this script${NC}"
 	echo -n -e " which can be found on GitHub at ${red}https://github.com/servisys/ispconfig_setup/${NC}"

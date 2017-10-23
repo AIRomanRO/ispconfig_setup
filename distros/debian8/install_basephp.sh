@@ -3,7 +3,12 @@
 #    Install Basic php need to run ispconfig
 #---------------------------------------------------------------------
 InstallBasePhp(){
-  echo -n "Installing basic php modules for ispconfig..."
-  apt-get -yqq install php7.1-fpm php7.1-cli php7.1-mysql php7.1-mcrypt >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-  echo -e "[${green}DONE${NC}]\n"
+  	START_TIME=$SECONDS
+	echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing basic php modules for ispconfig${NC}\n"
+
+	echo -n -e "$IDENTATION_LVL_1 ${BWhite}Installing needed components (php7.0) ${NC}\n"
+  	apt-get -yqq install php7.0-fpm php7.0-cli php7.0-mysql php7.0-mcrypt >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+  	echo -e " [ ${green}DONE${NC} ] "
+
+	MeasureTimeDuration $START_TIME
 }
