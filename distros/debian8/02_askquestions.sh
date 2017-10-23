@@ -240,18 +240,25 @@ AskQuestions() {
 	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Install Mode${NC}: ${green}" $CFG_ISPC "${NC} "
 	echo
 	
-	# while [ "x$CFG_ISPONCFIG_PORT" == "x" ]
-	# do
-		CFG_ISPONCFIG_PORT=$(whiptail --title "ISPConfig" --backtitle "$WT_BACKTITLE" --inputbox \
-		"Please specify a ISPConfig Port (leave empty for use 8081 port)" --nocancel 10 60 3>&1 1>&2 2>&3)
-	# done
-	
+
+	CFG_ISPONCFIG_PORT=$(whiptail --title "ISPConfig" --backtitle "$WT_BACKTITLE" --inputbox \
+	"Please specify a ISPConfig Port (leave empty for use 8081 port)" --nocancel 10 60 3>&1 1>&2 2>&3)
+
 	if [[ -z $CFG_ISPONCFIG_PORT ]]; then
 		CFG_ISPONCFIG_PORT=8081
 	fi
 	
 	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Port${NC}: ${green}" $CFG_ISPONCFIG_PORT "${NC} "
 	echo	
+
+	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Retrieve ISPConfig Admin password${NC}: "
+	CFG_ISPONCFIG_ADMIN_PASS=$(whiptail --title "ISPConfig" --backtitle "$WT_BACKTITLE" --inputbox \
+	"Please specify a ISPConfig Admin Password (leave empty for autogenerate)" --nocancel 10 60 3>&1 1>&2 2>&3)
+
+	if [[ -z $CFG_ISPONCFIG_ADMIN_PASS ]]; then
+		CFG_ISPONCFIG_ADMIN_PASS==$(< /dev/urandom tr -dc 'A-Z-a-z-0-9~!@#$%^&*_=-' | head -c${1:-12})
+	fi
+	echo -e " [ ${green}DONE${NC} ] "
 	
 	while [ "x$CFG_ISPCONFIG_DB_PASS_AUTO" == "x" ]
 	do

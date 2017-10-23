@@ -19,7 +19,7 @@ InstallISPConfig() {
 	echo -n -e "$IDENTATION_LVL_1 Change to install dir ... "
 	cd ispconfig3_install/install/ >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 	echo -e " [ ${green}DONE${NC} ] "
-	
+
 	if [ $CFG_ISPC == "standard" ]; then
 		echo -n -e "$IDENTATION_LVL_1 Create the autoinstall file "
 		touch autoinstall.ini
@@ -43,6 +43,7 @@ InstallISPConfig() {
 		fi
 
 		echo "ispconfig_port=$CFG_ISPONCFIG_PORT" >> autoinstall.ini
+		echo "ispconfig_admin_password=$CFG_ISPONCFIG_ADMIN_PASS" >> autoinstall.ini
 		echo "ispconfig_use_ssl=y" >> autoinstall.ini
 		echo "\n" >> autoinstall.ini
 		echo "[ssl_cert]" >> autoinstall.ini
@@ -109,4 +110,5 @@ InstallISPConfig() {
 	    echo -e " [ ${green}DONE${NC} ] "
   	fi
 
+  	MeasureTimeDuration $START_TIME
 }

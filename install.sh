@@ -311,12 +311,14 @@ if [ -f /etc/debian_version ]; then
 		fi
 
 	    if [ $CFG_MYSQL_ROOT_PWD_AUTO == true ]; then		    
-		    echo -n -e "MySQL ROOT: ${red}$CFG_MYSQL_ROOT_PWD${NC} \n"
+		    echo -n -e "MySQL ROOT: ${red}$CFG_MYSQL_ROOT_PWD${NC}\n"
 		fi
 
 		if [ $CFG_ISPCONFIG_DB_PASS_AUTO == true ]; then
-		    echo -n -e "ISPConfig DB: ${red}$CFG_ISPCONFIG_DB_PASS${NC} \n"
+		    echo -n -e "ISPConfig DB: ${red}$CFG_ISPCONFIG_DB_PASS${NC}\n"
 		fi
+
+		echo -n -e "ISPConfig Admin PAsswprd: ${red}$CFG_ISPONCFIG_ADMIN_PASS{$NC}\n"
 	fi
 
 else 
