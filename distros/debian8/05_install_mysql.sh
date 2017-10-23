@@ -98,6 +98,7 @@ InstallSQLServer() {
 			echo "
 # Instead of skip-networking the default is now to listen only on
 # localhost which is more compatible and is not less secure.
+[mysqld]
 bind-address = 127.0.0.1" >> "$CNF_DEST/mysqld_bind_address.cnf"
 
 			echo "
