@@ -85,6 +85,7 @@ source $PWD/functions/01_check_linux.sh
 source $PWD/functions/02_check_ipv6.sh
 source $PWD/functions/03_check_whiptail.sh
 source $PWD/functions/04_measure_duration_and_echo.sh
+source $PWD/functions/05_apt_get_commands_wrappers.sh
 
 #---------------------------------------------------------------------
 # Basic Checks

@@ -43,7 +43,7 @@ InstallPHP() {
 				echo -e " [ ${green}DONE${NC} ] "
 
 				echo -n -e "$IDENTATION_LVL_2 Install PHP Modules list ... "
-				apt-get -yqq --force-yes install $PARSED_PHP_MODULE_LIST >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+				package_install $PARSED_PHP_MODULE_LIST
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo ... "
@@ -64,7 +64,7 @@ InstallPHP() {
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Install PHP Modules list ... "
-				apt-get -yqq --force-yes install $PARSED_PHP_MODULE_LIST >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+				package_install $PARSED_PHP_MODULE_LIST
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo ... "
@@ -85,7 +85,7 @@ InstallPHP() {
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Install PHP Modules list ... "
-				apt-get -yqq --force-yes install $PARSED_PHP_MODULE_LIST >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+				package_install $PARSED_PHP_MODULE_LIST
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo ... "
@@ -111,7 +111,7 @@ InstallPHP() {
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Install PHP Modules list ... "
-				apt-get -yqq --force-yes install $PARSED_PHP_MODULE_LIST >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+				package_install install $PARSED_PHP_MODULE_LIST
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo ... "
@@ -128,9 +128,8 @@ InstallPHP() {
 				if [ $ANY_VERSION_INSTALLED == false ]; then
 					echo -n "$IDENTATION_LVL_1 Installing basic php modules for ispconfig ... "
 					if [ $CFG_WEBSERVER == "apache" ]; then
-						apt-get -yqq install php7.0 libapache2-mod-php7.0 php7.0-cli php7.0-mysql php7.0-mcrypt >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-					elif [ $CFG_WEBSERVER == "nginx" ]; then
-						apt-get -yqq install php7.0-fpm php7.0-cli php7.0-mysql php7.0-mcrypt >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+						package_install php7.0 libapache2-mod-php7.0 php7.0-cli php7.0-mysql php7.0-mcrypt
+						package_install php7.0-fpm php7.0-cli php7.0-mysql php7.0-mcrypt
 					fi
 					echo -e " [ ${green}DONE${NC} ]"
 				fi
@@ -140,7 +139,7 @@ InstallPHP() {
 
 	
 	echo -n "$IDENTATION_LVL_1 Install needed Programs for PHP and Web Server ... "
-	apt-get -yqq install --force-yes $RAW_ADITIONAL_PROGRAMS >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+	package_install $RAW_ADITIONAL_PROGRAMS
 	echo -e " [ ${green}DONE${NC} ]"
   
   

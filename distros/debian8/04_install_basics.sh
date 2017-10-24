@@ -12,7 +12,7 @@ InstallBasics() {
      	echo -n -e "$IDENTATION_LVL_2 ${BBlack}debconf-utils${NC}: ${green}Already Installed${NC}\n"
     else
 	    echo -n -e "$IDENTATION_LVL_2 ${BBlack}debconf-utils${NC}: ${red}NOT FOUND${NC} - try to install it ... "
-        apt-get -yqq install debconf-utils >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+        package_install debconf-utils
 		echo -e " [ ${green}DONE${NC} ]\n"
 	fi
 	
@@ -24,7 +24,7 @@ InstallBasics() {
 		echo -n -e "$IDENTATION_LVL_2 ${BBlack}BINUTILS${NC}: ${green}Already Installed${NC}\n"
 	else
 		echo -n -e "$IDENTATION_LVL_2 ${BBlack}BINUTILS${NC}: ${red}NOT FOUND${NC} - try to install it ... "
-		apt-get -yqq install binutils >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		package_install binutils
 		echo -e " [ ${green}DONE${NC} ]\n"
 	fi
 
@@ -34,7 +34,7 @@ InstallBasics() {
 		echo -n -e "$IDENTATION_LVL_2 ${BBlack}SUDO${NC}: ${green}Already Installed${NC}\n"
 	else
 		echo -n -e "$IDENTATION_LVL_2 ${BBlack}SUDO${NC}: ${red}NOT FOUND${NC} - try to install it ... "
-		apt-get -yqq install sudo >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		package_install sudo
 		echo -e " [ ${green}DONE${NC} ]\n"
 	fi
 
@@ -44,7 +44,7 @@ InstallBasics() {
 		echo -n -e "$IDENTATION_LVL_2 ${BBlack}LSB-RELEASE${NC}: ${green}Already Installed${NC}\n"
 	else
 		echo -n -e "$IDENTATION_LVL_2 ${BBlack}LSB-RELEASE${NC}: ${red}NOT FOUND${NC} - try to install it ... "
-		apt-get -yqq install lsb-release >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		package_install lsb-release
 		echo -e " [ ${green}DONE${NC} ]\n"
 	fi
   
@@ -54,7 +54,7 @@ InstallBasics() {
 		echo -n -e "$IDENTATION_LVL_2 ${BBlack}APT HTTPS Method${NC}: ${green}Already Installed${NC}\n"
 	else
 		echo -n -e "$IDENTATION_LVL_2 ${BBlack}APT HTTPS Method${NC}: ${red}NOT FOUND${NC} - try to install it ... "
-		apt-get -yqq install apt-transport-https >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		package_install apt-transport-https
 		echo -e " [ ${green}DONE${NC} ]"
 	fi
 	
@@ -75,7 +75,7 @@ InstallBasics() {
      	            echo -n -e "$IDENTATION_LVL_2 ${BBlack}HTOP${NC}: ${green}Already Installed${NC} \n"
                 else
 	                echo -n -e "$IDENTATION_LVL_2 ${BBlack}HTOP${NC}: ${red}NOT FOUND${NC} - try to install it ... "
-                    apt-get -yqq install htop >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+                    package_install htop
 		            echo -e " [ ${green}DONE${NC} ]"
 	            fi
 		    ;;
@@ -85,7 +85,7 @@ InstallBasics() {
 					echo -n -e "$IDENTATION_LVL_2 ${BBlack}NANO${NC}: ${green}Already Installed${NC} \n"
 				else
 					echo -n -e "$IDENTATION_LVL_2 ${BBlack}NANO${NC}: ${red}NOT FOUND${NC} - try to install it ... "
-					apt-get -yqq install nano >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+					package_install nano
 					echo -e " [ ${green}DONE${NC} ]"
 				fi
 		    ;;
@@ -95,7 +95,7 @@ InstallBasics() {
 					echo -n -e "$IDENTATION_LVL_2 ${BBlack}NTP${NC}: ${green}Already Installed${NC} \n"
 				else
 					echo -n -e "$IDENTATION_LVL_2 ${BBlack}NTP${NC}: ${red}NOT FOUND${NC} - try to install it ... "
-					apt-get -yqq install ntp ntpdate >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+					package_install ntp ntpdate
 					echo -e " [ ${green}DONE${NC} ]"
 				fi
 		    ;;            
@@ -105,7 +105,7 @@ InstallBasics() {
 					echo -n -e "$IDENTATION_LVL_2 ${BBlack}HAVEGED${NC}: ${green}Already Installed${NC} \n"
 				else
 					echo -n -e "$IDENTATION_LVL_2 ${BBlack}HAVEGED${NC}: ${red}NOT FOUND${NC} - try to install it ... "
-					apt-get -yqq install haveged >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+					package_install haveged
 					echo -e " [ ${green}DONE${NC} ]"
 				fi
 		    ;;
@@ -186,7 +186,7 @@ InstallBasics() {
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}DPKG DEV${NC}: ${green}Already Installed${NC} \n"
 		else
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}DPKG DEV${NC}: ${red}NOT FOUND${NC} - try to install it ... "
-			apt-get -yqq install dpkg-dev >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			package_install dpkg-dev
 			echo -e " [ ${green}DONE${NC} ]"
 		fi
 	
@@ -195,7 +195,7 @@ InstallBasics() {
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Debian Keyring${NC}: ${green}Already Installed${NC} \n"
 		else
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Debian Keyring${NC}: ${red}NOT FOUND${NC} - try to install it ... "
-			apt-get -yqq install debian-keyring >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			package_install debian-keyring
 			echo -e " [ ${green}DONE${NC} ]"
 		fi
 	
@@ -204,7 +204,7 @@ InstallBasics() {
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Dev Scripts${NC}: ${green}Already Installed${NC} \n"
 		else
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Dev Scripts${NC}: ${red}NOT FOUND${NC} - try to install it ... "
-			apt-get -yqq install devscripts >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			package_install devscripts
 			echo -e " [ ${green}DONE${NC} ]"
 		fi
 	
@@ -213,7 +213,7 @@ InstallBasics() {
 		    echo -n -e "$IDENTATION_LVL_2 ${BBlack}Quilt${NC}: ${green}Already Installed${NC} \n"
 	    else
 		    echo -n -e "$IDENTATION_LVL_2 ${BBlack}Quilt${NC}: ${red}NOT FOUND${NC} - try to install it ... "
-		    apt-get -yqq install quilt >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		    package_install quilt
 		    echo -e " [ ${green}DONE${NC} ]"
 	    fi
 		
@@ -222,7 +222,7 @@ InstallBasics() {
 		    echo -n -e "$IDENTATION_LVL_2 ${BBlack}Lib PCRE3 Dev${NC}: ${green}Already Installed${NC} \n"
 	    else
 		    echo -n -e "$IDENTATION_LVL_2 ${BBlack}Lib PCRE3 Dev${NC}: ${red}NOT FOUND${NC} - try to install it ... "
-		    apt-get -yqq --force-yes install libpcre3-dev >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		    package_install libpcre3-dev
 		    echo -e " [ ${green}DONE${NC} ]"
 	    fi
 		
@@ -231,7 +231,7 @@ InstallBasics() {
 		    echo -n -e "$IDENTATION_LVL_2 ${BBlack}Lib Zlib 1g Dev${NC}: ${green}Already Installed${NC} \n"
 	    else
 		    echo -n -e "$IDENTATION_LVL_2 ${BBlack}Lib Zlib 1g Dev${NC}: ${red}NOT FOUND${NC} - try to install it ... "
-		    apt-get -yqq --force-yes install zlib1g-dev >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		    package_install zlib1g-dev
 		    echo -e " [ ${green}DONE${NC} ]"
 	    fi
 	fi
