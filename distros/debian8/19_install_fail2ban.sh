@@ -121,8 +121,7 @@ EOF
 
 #block direct access to wp-config.php*
 [nginx-wp-config]
-
-enabled  = true
+enabled  = false
 port     = http,https
 filter   = nginx-wp-config
 logpath  = /var/www/clients/client*/web*/log/access.log
@@ -132,8 +131,7 @@ bantime  = 2635200
 
 #block access to /.jpg|/.txt etc
 [nginx-wp-dot-access]
-
-enabled  = true
+enabled  = false
 port     = http,https
 filter   = nginx-wp-dot-access
 logpath  = /var/www/clients/client*/web*/log/access.log
@@ -143,8 +141,7 @@ bantime  = 2635200
 
 #block errors like "access forbidden by rule"
 [nginx-wp-access-denied-by-rule]
-
-enabled  = true
+enabled  = false
 port     = http,https
 filter   = nginx-wp-access-denied-by-rule
 logpath  = /var/www/clients/client*/web*/log/access.log
@@ -154,8 +151,7 @@ bantime  = 2635200
 
 #block bad bots from apache
 [nginx-badbots]
-
-enabled  = true
+enabled  = false
 port     = http,https
 filter   = apache-badbots
 logpath  = /var/www/clients/client*/web*/log/access.log
