@@ -7,7 +7,7 @@ InstallQuota() {
 
  	echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing Quota${NC} \n" 
 
-	apt-get -qqy install quota quotatool >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+	package_install quota quotatool >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 
 	echo -n -e "$IDENTATION_LVL_1 Initializing Quota (this might take while) ... " 
 

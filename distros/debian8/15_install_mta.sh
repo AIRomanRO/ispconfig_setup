@@ -16,7 +16,7 @@ InstallMTA() {
 			echo -e " [ ${green}DONE${NC} ] "
 
 		    echo -n -e "$IDENTATION_LVL_2 Installing Courier and dependecies... "
-		    apt-get -yqq install courier-authdaemon courier-authlib-mysql courier-pop courier-pop-ssl courier-imap courier-imap-ssl libsasl2-2 libsasl2-modules libsasl2-modules-sql sasl2-bin libpam-mysql courier-maildrop opendkim opendkim-tools >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		    package_install courier-authdaemon courier-authlib-mysql courier-pop courier-pop-ssl courier-imap courier-imap-ssl libsasl2-2 libsasl2-modules libsasl2-modules-sql sasl2-bin libpam-mysql courier-maildrop opendkim opendkim-tools
 		    echo -e " [ ${green}DONE${NC} ] "
 
 		    echo -n -e "$IDENTATION_LVL_2 Config saslauthd... "
@@ -48,7 +48,7 @@ InstallMTA() {
 			echo -n -e "$IDENTATION_LVL_1 Installing ${red}Dovecot ${NC}... \n"
 
 			echo -n -e "$IDENTATION_LVL_2 Installing Dovecot and dependecies... "
-			apt-get -qqy install dovecot-imapd dovecot-pop3d dovecot-sieve dovecot-mysql dovecot-lmtpd opendkim opendkim-tools >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			package_install dovecot-imapd dovecot-pop3d dovecot-sieve dovecot-mysql dovecot-lmtpd opendkim opendkim-tools
 			echo -e " [ ${green}DONE${NC} ] "
 		;;
     esac

@@ -39,7 +39,7 @@ InstallSQLServer() {
 			echo -e " [ ${green}DONE${NC} ] "
 
 			echo -n -e "$IDENTATION_LVL_1 Update the Packages List ... "
-			apt-get -qq update >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			package_update
 			echo -e " [ ${green}DONE${NC} ] "
 
 			echo "mysql-community-server mysql-community-server/root-pass password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
@@ -66,7 +66,7 @@ InstallSQLServer() {
 			echo -e " [ ${green}DONE${NC} ]"
 
 			echo -n -e "$IDENTATION_LVL_1 Update the Packages List ... "
-			apt-get -qq update >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			package_update
 			echo -e " [ ${green}DONE${NC} ] "
 
 			echo -n -e "$IDENTATION_LVL_1 Set the selected MySQL Password to MySQL Installer ... "
@@ -83,7 +83,7 @@ InstallSQLServer() {
 		if [ $SHOULD_INSTALL_MYSQL == true ]; then
 
 			echo -n -e "$IDENTATION_LVL_1 Install MySQL Server & Client ... "
-			apt-get -yqq install mysql-client mysql-server >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			package_install mysql-client mysql-server
 			echo -e " [ ${green}DONE${NC} ] "
 
 
@@ -142,7 +142,7 @@ sql-mode='NO_ENGINE_SUBSTITUTION'
 		echo -e " [ ${green}DONE${NC} ] "
 
 		echo -n -e "$IDENTATION_LVL_1 Install MySQL Server & Client ... "
-		apt-get -y install mariadb-client mariadb-server >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		package_install mariadb-client mariadb-server >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		echo -e " [ ${green}DONE${NC} ] "
 
 		echo -n -e "$IDENTATION_LVL_1 Make some basic configs ... "

@@ -46,15 +46,15 @@ InstallPHPMyAdmin() {
 		
 		if [ $CFG_PHPMYADMIN_VERSION == "default" ]; then
 			echo -n -e "$IDENTATION_LVL_1 Install Default Version ... "
-			apt-get -y install phpmyadmin -t stable >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			package_install phpmyadmin -t stable
 			echo -e " [ ${green}DONE${NC} ] "
 		elif [ $CFG_PHPMYADMIN_VERSION == "jessie" ]; then
 			echo -n -e "$IDENTATION_LVL_1 Install Jessie Backports Version ... "
-			apt-get -y install phpmyadmin -t jessie-backports >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			package_install phpmyadmin -t jessie-backports
 			echo -e " [ ${green}DONE${NC} ] "
 		elif [ $CFG_PHPMYADMIN_VERSION == "stretch" ]; then
 			echo -n -e "$IDENTATION_LVL_1 Install Stretch Version ... "
-			apt-get -y install phpmyadmin -t stretch >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			package_install phpmyadmin -t stretch
 			echo -e " [ ${green}DONE${NC} ] "
 		elif [ $CFG_PHPMYADMIN_VERSION == "latest-stable" ]; then
 			echo -n -e "$IDENTATION_LVL_1 Install Latest Stable Version ... "

@@ -8,7 +8,7 @@ InstallAntiVirus() {
   echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing AntiVirus${NC}\n"
 
   echo -n -e "$IDENTATION_LVL_1 Installing AntiVirus utilities (This take some time. Don't abort it! ) ... "
-  apt-get -yqq install amavisd-new spamassassin clamav clamav-daemon zoo unzip bzip2 arj nomarch lzop cabextract apt-listchanges libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl rkhunter systemd unrar-free p7zip rpm2cpio tnef >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+  package_install amavisd-new spamassassin clamav clamav-daemon zoo unzip bzip2 arj nomarch lzop cabextract apt-listchanges libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl rkhunter systemd unrar-free p7zip rpm2cpio tnef
   echo -e " [ ${green}DONE${NC} ] "
 
   echo -n -e "$IDENTATION_LVL_1 Configure AntiVirus ... "

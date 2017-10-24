@@ -15,11 +15,11 @@ InstallHHVM() {
 	    echo -e "[ ${green}DONE${NC} ] "
 
 	    echo -n -e "$IDENTATION_LVL_1 Update packages list ... "
-	    apt-get update >> $PROGRAMS_INSTALL_LOG_FILES 2>&1  
+	    package_update
 	    echo -e "[ ${green}DONE${NC} ] "
 
 	    echo -n -e "$IDENTATION_LVL_1 Install HHVM ... "
-	    apt-get -yqq install hhvm >> $PROGRAMS_INSTALL_LOG_FILES 2>&1  
+	    package_install hhvm
 	    echo -e "[ ${green}DONE${NC} ] "
 	else
 		echo -n -e "$IDENTATION_LVL_1 SKIP INSTALL - Reason: ${red}Your Choice ${NC}\n"

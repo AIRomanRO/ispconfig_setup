@@ -128,6 +128,7 @@ InstallPHP() {
 				if [ $ANY_VERSION_INSTALLED == false ]; then
 					echo -n "$IDENTATION_LVL_1 Installing basic php modules for ispconfig ... "
 					if [ $CFG_WEBSERVER == "apache" ]; then
+						
 						package_install php7.0 libapache2-mod-php7.0 php7.0-cli php7.0-mysql php7.0-mcrypt
 						package_install php7.0-fpm php7.0-cli php7.0-mysql php7.0-mcrypt
 					fi

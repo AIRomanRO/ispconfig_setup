@@ -7,7 +7,7 @@ InstallBind() {
 	echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing Bind DNS Server${NC}\n"
 
 	echo -n -e "$IDENTATION_LVL_1 Installing Bind9... ";
-	apt-get -y install bind9 dnsutils >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+	package_install bind9 dnsutils
 	echo -e " [ ${green}DONE${NC} ] "
 
 	echo -n -e "$IDENTATION_LVL_1 Secure Bind9 ... ";

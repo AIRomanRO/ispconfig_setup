@@ -38,7 +38,7 @@ InstallWebServer() {
 		CFG_NGINX=n
 		CFG_APACHE=y
 		echo -n -e "$IDENTATION_LVL_1 Installing Apache and Modules... "		
-		apt-get -yqq install apache2 apache2.2-common apache2-doc apache2-mpm-prefork apache2-utils libapache2-mod-fastcgi libapache2-mod-fcgid apache2-suexec libapache2-mod-passenger libapache2-mod-python libexpat1 ssl-cert libruby >> $PROGRAMS_INSTALL_LOG_FILES 2>&1  
+		package_install apache2 apache2.2-common apache2-doc apache2-mpm-prefork apache2-utils libapache2-mod-fastcgi libapache2-mod-fcgid apache2-suexec libapache2-mod-passenger libapache2-mod-python libexpat1 ssl-cert libruby
 		echo -e "[ ${green}DONE${NC} ]\n"		
 	  
 		echo -n "$IDENTATION_LVL_1 Activating Apache2 Modules: "
@@ -111,7 +111,7 @@ InstallWebServer() {
 		echo -e "[ ${green}DONE${NC} ]"
 		
 		echo -n -e "$IDENTATION_LVL_2 Remove Apache2 from ${BBlack}apt${NC}: "
-		apt-get -yqq remove --purge apache2 >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		package_purge_remove apache2 >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		echo -e "[ ${green}DONE${NC} ]"
 
 		echo -n -e "$IDENTATION_LVL_1 Installing NGINX and Modules... "
@@ -120,13 +120,13 @@ InstallWebServer() {
 		if [ $CFG_NGINX_VERSION == "n-os-default" ]; then
 		
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green} OS Default ${NC}"
-			apt-get -yqq --force-yes install nginx -t stable >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			package_install nginx -t stable
 			echo -e "[ ${green}DONE${NC} ]"
 			
 		elif [ $CFG_NGINX_VERSION == "n-nginx" ]; then
 		
 			echo -n -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green} Official - nginx.org ${NC}"
-			apt-get -yqq --force-yes install nginx >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			package_install nginx
 			echo -e "[ ${green}DONE${NC} ]"
 			
 		elif [ $CFG_NGINX_VERSION == "n-dotdeb" ]; then
@@ -138,17 +138,17 @@ InstallWebServer() {
 			echo -e " [ ${green}DONE${NC} ]"
 			
 			echo -n -e "$IDENTATION_LVL_3 ${BBlack}Install ${BWhite}libssl1.0.0${BBlack} from ${BWhite}jessie-backports ${NC}"
-			apt-get -yqq --force-yes install libssl1.0.0/jessie-backports libssl-dev/jessie-backports openssl/jessie-backports >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			package_install libssl1.0.0/jessie-backports libssl-dev/jessie-backports openssl/jessie-backports
 			echo -e " [ ${green}DONE${NC} ]"
 			
 			echo -n -e "$IDENTATION_LVL_3 ${BBlack}Install ${BWhite}nginx${BBlack} & ${BWhite}nginx-full${NC}"
-			apt-get -yqq --force-yes install nginx nginx-full -t jessie-nginx-http2 >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			package_install nginx nginx-full -t jessie-nginx-http2
 			echo -e " [ ${green}DONE${NC} ]"
 			
 		elif [ $CFG_NGINX_VERSION == "n-stretch" ]; then
 		
 			echo -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green} Debian Stretch - with HTTP2 ${NC}"
-			apt-get -yqq --force-yes install nginx -t stretch >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			package_install nginx -t stretch
 			echo -e " [ ${green}DONE${NC} ]"
 			
 		elif [ $CFG_NGINX_VERSION == "n-custom" ]; then
@@ -160,7 +160,7 @@ InstallWebServer() {
 			echo -e " [ ${green}DONE${NC} ]"
 			
 			echo -n -e "$IDENTATION_LVL_2 Install OpenSSL v1.1"
-			apt-get -yqq --force-yes install openssl libssl-dev -t stretch >> $PROGRAMS_INSTALL_LOG_FILES 2>&1			
+			package_install openssl libssl-dev -t stretch
 			echo -e " [ ${green}DONE${NC} ]"
 			
 			echo -n -e "$IDENTATION_LVL_2 Get NGINX sources"

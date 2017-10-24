@@ -32,9 +32,9 @@ InstallWebmail() {
 			# 	echo "deb-src http://http.debian.net/debian/ jessie-backports main contrib non-free" >> /etc/apt/sources.list
 			# fi
 			echo -n -e "$IDENTATION_LVL_2 Installing Roundcube ... "
-		  	apt-get -qq update
+		  	package_update
 		  	# apt-get -yqq -t jessie-backports install roundcube roundcube-mysql roundcube-plugins >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-		  	apt-get -yqq -t stretch install roundcube roundcube-mysql roundcube-plugins >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		  	package_install -t stretch roundcube roundcube-mysql roundcube-plugins
 
 		  	echo -e " [ ${green}DONE${NC} ] "
 
@@ -235,7 +235,7 @@ EOF
 
 			echo -n -e "$IDENTATION_LVL_2 Installing SquirrelMail ... " 
 			echo "dictionaries-common dictionaries-common/default-wordlist select american (American English)" | debconf-set-selections
-	    	apt-get -yqq install squirrelmail wamerican >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+	    	package_install squirrelmail wamerican >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 
 		  	if [ $CFG_WEBSERVER == "apache" ]; then
 		    	ln -s /etc/squirrelmail/apache.conf /etc/apache2/conf-available/squirrelmail.conf

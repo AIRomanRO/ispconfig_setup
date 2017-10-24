@@ -23,7 +23,7 @@ InstallJailkit() {
   echo -n -e "$IDENTATION_LVL_1 We will install version $JKV \n"
 
   echo -n -e "$IDENTATION_LVL_1 Install needed tools"
-  apt-get -y install build-essential autoconf automake libtool flex bison debhelper binutils >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+  package_install build-essential autoconf automake libtool flex bison debhelper binutils >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
   echo -e " [ ${green}DONE${NC} ] "
 
   echo -n -e "$IDENTATION_LVL_1 Download and make JailKit Version: $JKV "

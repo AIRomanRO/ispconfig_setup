@@ -15,7 +15,7 @@ InstallFTP() {
     echo -e " [ ${green}DONE${NC} ] "
     
     echo -n -e "$IDENTATION_LVL_1 Install PureFTPd ... "
-    apt-get -yqq install pure-ftpd-common pure-ftpd-mysql >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+    package_install pure-ftpd-common pure-ftpd-mysql
     sed -i 's/ftp/\#ftp/' /etc/inetd.conf >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
     echo -e " [ ${green}DONE${NC} ] "
 

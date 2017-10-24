@@ -11,7 +11,7 @@ InstallPostfix() {
     if [ -f /etc/init.d/sendmail ]; then
       service sendmail stop >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
       update-rc.d -f sendmail remove >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-      apt-get -y remove sendmail >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+      package_remove sendmail
     fi
     echo -e " [ ${green}DONE${NC} ] "
 
@@ -21,7 +21,7 @@ InstallPostfix() {
     echo -e " [ ${green}DONE${NC} ] "
 
     echo -n -e "$IDENTATION_LVL_1 Install Postfix ... "
-    apt-get -yqq install postfix postfix-mysql postfix-doc getmail4 >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+    package_install postfix postfix-mysql postfix-doc getmail4
     echo -e " [ ${green}DONE${NC} ] "
 
     echo -n -e "$IDENTATION_LVL_1 Configure Postfix ... "

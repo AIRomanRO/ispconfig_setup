@@ -7,7 +7,7 @@ InstallFail2ban() {
   echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing Fail2Ban${NC}\n"
 
   echo -n -e "$IDENTATION_LVL_1 Install Needed Components ... "
-  apt-get -y install fail2ban >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+  package_install fail2ban
   echo -e " [ ${green}DONE${NC} ] "
 
 
