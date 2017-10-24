@@ -34,7 +34,7 @@ InstallPHP() {
 	echo -n -e "$IDENTATION_LVL_1 Install current distro php5 version (${red}needed by ISPConfig${NC}) \n"
 
 	echo -n -e "$IDENTATION_LVL_2 Prepare PHP Modules list ... "
-	PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES//php5/$PHP_VERSION_ENABLED}"
+	PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES//PHP_SELECTED_VERSION/php5}"
 	echo -e " [ ${green}DONE${NC} ] "
 
 	echo -n -e "$IDENTATION_LVL_2 Install PHP Modules list ... "
