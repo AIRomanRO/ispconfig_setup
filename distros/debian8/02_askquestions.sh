@@ -256,7 +256,7 @@ AskQuestions() {
 	"Please specify a ISPConfig Admin Password (leave empty for autogenerate)" --nocancel 10 60 3>&1 1>&2 2>&3)
 
 	if [[ -z $CFG_ISPONCFIG_ADMIN_PASS ]]; then
-		CFG_ISPONCFIG_ADMIN_PASS==$(< /dev/urandom tr -dc 'A-Z-a-z-0-9~!@#$%^&*_=-' | head -c${1:-12})
+		CFG_ISPONCFIG_ADMIN_PASS==$(< /dev/urandom tr -dc 'A-Z-a-z-0-9' | head -c${1:-12})
 	fi
 	echo -e " [ ${green}DONE${NC} ] "
 	

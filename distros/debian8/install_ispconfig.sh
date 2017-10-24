@@ -45,7 +45,7 @@ InstallISPConfig() {
 		echo "ispconfig_port=$CFG_ISPONCFIG_PORT" >> autoinstall.ini
 		echo "ispconfig_admin_password=$CFG_ISPONCFIG_ADMIN_PASS" >> autoinstall.ini
 		echo "ispconfig_use_ssl=y" >> autoinstall.ini
-		echo "\n" >> autoinstall.ini
+		echo "" >> autoinstall.ini
 		echo "[ssl_cert]" >> autoinstall.ini
 		echo "ssl_cert_country=$SSL_COUNTRY" >> autoinstall.ini
 	    echo "ssl_cert_state=$SSL_STATE" >> autoinstall.ini
