@@ -31,6 +31,25 @@ InstallPHP() {
 	echo -e " [ ${green}DONE${NC} ] "
 
 	
+	echo -n -e "$IDENTATION_LVL_1 Install current distro php5 version (${red}needed by ISPConfig${NC}) \n"
+
+	echo -n -e "$IDENTATION_LVL_2 Prepare PHP Modules list ... "
+	PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES//php5/$PHP_VERSION_ENABLED}"
+	echo -e " [ ${green}DONE${NC} ] "
+
+	echo -n -e "$IDENTATION_LVL_2 Install PHP Modules list ... "
+	package_install $PARSED_PHP_MODULE_LIST
+	echo -e " [ ${green}DONE${NC} ] "
+				
+	echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo ... "
+	sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php5/fpm/php.ini >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+	echo -e " [ ${green}DONE${NC} ] "
+				
+	echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest ... "
+	sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php5/fpm/php.ini >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+	echo -e " [ ${green}DONE${NC} ] "
+
+
 	ANY_VERSION_INSTALLED=false
 	for PHP_VERSION_ENABLED in ${CFG_PHP_VERSION[@]};
     do
@@ -158,10 +177,10 @@ InstallPHP() {
 		echo -e " [ ${green}DONE${NC} ] "
 		
 		echo -n -e "$IDENTATION_LVL_2 Restart PHP-FPM ... "
-		case $PHP_VERSION_ENABLED in
-            "php5.6" )
-				service php5.6-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-			;;
+
+		service php5-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+
+		case $PHP_VERSION_ENABLED in            
             "php7.0" )
 				service php7.0-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			;;

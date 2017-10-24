@@ -170,14 +170,14 @@ failregex = client: <HOST>,.* "(GET|POST) /wp-config.*
 ignoreregex =
 EOF
 
-  cat >> /etc/fail2ban/filter.d/nginx-wp-dot-access <<EOF
+  cat >> /etc/fail2ban/filter.d/nginx-wp-dot-access.conf <<EOF
 # Fail2Ban configuration file
 [Definition]
 failregex = client: <HOST>,.* "(GET|POST).*(/\.php|/\.asp|/\.exe|/\.pl|/\.cgi|/\scgi|/\.txt|/\.jpg|/\.html)
 ignoreregex =
 EOF
 
-  cat >> /etc/fail2ban/filter.d/nginx-wp-access-denied-by-rule <<EOF
+  cat >> /etc/fail2ban/filter.d/nginx-wp-access-denied-by-rule.conf <<EOF
 # Fail2Ban configuration file
 [Definition]
 failregex = access forbidden by rule, client: <HOST>.*

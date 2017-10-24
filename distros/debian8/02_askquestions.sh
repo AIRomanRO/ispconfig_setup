@@ -96,8 +96,7 @@ AskQuestions() {
 	while [ "x$CFG_PHP_VERSION" == "x" ]
 	do
 		CFG_PHP_VERSION=$(whiptail --title "Choose PHP Version(s)" --backtitle "$WT_BACKTITLE" --nocancel --separate-output --checklist \
-		    "Choose PHP Version do you want to install" 20 75 6 \
-            "php5.6"    "Latest Available from 5.6" ON \
+		    "Choose PHP Version do you want to install" 20 75 6 \            
             "php7.0"    "Latest Available from 7.0" ON \
             "php7.1"    "Latest Available from 7.1" OFF \
             "php7.2"    "Latest Available from 7.2" OFF \
