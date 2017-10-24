@@ -31,14 +31,14 @@ InstallWebServer() {
 			echo -e "$IDENTATION_LVL_2 Version: ${green} Custom - With OpenSSL 1.1 and ChaCha20-Poly1305 ${NC}"
 		fi
 	else
-		echo -e "${red} None {NC}"
+		echo -n -e "${red} None {NC}"
 	fi
 	
 	if [ $CFG_WEBSERVER == "apache" ]; then
 		CFG_NGINX=n
 		CFG_APACHE=y
 		echo -n -e "$IDENTATION_LVL_1 Installing Apache and Modules... "		
-		package_install apache2 apache2.2-common apache2-doc apache2-mpm-prefork apache2-utils libapache2-mod-fastcgi libapache2-mod-fcgid apache2-suexec libapache2-mod-passenger libapache2-mod-python libexpat1 ssl-cert libruby
+		package_install apache2 apache2.2-common apache2-doc apache2-mpm-prefork apache2-utils libapache2-mod-fastcgi libapache2-mod-fcgid apache2-suexec php-gettext libapache2-mod-passenger libapache2-mod-python libexpat1 ssl-cert libruby
 		echo -e "[ ${green}DONE${NC} ]\n"		
 	  
 		echo -n "$IDENTATION_LVL_1 Activating Apache2 Modules: "
