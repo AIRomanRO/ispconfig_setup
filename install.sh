@@ -186,11 +186,11 @@ source $PWD/distros/$DISTRO/17_install_bind.sh
 source $PWD/distros/$DISTRO/18_install_webstats.sh
 source $PWD/distros/$DISTRO/19_install_fail2ban.sh
 
-
 source $PWD/distros/$DISTRO/install_ispconfig.sh
 source $PWD/distros/$DISTRO/install_fix.sh
 
 source $PWD/distros/$DISTRO/install_basephp.sh #to remove in feature release
+
 echo -e " [ ${green}DONE${NC} ] "
 
 
@@ -318,7 +318,7 @@ if [ -f /etc/debian_version ]; then
 		    echo -n -e "ISPConfig DB: ${red}$CFG_ISPCONFIG_DB_PASS${NC}\n"
 		fi
 
-		echo -n -e "ISPConfig Admin PAsswprd: ${red}$CFG_ISPONCFIG_ADMIN_PASS{$NC}\n"
+		echo -n -e "ISPConfig Admin PAsswprd: ${red}$CFG_ISPONCFIG_ADMIN_PASS{$NC}php\n"
 	fi
 
 else 

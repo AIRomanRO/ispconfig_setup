@@ -97,7 +97,7 @@ AskQuestions() {
 	do
 		CFG_PHP_VERSION=$(whiptail --title "Choose PHP Version(s)" --backtitle "$WT_BACKTITLE" --nocancel --separate-output --checklist \
 		    "Choose PHP Version do you want to install" 20 75 6 \
-            "php5.6"    "Latest Available from 5.6" OFF \
+            "php5.6"    "Latest Available from 5.6" ON \
             "php7.0"    "Latest Available from 7.0" ON \
             "php7.1"    "Latest Available from 7.1" OFF \
             "php7.2"    "Latest Available from 7.2" OFF \
@@ -289,26 +289,41 @@ AskQuestions() {
 	
 	SSL_COUNTRY=$(whiptail --title "SSL Country Code" --backtitle "$WT_BACKTITLE" \
 	                --inputbox "SSL Configuration - Country Code (2 letter code - ex. EN)" --nocancel 10 60 3>&1 1>&2 2>&3)
+    if [[ -z $SSL_COUNTRY ]]; then
+    	SSL_COUNTRY="RO"
+    fi
 	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Country${NC}: ${green}" $SSL_COUNTRY "${NC} "
 	echo
 	
     SSL_STATE=$(whiptail --title "SSL State or Province Name" --backtitle "$WT_BACKTITLE" \
                     --inputbox "SSL Configuration - STATE or Province Name (full name - ex. Romania)" --nocancel 10 60 3>&1 1>&2 2>&3)
+    if [[ -z $SSL_STATE ]]; then
+    	SSL_STATE="Romania"
+    fi
 	echo -n -e "$IDENTATION_LVL_2 ${BBlack}State${NC}: ${green}" $SSL_STATE "${NC} "
 	echo
 	
     SSL_LOCALITY=$(whiptail --title "SSL Locality" --backtitle "$WT_BACKTITLE" \
                     --inputbox "SSL Configuration - Locality (ex. Craiova)" --nocancel 10 60 3>&1 1>&2 2>&3)
+    if [[ -z $SSL_LOCALITY ]]; then
+    	SSL_LOCALITY="Romania"
+    fi
 	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Locality${NC}: ${green}" $SSL_LOCALITY "${NC} "
 	echo
 	
     SSL_ORGANIZATION=$(whiptail --title "SSL Organization" --backtitle "$WT_BACKTITLE" \
                     --inputbox "SSL Configuration - Organization (ex. Company L.t.d.)" --nocancel 10 60 3>&1 1>&2 2>&3)
+    if [[ -z $SSL_ORGANIZATION ]]; then
+    	SSL_ORGANIZATION="$CFG_HOSTNAME_FQDN"
+    fi
 	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Organization${NC}: ${green}" $SSL_ORGANIZATION "${NC} "
 	echo
 	
     SSL_ORGUNIT=$(whiptail --title "SSL Organization Unit" --backtitle "$WT_BACKTITLE" \
                     --inputbox "SSL Configuration - Organization Unit (ex. IT)" --nocancel 10 60 3>&1 1>&2 2>&3)
+ 	if [[ -z $SSL_ORGUNIT ]]; then
+    	SSL_ORGUNIT="IT"
+    fi
 	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Unit${NC}: ${green}" $SSL_ORGUNIT "${NC} "
 	echo
 

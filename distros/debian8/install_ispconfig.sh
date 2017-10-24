@@ -53,7 +53,7 @@ InstallISPConfig() {
 		echo "ssl_cert_organisation=$SSL_ORGANIZATION" >> autoinstall.ini
 		echo "ssl_cert_organisation_unit=$SSL_ORGUNIT" >> autoinstall.ini
 		echo "ssl_cert_common_name=$CFG_HOSTNAME_FQDN" >> autoinstall.ini
-		echo "\n" >> autoinstall.ini
+		echo "" >> autoinstall.ini
 		echo "[expert]" >> autoinstall.ini
 		echo "mysql_ispconfig_user=ispconfig" >> autoinstall.ini
 		echo "mysql_ispconfig_password=$CFG_ISPCONFIG_DB_PASS" >> autoinstall.ini
@@ -76,7 +76,7 @@ InstallISPConfig() {
 		echo "configure_nginx=$CFG_NGINX" >> autoinstall.ini
 		echo "configure_firewall=y" >> autoinstall.ini
 		echo "install_ispconfig_web_interface=$CFG_SETUP_MASTER" >> autoinstall.ini
-		echo "\n" >> autoinstall.ini
+		echo "" >> autoinstall.ini
 		echo "[update]" >> autoinstall.ini
 		echo "do_backup=yes" >> autoinstall.ini
 		echo "mysql_root_password=$CFG_MYSQL_ROOT_PWD" >> autoinstall.ini
