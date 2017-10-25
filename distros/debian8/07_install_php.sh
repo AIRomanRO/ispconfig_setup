@@ -51,10 +51,9 @@ InstallPHP() {
 	PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-sqlite3/php-sqlite3}"	
 	#fix php5-xmlrpc wrong rename
 	PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST// rpc / php5-xmlrpc }"
-
 	echo -e " [ ${green}DONE${NC} ] "
 
-	echo -n -e "$IDENTATION_LVL_2 Install PHP5 Modules list ... "
+	echo -n -e "$IDENTATION_LVL_2 Install PHP5 Modules list [ ${green}$PARSED_PHP_MODULE_LIST${NC} ] ... "
 	package_install $PARSED_PHP_MODULE_LIST
 	echo -e " [ ${green}DONE${NC} ] "
 				
@@ -99,7 +98,7 @@ InstallPHP() {
 				PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES//PHP_SELECTED_VERSION/$PHP_VERSION_ENABLED}"
 				echo -e " [ ${green}DONE${NC} ] "
 				
-				echo -n -e "$IDENTATION_LVL_2 Install PHP7.0 Modules list ... "
+				echo -n -e "$IDENTATION_LVL_2 Install PHP7.0 Modules list [ ${green}$PARSED_PHP_MODULE_LIST${NC} ] ... "
 				package_install $PARSED_PHP_MODULE_LIST
 				echo -e " [ ${green}DONE${NC} ] "
 				
@@ -120,7 +119,7 @@ InstallPHP() {
 				PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES//PHP_SELECTED_VERSION/$PHP_VERSION_ENABLED}"
 				echo -e " [ ${green}DONE${NC} ] "
 				
-				echo -n -e "$IDENTATION_LVL_2 Install PHP7.1 Modules list ... "
+				echo -n -e "$IDENTATION_LVL_2 Install PHP7.1 Modules list [ ${green}$PARSED_PHP_MODULE_LIST${NC} ] ... "
 				package_install $PARSED_PHP_MODULE_LIST
 				echo -e " [ ${green}DONE${NC} ] "
 				
@@ -146,7 +145,7 @@ InstallPHP() {
 
 				echo -e " [ ${green}DONE${NC} ] "
 				
-				echo -n -e "$IDENTATION_LVL_2 Install PHP7.2 Modules list ... "
+				echo -n -e "$IDENTATION_LVL_2 Install PHP7.2 Modules list [ ${green}$PARSED_PHP_MODULE_LIST${NC} ] ... "
 				package_install install $PARSED_PHP_MODULE_LIST
 				echo -e " [ ${green}DONE${NC} ] "
 				
