@@ -41,10 +41,17 @@ InstallPHP() {
 	PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-xml/}"
 	#php5-zip will be installed as php-zip
 	PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-zip/}"
-	#php5-opcache will be installed as php5.6-opcache
-	PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-opcache/php5.6-opcache}"
 	#php5-bz2 will be installed as php-bz2
 	PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-bz2/}"
+	#php5-opcache will be installed as php5.6-opcache
+	PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-opcache/php5.6-opcache}"
+	#php5-mbstring will be installed as php-mbstring
+	PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-mbstring/php-mbstring}"
+	#php5-sqlite3 will be installed as php-sqlite3
+	PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-sqlite3/php-sqlite3}"	
+	#fix php5-xmlrpc wrong rename
+	PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST// rpc /php5-xmlrpc}"
+	
 	echo -e " [ ${green}DONE${NC} ] "
 
 	echo -n -e "$IDENTATION_LVL_2 Install PHP5 Modules list ... "
