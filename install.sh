@@ -224,10 +224,10 @@ if [ -f /etc/debian_version ]; then
 	"Please Enter your Email Address. We will use it for: 
 - Generate ISPConfig LetsEncrypt ssl ( if you choosed to install LetsEncrypt and ISPConfig interface)
 - Send you the logs of this setup. \n
-!Important! If you will let it empty we will use postmaser@$CFG_HOSTNAME_FQDN" --nocancel 15 90 3>&1 1>&2 2>&3)
+!Important! If you will let it empty we will use postmaster@$CFG_HOSTNAME_FQDN" --nocancel 15 90 3>&1 1>&2 2>&3)
 
 	if [[ -z $CFG_INSTALL_EMAIL_ADR ]]; then
-		CFG_INSTALL_EMAIL_ADR=="postmaser@$CFG_HOSTNAME_FQDN"
+		CFG_INSTALL_EMAIL_ADR=="postmaster@$CFG_HOSTNAME_FQDN"
 	fi
 
     if [ "$CFG_MULTISERVER" == "no" ]; then
