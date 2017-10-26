@@ -227,10 +227,10 @@ AskQuestions() {
 	
 
 	CFG_ISPONCFIG_PORT=$(whiptail --title "ISPConfig" --backtitle "$WT_BACKTITLE" --inputbox \
-	"Please specify a ISPConfig Port (leave empty for use 8081 port)" --nocancel 10 60 3>&1 1>&2 2>&3)
+	"Please specify a ISPConfig Port (leave empty for use 8080 port)" --nocancel 10 60 3>&1 1>&2 2>&3)
 
 	if [[ -z $CFG_ISPONCFIG_PORT ]]; then
-		CFG_ISPONCFIG_PORT=8081
+		CFG_ISPONCFIG_PORT=8080
 	fi
 	
 	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Port${NC}: ${green}" $CFG_ISPONCFIG_PORT "${NC} "
