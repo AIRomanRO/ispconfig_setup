@@ -36,13 +36,13 @@ InstallFix(){
     do
         case $INSTALLED_PHP_VERSION in
             "php7.0" )
-            	mysql -uroot -p$CFG_MYSQL_ROOT_PWD dbispconfig -e "INSERT INTO `server_php` (`server_php_id`, `sys_userid`, `sys_groupid`, `sys_perm_user`, `sys_perm_group`, `sys_perm_other`, `server_id`, `client_id`, `name`, `php_fastcgi_binary`, `php_fastcgi_ini_dir`, `php_fpm_init_script`, `php_fpm_ini_dir`, `php_fpm_pool_dir`) VALUES (NULL, '1', '1', 'riud', 'riud', NULL, '1', '0', 'PHP 7.0', '/usr/bin/php-cgi7.0', '/etc/php/7.0/cgi/', '/etc/init.d/php7.0-fpm', '/etc/php/7.0/fpm/', '/etc/php/7.0/fpm/pool.d/');"
+            	mysql -uroot -p$CFG_MYSQL_ROOT_PWD dbispconfig -e "INSERT INTO server_php (server_php_id, sys_userid, sys_groupid, sys_perm_user, sys_perm_group, sys_perm_other, server_id, client_id, name, php_fastcgi_binary, php_fastcgi_ini_dir, php_fpm_init_script, php_fpm_ini_dir, php_fpm_pool_dir) VALUES (NULL, '1', '1', 'riud', 'riud', NULL, '1', '0', 'PHP 7.0', '/usr/bin/php-cgi7.0', '/etc/php/7.0/cgi/', '/etc/init.d/php7.0-fpm', '/etc/php/7.0/fpm/', '/etc/php/7.0/fpm/pool.d/');"
 		    ;;
             "php7.1" )
-				mysql -uroot -p$CFG_MYSQL_ROOT_PWD dbispconfig -e "INSERT INTO `server_php` (`server_php_id`, `sys_userid`, `sys_groupid`, `sys_perm_user`, `sys_perm_group`, `sys_perm_other`, `server_id`, `client_id`, `name`, `php_fastcgi_binary`, `php_fastcgi_ini_dir`, `php_fpm_init_script`, `php_fpm_ini_dir`, `php_fpm_pool_dir`) VALUES (NULL, '1', '1', 'riud', 'riud', NULL, '1', '0', 'PHP 7.1', '/usr/bin/php-cgi7.1', '/etc/php/7.1/cgi/', '/etc/init.d/php7.1-fpm', '/etc/php/7.1/fpm/', '/etc/php/7.1/fpm/pool.d/');"
+				mysql -uroot -p$CFG_MYSQL_ROOT_PWD dbispconfig -e "INSERT INTO server_php (server_php_id, sys_userid, sys_groupid, sys_perm_user, sys_perm_group, sys_perm_other, server_id, client_id, name, php_fastcgi_binary, php_fastcgi_ini_dir, php_fpm_init_script, php_fpm_ini_dir, php_fpm_pool_dir) VALUES (NULL, '1', '1', 'riud', 'riud', NULL, '1', '0', 'PHP 7.1', '/usr/bin/php-cgi7.1', '/etc/php/7.1/cgi/', '/etc/init.d/php7.1-fpm', '/etc/php/7.1/fpm/', '/etc/php/7.1/fpm/pool.d/');"
 			;;
 		    "php7.2" )
-				mysql -uroot -p$CFG_MYSQL_ROOT_PWD dbispconfig -e "INSERT INTO `server_php` (`server_php_id`, `sys_userid`, `sys_groupid`, `sys_perm_user`, `sys_perm_group`, `sys_perm_other`, `server_id`, `client_id`, `name`, `php_fastcgi_binary`, `php_fastcgi_ini_dir`, `php_fpm_init_script`, `php_fpm_ini_dir`, `php_fpm_pool_dir`) VALUES (NULL, '1', '1', 'riud', 'riud', NULL, '1', '0', 'PHP 7.2', '/usr/bin/php-cgi7.2', '/etc/php/7.2/cgi/', '/etc/init.d/php7.2-fpm', '/etc/php/7.2/fpm/', '/etc/php/7.2/fpm/pool.d/');"
+				mysql -uroot -p$CFG_MYSQL_ROOT_PWD dbispconfig -e "INSERT INTO server_php (server_php_id, sys_userid, sys_groupid, sys_perm_user, sys_perm_group, sys_perm_other, server_id, client_id, name, php_fastcgi_binary, php_fastcgi_ini_dir, php_fpm_init_script, php_fpm_ini_dir, php_fpm_pool_dir) VALUES (NULL, '1', '1', 'riud', 'riud', NULL, '1', '0', 'PHP 7.2', '/usr/bin/php-cgi7.2', '/etc/php/7.2/cgi/', '/etc/init.d/php7.2-fpm', '/etc/php/7.2/fpm/', '/etc/php/7.2/fpm/pool.d/');"
 		    ;;
         esac
     done	
