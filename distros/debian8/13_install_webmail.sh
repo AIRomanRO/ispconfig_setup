@@ -14,7 +14,6 @@ InstallWebmail() {
 
 			echo -n -e "$IDENTATION_LVL_2 Configure Roundcube ... "
 			CFG_ROUNDCUBE_PWD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c16)
-
 			echo "roundcube-core roundcube/dbconfig-install boolean true" | debconf-set-selections
 			echo "roundcube-core roundcube/database-type select mysql" | debconf-set-selections
 			echo "roundcube-core roundcube/mysql/admin-pass password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
@@ -154,10 +153,16 @@ InstallWebmail() {
 </IfModule>
 EOF
 		  	else
+		  		APPS_SOCKET="/var/lib/php5-fpm/apps.sock"
+		  		if [ -f /var/run/php/php7.0-fpm.sock ]; then
+		  			APPS_SOCKET="/var/run/php/php7.0-fpm.sock"
+		  		fi
+
 	        cat << "EOF" > /etc/nginx/sites-available/roundcube.vhost
 server {
    # SSL configuration
    listen 443 ssl http2;
+   server_name webmail.* $CFG_HOSTNAME_FQDN;
 
    ssl on;
    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
@@ -173,7 +178,7 @@ server {
         include /etc/nginx/fastcgi_params;
         # To access SquirrelMail, the default user (like www-data on Debian/Ubuntu) must be used
         #fastcgi_pass 127.0.0.1:9000;
-        fastcgi_pass unix:/var/lib/php/roundcube-webmail.sock;
+        fastcgi_pass unix:$APPS_SOCKET;
         fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_buffer_size 128k;
