@@ -44,7 +44,7 @@ AskQuestions() {
 	if [[ -z $CFG_MYSQL_ROOT_PWD ]]; then
 		CFG_MYSQL_ROOT_PWD_AUTO=true
 		#We generate a random 32 Chars Length
-		CFG_MYSQL_ROOT_PWD=$(< /dev/urandom tr -dc 'A-Z-a-z-0-9~!@#$%^&*_=-' | head -c${1:-32})
+		CFG_MYSQL_ROOT_PWD=$(< /dev/urandom tr -dc 'A-Z-a-z-0-9~!@#^*_=-' | head -c${1:-16})
 	else
 		CFG_MYSQL_ROOT_PWD_AUTO=false
 	fi
@@ -251,7 +251,7 @@ AskQuestions() {
 
 	if [[ -z $CFG_ISPONCFIG_ADMIN_PASS ]]; then
 		CFG_ISPCONFIG_DB_PASS_AUTO=true
-		CFG_ISPCONFIG_DB_PASS=$(< /dev/urandom tr -dc 'A-Z-a-z-0-9~!@#$%^&*_=-' | head -c${1:-32})
+		CFG_ISPCONFIG_DB_PASS=$(< /dev/urandom tr -dc 'A-Z-a-z-0-9~!@#^*_=-' | head -c${1:-16})
 	else
 		CFG_ISPCONFIG_DB_PASS_AUTO=false
 	fi

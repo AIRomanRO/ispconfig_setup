@@ -35,7 +35,7 @@ InstallPHPMyAdmin() {
 		echo -e " [ ${green}DONE${NC} ] "
 		
 		echo -n -e "$IDENTATION_LVL_1 Generate phpMyAdmin db password ... "
-		APP_DB_PASS=$(< /dev/urandom tr -dc 'A-Z-a-z-0-9~!@#$%^&*_=-' | head -c${1:-32})
+		APP_DB_PASS=$(< /dev/urandom tr -dc 'A-Z-a-z-0-9~!@#^*_=-' | head -c${1:-16})
 		echo -e " [ ${green}DONE${NC} ] "
 		
 		echo -n -e "$IDENTATION_LVL_1 Set passwords ... "	

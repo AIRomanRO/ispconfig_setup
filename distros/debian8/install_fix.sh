@@ -4,7 +4,7 @@ InstallFix(){
 
 
 	if [ $CFG_CERTBOT_VERSION == "default" ] || [ $CFG_CERTBOT_VERSION == "stretch" ]; then
-		echo -n -e "$IDENTATION_LVL_1 ${BWhite}Generate LetsEncrypt SSL for $CFG_HOSTNAME_FQDN ${NC}\n"
+		echo -n -e "$IDENTATION_LVL_1 ${BWhite}Generate LetsEncrypt SSL for $CFG_HOSTNAME_FQDN ${NC}"
   		
   		certbot certonly --webroot -w /var/www/html/ -d $CFG_HOSTNAME_FQDN -n --text --agree-tos --rsa-key-size 4096 --email $CFG_INSTALL_EMAIL_ADR >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
   		
@@ -20,7 +20,7 @@ InstallFix(){
   		echo -e " [ ${green}DONE${NC} ] "
   	fi
 
-	echo -n -e "$IDENTATION_LVL_1 ${BWhite}Fix Amavis Integration ${NC}\n"
+	echo -n -e "$IDENTATION_LVL_1 ${BWhite}Fix Amavis Integration ${NC}"
 	MYNET=`cat /etc/postfix/main.cf | grep "mynetworks =" | sed 's/mynetworks = //'`
 	echo "@mynetworks = qw( $MYNET );" >> /etc/amavis/conf.d/20-debian_defaults
 	if [ -f /etc/init.d/amavisd-new ]; then
@@ -31,18 +31,18 @@ InstallFix(){
 	echo -e " [ ${green}DONE${NC} ] "
 
 	#Make Additional PHP versions available on ISPConfig
-	echo -n -e "$IDENTATION_LVL_1 ${BWhite}Add Additional PHP versions on ISPConfig [ on System > Additional PHP Versions tab] ${NC}\n"
+	echo -n -e "$IDENTATION_LVL_1 ${BWhite}Add Additional PHP versions on ISPConfig [ on System > Additional PHP Versions tab] ${NC}"
 	for INSTALLED_PHP_VERSION in ${CFG_PHP_VERSION[@]};
     do
         case $INSTALLED_PHP_VERSION in
             "php7.0" )
-            	mysql -uroot -p$CFG_MYSQL_ROOT_PWD dbispconfig -e "INSERT INTO server_php (server_php_id, sys_userid, sys_groupid, sys_perm_user, sys_perm_group, sys_perm_other, server_id, client_id, name, php_fastcgi_binary, php_fastcgi_ini_dir, php_fpm_init_script, php_fpm_ini_dir, php_fpm_pool_dir) VALUES (NULL, '1', '1', 'riud', 'riud', NULL, '1', '0', 'PHP 7.0', '/usr/bin/php-cgi7.0', '/etc/php/7.0/cgi/', '/etc/init.d/php7.0-fpm', '/etc/php/7.0/fpm/', '/etc/php/7.0/fpm/pool.d/');"
+            	mysql -uroot -p$CFG_MYSQL_ROOT_PWD dbispconfig -e "INSERT INTO server_php (server_php_id, sys_userid, sys_groupid, sys_perm_user, sys_perm_group, sys_perm_other, server_id, client_id, name, php_fastcgi_binary, php_fastcgi_ini_dir, php_fpm_init_script, php_fpm_ini_dir, php_fpm_pool_dir) VALUES (NULL, '1', '1', 'riud', 'riud', NULL, '1', '0', 'PHP 7.0', '/usr/bin/php-cgi7.0', '/etc/php/7.0/cgi/', '/etc/init.d/php7.0-fpm', '/etc/php/7.0/fpm/', '/etc/php/7.0/fpm/pool.d/');" >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		    ;;
             "php7.1" )
-				mysql -uroot -p$CFG_MYSQL_ROOT_PWD dbispconfig -e "INSERT INTO server_php (server_php_id, sys_userid, sys_groupid, sys_perm_user, sys_perm_group, sys_perm_other, server_id, client_id, name, php_fastcgi_binary, php_fastcgi_ini_dir, php_fpm_init_script, php_fpm_ini_dir, php_fpm_pool_dir) VALUES (NULL, '1', '1', 'riud', 'riud', NULL, '1', '0', 'PHP 7.1', '/usr/bin/php-cgi7.1', '/etc/php/7.1/cgi/', '/etc/init.d/php7.1-fpm', '/etc/php/7.1/fpm/', '/etc/php/7.1/fpm/pool.d/');"
+				mysql -uroot -p$CFG_MYSQL_ROOT_PWD dbispconfig -e "INSERT INTO server_php (server_php_id, sys_userid, sys_groupid, sys_perm_user, sys_perm_group, sys_perm_other, server_id, client_id, name, php_fastcgi_binary, php_fastcgi_ini_dir, php_fpm_init_script, php_fpm_ini_dir, php_fpm_pool_dir) VALUES (NULL, '1', '1', 'riud', 'riud', NULL, '1', '0', 'PHP 7.1', '/usr/bin/php-cgi7.1', '/etc/php/7.1/cgi/', '/etc/init.d/php7.1-fpm', '/etc/php/7.1/fpm/', '/etc/php/7.1/fpm/pool.d/');" >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			;;
 		    "php7.2" )
-				mysql -uroot -p$CFG_MYSQL_ROOT_PWD dbispconfig -e "INSERT INTO server_php (server_php_id, sys_userid, sys_groupid, sys_perm_user, sys_perm_group, sys_perm_other, server_id, client_id, name, php_fastcgi_binary, php_fastcgi_ini_dir, php_fpm_init_script, php_fpm_ini_dir, php_fpm_pool_dir) VALUES (NULL, '1', '1', 'riud', 'riud', NULL, '1', '0', 'PHP 7.2', '/usr/bin/php-cgi7.2', '/etc/php/7.2/cgi/', '/etc/init.d/php7.2-fpm', '/etc/php/7.2/fpm/', '/etc/php/7.2/fpm/pool.d/');"
+				mysql -uroot -p$CFG_MYSQL_ROOT_PWD dbispconfig -e "INSERT INTO server_php (server_php_id, sys_userid, sys_groupid, sys_perm_user, sys_perm_group, sys_perm_other, server_id, client_id, name, php_fastcgi_binary, php_fastcgi_ini_dir, php_fpm_init_script, php_fpm_ini_dir, php_fpm_pool_dir) VALUES (NULL, '1', '1', 'riud', 'riud', NULL, '1', '0', 'PHP 7.2', '/usr/bin/php-cgi7.2', '/etc/php/7.2/cgi/', '/etc/init.d/php7.2-fpm', '/etc/php/7.2/fpm/', '/etc/php/7.2/fpm/pool.d/');" >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		    ;;
         esac
     done	
