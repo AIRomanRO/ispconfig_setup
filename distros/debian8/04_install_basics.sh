@@ -234,6 +234,16 @@ InstallBasics() {
 		    package_install zlib1g-dev
 		    echo -e " [ ${green}DONE${NC} ]"
 	    fi
+
+	    #Check for Lib Zlib 1g Dev
+		if dpkg --list 2>&1 | grep -qw dh-systemd; then
+		    echo -n -e "$IDENTATION_LVL_2 ${BBlack}dh-systemd${NC}: ${green}Already Installed${NC} \n"
+	    else
+		    echo -n -e "$IDENTATION_LVL_2 ${BBlack}dh-systemd${NC}: ${red}NOT FOUND${NC} - try to install it ... "
+		    package_install dh-systemd
+		    echo -e " [ ${green}DONE${NC} ]"
+	    fi
+	    
 	fi
 
     echo -n "$IDENTATION_LVL_1 Reconfigure dash... "	  
