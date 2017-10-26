@@ -36,34 +36,20 @@ AskQuestions() {
 	    echo
 	fi
 
-	if [ $CFG_SQLSERVER == "MySQL" ] || [ $CFG_SQLSERVER == "MariaDB" ]; then
-	    while [ "x$CFG_MYSQL_ROOT_PWD_AUTO" == "x" ]
-        do
-            CFG_MYSQL_ROOT_PWD_AUTO=$(whiptail --title "MySQL Root Password" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
-		        "Auto Generate ROOT PASSWORD?" 10 57 2 \
-		        "false" "NO, i have IT OR i want to choose one" OFF \
-		        "true"  "YES, autogenerate it" ON 3>&1 1>&2 2>&3)
-        done
-		echo -n -e "$IDENTATION_LVL_2 ${BBlack}Generate PASSWORD${NC}: ${green}$CFG_MYSQL_ROOT_PWD_AUTO${NC} "
-	    echo
+
+	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Retrieve MySQL Root PASSWORD${NC}: "
+	CFG_MYSQL_ROOT_PWD=$(whiptail --title "MySQL Root Password" --backtitle "$WT_BACKTITLE" --inputbox \
+	"Please specify the MySQL Root Password (leave empty for autogenerate)" --nocancel 10 60 3>&1 1>&2 2>&3)
+
+	if [[ -z $CFG_MYSQL_ROOT_PWD ]]; then
+		CFG_MYSQL_ROOT_PWD_AUTO=true
+		#We generate a random 32 Chars Length
+		CFG_MYSQL_ROOT_PWD=$(< /dev/urandom tr -dc 'A-Z-a-z-0-9~!@#$%^&*_=-' | head -c${1:-32})
 	else
 		CFG_MYSQL_ROOT_PWD_AUTO=false
 	fi
-
-	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Retrieve PASSWORD${NC}: "
-	if [ $CFG_MYSQL_ROOT_PWD_AUTO == false ]; then
-	    #We should receive a password
-	    while [ "x$CFG_MYSQL_ROOT_PWD" == "x" ]
-	    do
-	        CFG_MYSQL_ROOT_PWD=$(whiptail --title "MySQL Root Password" --backtitle "$WT_BACKTITLE" --nocancel --inputbox \
-				"Please specify a root password" 10 60 3>&1 1>&2 2>&3)
-	    done
-	else
-		#We generate a random 32 Chars Length
-		CFG_MYSQL_ROOT_PWD=$(< /dev/urandom tr -dc 'A-Z-a-z-0-9~!@#$%^&*_=-' | head -c${1:-32})
-	fi
 	echo -e " [ ${green}DONE${NC} ] "
-		
+
     while [ "x$CFG_WEBSERVER" == "x" ]
 	do
 		CFG_WEBSERVER=$(whiptail --title "Install Web Server" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
@@ -259,29 +245,18 @@ AskQuestions() {
 	fi
 	echo -e " [ ${green}DONE${NC} ] "
 	
-	while [ "x$CFG_ISPCONFIG_DB_PASS_AUTO" == "x" ]
-	do
-		CFG_ISPCONFIG_DB_PASS_AUTO=$(whiptail --title "Auto Generate ISPConfig DB pass for Advanced" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
-			"Auto Generate ISPConfig DB pass for Advanced?" 10 57 2 \
-			"false" "NO, i have IT OR i want to choose one" OFF \
-			"true"  "YES, autogenerate it" ON 3>&1 1>&2 2>&3)
-	done
-	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Auto Generate DB pass for advanced${NC}: ${green}$CFG_ISPCONFIG_DB_PASS_AUTO${NC} "
-	echo	
+	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Retrieve ISPConfig DB password${NC}: "
+	CFG_ISPCONFIG_DB_PASS=$(whiptail --title "ISPConfig DB Password" --backtitle "$WT_BACKTITLE" --inputbox \
+	"Please specify a ISPConfig DB Password (leave empty for autogenerate)" --nocancel 10 60 3>&1 1>&2 2>&3)
 
-	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Retrieve DB pass for advanced${NC}: "
-	if [ $CFG_ISPCONFIG_DB_PASS_AUTO == false ]; then
-	    #We should receive a password
-	    while [ "x$CFG_ISPCONFIG_DB_PASS" == "x" ]
-	    do
-			CFG_ISPCONFIG_DB_PASS=$(whiptail --title "ISPConfig DB pass for advanced" --backtitle "$WT_BACKTITLE" --nocancel --inputbox \
-				"Please specify a password for ISPConfig db used on advanced" 10 60 3>&1 1>&2 2>&3)
-	    done
-	else
-		#We generate a random 32 Chars Length
+	if [[ -z $CFG_ISPONCFIG_ADMIN_PASS ]]; then
+		CFG_ISPCONFIG_DB_PASS_AUTO=true
 		CFG_ISPCONFIG_DB_PASS=$(< /dev/urandom tr -dc 'A-Z-a-z-0-9~!@#$%^&*_=-' | head -c${1:-32})
-	fi	
+	else
+		CFG_ISPCONFIG_DB_PASS_AUTO=false
+	fi
 	echo -e " [ ${green}DONE${NC} ] "
+
 
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}SSL Configuration:${NC} "
 	echo
