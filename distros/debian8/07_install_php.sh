@@ -180,14 +180,13 @@ InstallPHP() {
   
 	echo -n -e "$IDENTATION_LVL_1 Restart Web Server and PHP ... "
 	echo
-	if [ $CFG_WEBSERVER == "apache" ]; then
-	
+	if [ $CFG_WEBSERVER == "apache" ]; 
+	then	
 		echo -n -e "$IDENTATION_LVL_2 Restart Apache2 Web Server ... "
 		service apache2 restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1		
-		echo -e " [ ${green}DONE${NC} ] "
-		
-	elif [ $CFG_WEBSERVER == "nginx" ]; then
-	
+		echo -e " [ ${green}DONE${NC} ] "		
+	elif [ $CFG_WEBSERVER == "nginx" ]; 
+	then	
 		echo -n -e "$IDENTATION_LVL_2 Restart NGINX Web Server ... "
 		service nginx restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		echo -e " [ ${green}DONE${NC} ] "
