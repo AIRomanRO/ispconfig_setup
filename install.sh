@@ -227,7 +227,7 @@ if [ -f /etc/debian_version ]; then
 !Important! If you will let it empty we will use postmaster@$CFG_HOSTNAME_FQDN" --nocancel 15 90 3>&1 1>&2 2>&3)
 
 	if [[ -z $CFG_INSTALL_EMAIL_ADR ]]; then
-		CFG_INSTALL_EMAIL_ADR=="postmaster@$CFG_HOSTNAME_FQDN"
+		CFG_INSTALL_EMAIL_ADR="postmaster@$CFG_HOSTNAME_FQDN"
 	fi
 
     if [ "$CFG_MULTISERVER" == "no" ]; then
