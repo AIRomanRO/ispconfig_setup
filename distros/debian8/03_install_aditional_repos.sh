@@ -7,6 +7,15 @@ InstallAditionalRepos() {
 
 	echo -n -e "$IDENTATION_LVL_0 ${BWhite} Start Adding additional repositories ${NC} \n"
 	
+	#Check for apt-transport-https
+	if [ -f /usr/lib/apt/methods/https ]; then
+		echo -n -e "$IDENTATION_LVL_1 ${BBlack}APT HTTPS Method${NC}: ${green}Already Installed${NC}\n"
+	else
+		echo -n -e "$IDENTATION_LVL_1 ${BBlack}APT HTTPS Method${NC}: ${red}NOT FOUND${NC} - try to install it ... "
+		package_install apt-transport-https
+		echo -e " [ ${green}DONE${NC} ]"
+	fi
+
     echo -n -e "$IDENTATION_LVL_1 ${BBlack}Update Packages Before we start ${NC} ... "	
     package_update
 	echo -e " [ ${green}DONE${NC} ]"

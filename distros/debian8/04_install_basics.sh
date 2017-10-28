@@ -48,16 +48,6 @@ InstallBasics() {
 		echo -e " [ ${green}DONE${NC} ]\n"
 	fi
   
-  
-	#Check for apt-transport-https
-	if [ -f /usr/lib/apt/methods/https ]; then
-		echo -n -e "$IDENTATION_LVL_2 ${BBlack}APT HTTPS Method${NC}: ${green}Already Installed${NC}\n"
-	else
-		echo -n -e "$IDENTATION_LVL_2 ${BBlack}APT HTTPS Method${NC}: ${red}NOT FOUND${NC} - try to install it ... "
-		package_install apt-transport-https
-		echo -e " [ ${green}DONE${NC} ]"
-	fi
-	
 	
 	echo -n -e "$IDENTATION_LVL_1 Updating apt and upgrading currently installed packages... "
     apt-get -qq update >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
