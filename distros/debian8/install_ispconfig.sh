@@ -42,6 +42,7 @@ InstallISPConfig() {
 			echo "http_server=" >> autoinstall.ini
 		fi
 
+		echo "apps_vhost_port=1003" >> autoinstall.ini
 		echo "ispconfig_port=$CFG_ISPONCFIG_PORT" >> autoinstall.ini
 		echo "ispconfig_admin_password=$CFG_ISPONCFIG_ADMIN_PASS" >> autoinstall.ini
 		echo "ispconfig_use_ssl=y" >> autoinstall.ini
@@ -86,6 +87,7 @@ InstallISPConfig() {
 		echo "mysql_master_database=dbispconfig" >> autoinstall.ini
 		echo "reconfigure_permissions_in_master_database=no" >> autoinstall.ini
 		echo "reconfigure_services=yes" >> autoinstall.ini
+		echo "apps_vhost_port=1003" >> autoinstall.ini
 	    echo "ispconfig_port=$CFG_ISPONCFIG_PORT" >> autoinstall.ini
 		echo "create_new_ispconfig_ssl_cert=no" >> autoinstall.ini
 	    echo "reconfigure_crontab=yes" >> autoinstall.ini

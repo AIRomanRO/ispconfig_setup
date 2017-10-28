@@ -112,7 +112,7 @@ InstallPHPMyAdmin() {
             echo "FLUSH PRIVILEGES;" >> tmpSQL.sql
             mysql -u root -p$CFG_MYSQL_ROOT_PWD < tmpSQL.sql >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
             rm -f tmpSQL.sql
-			echo -e " [ ${green}DONE${NC} ] -->"$APP_DB_PASS
+			echo -e " [ ${green}DONE${NC} ] "
 
 			echo -n -e "$IDENTATION_LVL_2 Generate and set random blowfish string ... "
 			BLOWFISH=$(< /dev/urandom tr -dc 'A-Z-a-z-0-9' | head -c${1:-64})
