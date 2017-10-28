@@ -262,7 +262,7 @@ AskQuestions() {
 	echo
 	
 	SSL_COUNTRY=$(whiptail --title "SSL Country Code" --backtitle "$WT_BACKTITLE" \
-	                --inputbox "SSL Configuration - Country Code (2 letter code - ex. EN)" --nocancel 10 60 3>&1 1>&2 2>&3)
+	                --inputbox "SSL Configuration - Country Code (2 letter code - ex. RO)" --nocancel 10 60 3>&1 1>&2 2>&3)
     if [[ -z $SSL_COUNTRY ]]; then
     	SSL_COUNTRY="RO"
     fi
@@ -280,7 +280,7 @@ AskQuestions() {
     SSL_LOCALITY=$(whiptail --title "SSL Locality" --backtitle "$WT_BACKTITLE" \
                     --inputbox "SSL Configuration - Locality (ex. Craiova)" --nocancel 10 60 3>&1 1>&2 2>&3)
     if [[ -z $SSL_LOCALITY ]]; then
-    	SSL_LOCALITY="Romania"
+    	SSL_LOCALITY="Craiova"
     fi
 	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Locality${NC}: ${green}" $SSL_LOCALITY "${NC} "
 	echo
