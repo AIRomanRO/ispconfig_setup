@@ -50,8 +50,8 @@ InstallBasics() {
   
 	
 	echo -n -e "$IDENTATION_LVL_1 Updating apt and upgrading currently installed packages... "
-    apt-get -qq update >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-    apt-get -qqy upgrade >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+    package_update
+    package_upgrade
     echo -e "[${green}DONE${NC}]"
   
   
