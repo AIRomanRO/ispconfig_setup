@@ -7,7 +7,7 @@ InstallAditionalRepos() {
 
 	echo -n -e "$IDENTATION_LVL_0 ${BWhite} Start Adding additional repositories ${NC} \n"
 	
-    echo -n -e "$IDENTATION_LVL_1 ${BBlack}Update Packages ${NC} ... "	
+    echo -n -e "$IDENTATION_LVL_1 ${BBlack}Update Packages Before we start ${NC} ... "	
     package_update
 	echo -e " [ ${green}DONE${NC} ]"
 
@@ -107,6 +107,10 @@ Pin-Priority: 100
 ####################################" > /etc/apt/preferences
 
     echo -e " [ ${green}DONE${NC} ]"
+
+    echo -n -e "$IDENTATION_LVL_1 ${BBlack}Update Packages Before at the final${NC} ... "	
+    package_update
+	echo -e " [ ${green}DONE${NC} ]"
 
 	MeasureTimeDuration $START_TIME
 }
