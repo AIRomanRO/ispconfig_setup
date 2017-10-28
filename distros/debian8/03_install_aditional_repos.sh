@@ -7,6 +7,10 @@ InstallAditionalRepos() {
 
 	echo -n -e "$IDENTATION_LVL_0 ${BWhite} Start Adding additional repositories ${NC} \n"
 	
+    echo -n -e "$IDENTATION_LVL_1 ${BBlack}Update Packages ${NC} ... "	
+    package_update
+	echo -e " [ ${green}DONE${NC} ]"
+
 	#Add Debian backports - Required for Letsencrypt
     echo -n -e "$IDENTATION_LVL_1 ${BBlack}Debian Jessie backports${NC} ... "
     echo "##################  Debian Jessie Backports  ##################
@@ -103,6 +107,6 @@ Pin-Priority: 100
 ####################################" > /etc/apt/preferences
 
     echo -e " [ ${green}DONE${NC} ]"
-	
+
 	MeasureTimeDuration $START_TIME
 }
