@@ -83,5 +83,7 @@ InstallFix(){
 		service php5-fpm force-reload >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 	fi
 
+	apt-get autoremove >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+
   	MeasureTimeDuration $START_TIME
 }
