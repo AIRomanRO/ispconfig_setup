@@ -32,6 +32,7 @@ InstallWebmail() {
 			# fi
 			echo -n -e "$IDENTATION_LVL_2 Installing Roundcube ... "
 		  	package_update
+		  	#apt-get -yqq --force-yes build-dep roundcube >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		  	# apt-get -yqq -t jessie-backports install roundcube roundcube-mysql roundcube-plugins >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		  	package_install -t stretch roundcube-core roundcube roundcube-mysql roundcube-plugins
 
@@ -158,16 +159,24 @@ EOF
 		  			APPS_SOCKET="/var/run/php/php7.0-fpm.sock"
 		  		fi
 
+		  		APPS_SOCKET="/var/lib/php5-fpm/apps.sock"
+		  		if [ -f /var/run/php/php7.0-fpm.sock ]; then
+		  			APPS_SOCKET="/var/run/php/php7.0-fpm.sock"
+		  		fi
+
 	        echo -e "
 server {
    # SSL configuration
-   listen $CFG_ISPONCFIG_PORT ssl http2;
-   server_name $CFG_HOSTNAME_FQDN webmail.*;
+   listen 443 http2;
+   server_name webmail.$CFG_HOSTNAME_FQDN webmail.*;
 
    ssl on;
    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
    ssl_certificate /usr/local/ispconfig/interface/ssl/ispserver.crt;
    ssl_certificate_key /usr/local/ispconfig/interface/ssl/ispserver.key;
+
+   ssl_ciphers 'ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA:ECDHE-ECDSA-DES-CBC3-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:DES-CBC3-SHA:!DSS';
+   ssl_prefer_server_ciphers on;
 
    location /roundcube {
       root /var/lib/;
@@ -180,7 +189,7 @@ server {
         #fastcgi_pass 127.0.0.1:9000;
         fastcgi_pass unix:$APPS_SOCKET;
         fastcgi_index index.php;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
         fastcgi_buffer_size 128k;
         fastcgi_buffers 256 4k;
         fastcgi_busy_buffers_size 256k;
@@ -201,7 +210,7 @@ server {
    }
 }" > /etc/nginx/sites-available/roundcube.vhost
 
-				ln -s /etc/nginx/sites-available/roundcube.vhost /etc/nginx/sites-enabled/roundcube.vhost
+				ln -s /etc/nginx/sites-available/roundcube.vhost /etc/nginx/sites-enabled/000-roundcube.vhost
 	  		fi
 
 	  		echo -e " [ ${green}DONE${NC} ] "
