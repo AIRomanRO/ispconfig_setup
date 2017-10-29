@@ -33,7 +33,7 @@ InstallWebmail() {
 			echo -n -e "$IDENTATION_LVL_2 Installing Roundcube ... "
 		  	package_update
 		  	# apt-get -yqq -t jessie-backports install roundcube roundcube-mysql roundcube-plugins >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-		  	package_install -t stretch roundcube roundcube-mysql roundcube-plugins
+		  	package_install -t stretch roundcube-core roundcube roundcube-mysql roundcube-plugins
 
 		  	echo -e " [ ${green}DONE${NC} ] "
 
@@ -173,7 +173,7 @@ server {
       root /var/lib/;
       index index.php index.html index.htm;
       location ~ ^/roundcube/(.+\.php)$ {
-        try_files $uri =404;
+        try_files \$uri =404;
         root /var/lib/;
         include /etc/nginx/fastcgi_params;
         # To access SquirrelMail, the default user (like www-data on Debian/Ubuntu) must be used
