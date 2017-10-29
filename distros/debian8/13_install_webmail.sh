@@ -158,11 +158,11 @@ EOF
 		  			APPS_SOCKET="/var/run/php/php7.0-fpm.sock"
 		  		fi
 
-	        cat << "EOF" > /etc/nginx/sites-available/roundcube.vhost
+	        echo -e "
 server {
    # SSL configuration
-   listen 443 ssl http2;
-   server_name webmail.* $CFG_HOSTNAME_FQDN;
+   listen $CFG_ISPONCFIG_PORT ssl http2;
+   server_name $CFG_HOSTNAME_FQDN webmail.*;
 
    ssl on;
    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
@@ -199,8 +199,8 @@ server {
    location /webmail {
      rewrite ^/* /roundcube last;
    }
-}
-EOF
+}" > /etc/nginx/sites-available/roundcube.vhost
+
 				ln -s /etc/nginx/sites-available/roundcube.vhost /etc/nginx/sites-enabled/roundcube.vhost
 	  		fi
 
