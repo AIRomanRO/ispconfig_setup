@@ -42,7 +42,6 @@ InstallISPConfig() {
 			echo "http_server=" >> autoinstall.ini
 		fi
 
-		echo "apps_vhost_port=1003" >> autoinstall.ini
 		echo "ispconfig_port=$CFG_ISPONCFIG_PORT" >> autoinstall.ini
 		echo "ispconfig_admin_password=$CFG_ISPONCFIG_ADMIN_PASS" >> autoinstall.ini
 		echo "ispconfig_use_ssl=y" >> autoinstall.ini

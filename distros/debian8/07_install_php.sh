@@ -195,18 +195,21 @@ InstallPHP() {
 
 		service php5-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 
-		case $PHP_VERSION_ENABLED in            
-            "php7.0" )
-				service php7.0-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-			;;
-            "php7.1" )
-				service php7.1-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-			;;      
-		    "php7.2" )
-				service php7.2-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-			;;
-        esac
-
+		for PHP_VERSION_ENABLED in ${CFG_PHP_VERSION[@]};
+    	do
+			case $PHP_VERSION_ENABLED in            
+	            "php7.0" )
+					service php7.0-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+				;;
+	            "php7.1" )
+					service php7.1-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+				;;      
+			    "php7.2" )
+					service php7.2-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+				;;
+	        esac
+        done
+        
 		echo -e " [ ${green}DONE${NC} ] "
 		
 	fi
