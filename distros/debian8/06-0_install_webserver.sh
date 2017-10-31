@@ -175,7 +175,7 @@ InstallWebServer() {
 			echo -e " [ ${green}DONE${NC} ]"
 
 			echo -n -e "$IDENTATION_LVL_2 Uninstall nginx"
-			package_purge_remove nginx
+			package_purge_remove --force-yes nginx*
 			echo -e " [ ${green}DONE${NC} ]"
 
 			echo -n -e "$IDENTATION_LVL_2 Make the Local src folder "
