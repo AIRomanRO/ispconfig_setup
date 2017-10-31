@@ -226,8 +226,8 @@ if [ -f /etc/debian_version ]; then
 - Send you the logs of this setup. \n
 !Important! If you will let it empty we will use postmaster@$CFG_HOSTNAME_FQDN" --nocancel 15 90 3>&1 1>&2 2>&3)
 
-	if [[ -z $CFG_INSTALL_EMAIL_ADR ]]; then
-		CFG_INSTALL_EMAIL_ADR="postmaster@$CFG_HOSTNAME_FQDN"
+    if [[ -z $CFG_INSTALL_EMAIL_ADR ]]; then
+        CFG_INSTALL_EMAIL_ADR="postmaster@$CFG_HOSTNAME_FQDN"
 	fi
 
     if [ "$CFG_MULTISERVER" == "no" ]; then
@@ -236,11 +236,11 @@ if [ -f /etc/debian_version ]; then
         source $PWD/distros/$DISTRO/02_askquestions_multiserver.sh
 	    AskQuestionsMultiserver
     fi
-	
+
 	InstallAditionalRepos
     InstallBasics 
     InstallSQLServer 
-	
+
     if [ "$CFG_SETUP_WEB" == "yes" ] || [ "$CFG_MULTISERVER" == "no" ];
 	then
         InstallWebServer
@@ -265,21 +265,21 @@ if [ -f /etc/debian_version ]; then
 				
         InstallWebmail 
     fi
-	
+
     if [ "$CFG_SETUP_MAIL" == "yes" ] || [ "$CFG_MULTISERVER" == "no" ]; then
         InstallPostfix 
         InstallMTA 
         InstallAntiVirus 
-    fi  
- 
+    fi
+
     if [ "$CFG_SETUP_NS" == "yes" ] || [ "$CFG_MULTISERVER" == "no" ]; then
         InstallBind 
     fi
-	
-	InstallWebStats
+
+    InstallWebStats
     InstallFail2ban
-		
-	if [ "$CFG_PHP_VERSION" == "none"]; then
+
+	if [ "$CFG_PHP_VERSION" == "none" ]; then
         InstallBasePhp
     fi
 
@@ -292,7 +292,7 @@ if [ -f /etc/debian_version ]; then
     echo '-----------------------------------------------------------------------------'
     echo "Original version of this script can be found on GitHub at	https://github.com/servisys/ispconfig_setup/"
     echo
-	
+
 	if [ "$CFG_WEBMAIL" == "roundcube" ]; then
         if [ "$DISTRO" != "debian8" ]; then
 		    echo -e "${red}You had to edit user/pass /var/lib/roundcube/plugins/ispconfig3_account/config/config.inc.php of roundcube user, as the one you inserted in ISPconfig ${NC}"
