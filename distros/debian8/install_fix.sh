@@ -6,7 +6,7 @@ InstallFix(){
 	if [ $CFG_CERTBOT_VERSION == "default" ] || [ $CFG_CERTBOT_VERSION == "stretch" ]; then
 		echo -n -e "$IDENTATION_LVL_1 ${BWhite}Generate LetsEncrypt SSL for $CFG_HOSTNAME_FQDN ${NC}"
   		
-  		certbot certonly --webroot -w /var/www/html/ -d $CFG_HOSTNAME_FQDN -n --text --agree-tos --rsa-key-size 4096 --email $CFG_INSTALL_EMAIL_ADR >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+  		certbot certonly --webroot -w /var/www/html/ -d $CFG_HOSTNAME_FQDN -d webmail.$CFG_HOSTNAME_FQDN -d apps.$CFG_HOSTNAME_FQDN -d manage.$CFG_HOSTNAME_FQDN -n --text --agree-tos --rsa-key-size 4096 --email $CFG_INSTALL_EMAIL_ADR >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
   		
   		if [ -f /etc/letsencrypt/live/$CFG_HOSTNAME_FQDN/fullchain.pem ]; then
 			cd /usr/local/ispconfig/interface/ssl/ >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
@@ -103,6 +103,6 @@ InstallFix(){
 	echo -n -e "$IDENTATION_LVL_1 ${BWhite}Cleanup APT-GET ${NC}"
 	apt-get autoremove >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 	echo -e " [ ${green}DONE${NC} ] "
-	
+
   	MeasureTimeDuration $START_TIME
 }
