@@ -10,6 +10,7 @@ InstallFix(){
   		
   		if [ -f /etc/letsencrypt/live/$CFG_HOSTNAME_FQDN/fullchain.pem ]; then
 			cd /usr/local/ispconfig/interface/ssl/ >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+
 			mv ispserver.crt ispserver.crt-$(date +"%y%m%d%H%M%S").bak >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			mv ispserver.key ispserver.key-$(date +"%y%m%d%H%M%S").bak >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 
@@ -58,7 +59,7 @@ InstallFix(){
         esac
     done	
 
-    if [ SHOULD_INSERT_ADDITIONAL_PHP_VERSIONS == true ];
+    if [ $SHOULD_INSERT_ADDITIONAL_PHP_VERSIONS == true ];
 	then
 		echo -n -e "$IDENTATION_LVL_2 Insert generated SQL ... "
         mysql -uroot -p$CFG_MYSQL_ROOT_PWD dbispconfig < tmpSQL.sql >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
@@ -89,6 +90,9 @@ InstallFix(){
 			sed -i 's/;openssl.cafile=/openssl.cafile=\/etc\/ssl\/certs\/ca-certificates.crt/' /etc/php/7.0/fpm/php.ini
 		fi
 		
+		sed -i 's/###//g' /etc/nginx/sites-available/webmail-roundcube.vhost >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		sed -i 's/listen 80/###listen 80/g' /etc/nginx/sites-available/webmail-roundcube.vhost >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+
 		echo -e " [ ${green}DONE${NC} ] "
 	fi
 
