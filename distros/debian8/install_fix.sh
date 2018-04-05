@@ -32,7 +32,7 @@ InstallFix(){
 	echo -e " [ ${green}DONE${NC} ] "
 
 	#Make Additional PHP versions available on ISPConfig
-	echo -n -e "$IDENTATION_LVL_1 ${BWhite}Add Additional PHP versions on ISPConfig [ on System > Additional PHP Versions tab] ${NC}"
+	echo -n -e "$IDENTATION_LVL_1 ${BWhite}Add Additional PHP versions on ISPConfig [ on System > Additional PHP Versions tab] ${NC} \n"
 	SHOULD_INSERT_ADDITIONAL_PHP_VERSIONS=false
 	echo -e -n "#Temp SQL for additional php versions \n" > tmpSQL.sql
 	for INSTALLED_PHP_VERSION in ${CFG_PHP_VERSION[@]};
@@ -67,8 +67,6 @@ InstallFix(){
     fi
 
     rm -f tmpSQL.sql
-	echo -e " [ ${green}DONE${NC} ] "
-
 
 	if [ $CFG_WEBMAIL == "roundcube" ]; then
 		echo -n -e "$IDENTATION_LVL_1 ${BWhite}Fix RoundCube Integration ${NC}"
