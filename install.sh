@@ -269,7 +269,7 @@ if [ -f /etc/debian_version ]; then
     	    InstallQuota
         fi
 
-        if [ "$CFG_JKIT" == false ];
+        if [ "$CFG_JKIT" == true ];
 		then
     	    InstallJailkit
         fi

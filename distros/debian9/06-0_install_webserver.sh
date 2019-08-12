@@ -164,16 +164,22 @@ InstallWebServer() {
 			package_install openssl libssl-dev -t stretch
 			echo -e " [ ${green}DONE${NC} ]"
 
+			echo -n -e "$IDENTATION_LVL_2 Make nginx directory on downloads and set permissions"
+			mkdir -p $PROGRAMS_INSTALL_DOWNLOAD/nginx
+			chown -R _apt:root $PROGRAMS_INSTALL_DOWNLOAD/nginx
+			chmod -R 700 $PROGRAMS_INSTALL_DOWNLOAD/nginx
+			echo -e " [ ${green}DONE${NC} ]"
+
 			echo -n -e "$IDENTATION_LVL_2 Get NGINX sources"
-			apt-get source nginx >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			apt-get source $PROGRAMS_INSTALL_DOWNLOAD/nginx >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			echo -e "[ ${green}DONE${NC} ]"
 
 			echo -n -e "$IDENTATION_LVL_2 Untar Nginx Sources"
-			tar xf nginx*.gz
+			tar xf $PROGRAMS_INSTALL_DOWNLOAD/nginx*.gz
 			echo -e " [ ${green}DONE${NC} ]"
 
 			echo -n -e "$IDENTATION_LVL_2 Go to Nginx Sources"
-			cd nginx*
+			cd $PROGRAMS_INSTALL_DOWNLOAD/nginx*
 			echo -e " [ ${green}DONE${NC} ]"
 
 			echo -n -e "$IDENTATION_LVL_2 Untar Nginx Sources"
@@ -185,11 +191,11 @@ InstallWebServer() {
 			echo -e " [ ${green}DONE${NC} ]"
 
 			echo -n -e "$IDENTATION_LVL_2 Go to main Nginx Sources folder"
-			cd ..
+			cd ../..
 			echo -e " [ ${green}DONE${NC} ]"
 
 			echo -n -e "$IDENTATION_LVL_2 Install the builded Version"
-			dpkg -i nginx_*.deb >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			dpkg -i $PROGRAMS_INSTALL_DOWNLOAD/nginx_*.deb >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			echo -e " [ ${green}DONE${NC} ]"
 
 			echo -n -e "$IDENTATION_LVL_2 Go back to previous working directory"
