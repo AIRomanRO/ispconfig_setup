@@ -3,6 +3,7 @@
 #    Install the chosen webmail client. Squirrelmail or Roundcube
 #---------------------------------------------------------------------
 InstallWebmail() {
+	
 	START_TIME=$SECONDS
 
   	echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing WebMail Client${NC}\n"	
@@ -30,16 +31,13 @@ InstallWebmail() {
 			# 	echo "deb http://http.debian.net/debian/ jessie-backports main contrib non-free" >> /etc/apt/sources.list
 			# 	echo "deb-src http://http.debian.net/debian/ jessie-backports main contrib non-free" >> /etc/apt/sources.list
 			# fi
-			echo -n -e "$IDENTATION_LVL_2 Installing Roundcube ... "
-		  	package_update
-		  	#apt-get -yqq --force-yes build-dep roundcube >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-		  	# apt-get -yqq -t jessie-backports install roundcube roundcube-mysql roundcube-plugins >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-		  	package_install -t stretch roundcube-core roundcube roundcube-mysql roundcube-plugins
+			echo -n -e "$IDENTATION_LVL_2 Installing Roundcube ... "		  	
+			package_install -t stretch roundcube-core roundcube roundcube-mysql roundcube-plugins
+			echo -e " [ ${green}DONE${NC} ] "
 
-		  	echo -e " [ ${green}DONE${NC} ] "
-
-		  	echo -n -e "$IDENTATION_LVL_2 Configure RoundCube on WebServer ... " 
-		  	if [ $CFG_WEBSERVER == "apache" ]; then
+			echo -n -e "$IDENTATION_LVL_2 Configure RoundCube on WebServer ... " 
+			
+			if [ $CFG_WEBSERVER == "apache" ]; then
 				mv /etc/roundcube/apache.conf /etc/roundcube/apache.conf.default
 				cat << "EOF" > /etc/roundcube/apache.conf
 <VirtualHost *:80>
@@ -218,10 +216,10 @@ server {
 
 	  		echo -n -e "$IDENTATION_LVL_2 Integrate RoundCube with ISPConfig... " 
 			# ISPConfig integration
-			cd /tmp
-			wget -q --no-check-certificate -O ispconfig3_roundcube.tgz https://github.com/w2c/ispconfig3_roundcube/tarball/master
-			tar xzf ispconfig3_roundcube.tgz
-			cp -r /tmp/*ispconfig3_roundcube*/ispconfig3_* /usr/share/roundcube/plugins/
+			
+			wget -q --no-check-certificate -O $PROGRAMS_INSTALL_DOWNLOAD/ispconfig3_roundcube.tgz https://github.com/w2c/ispconfig3_roundcube/tarball/master
+			tar xzf $PROGRAMS_INSTALL_DOWNLOAD/ispconfig3_roundcube.tgz -C $PROGRAMS_INSTALL_DOWNLOAD/ispconfig3_roundcube
+			cp -r $PROGRAMS_INSTALL_DOWNLOAD/*ispconfig3_roundcube*/ispconfig3_* /usr/share/roundcube/plugins/
 
 			ln -s /usr/share/roundcube/plugins/ispconfig3_account /var/lib/roundcube/plugins/ispconfig3_account
 			ln -s /usr/share/roundcube/plugins/ispconfig3_autoreply /var/lib/roundcube/plugins/ispconfig3_autoreply

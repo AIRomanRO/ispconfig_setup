@@ -18,7 +18,6 @@ InstallBasics() {
 	
     touch /etc/inetd.conf
 
-
 	#Check for binutils
 	if [ -f /bin/ld ] || [ -f /usr/bin/ld ]; then
 		echo -n -e "$IDENTATION_LVL_2 ${BBlack}BINUTILS${NC}: ${green}Already Installed${NC}\n"

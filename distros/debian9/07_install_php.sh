@@ -31,37 +31,37 @@ InstallPHP() {
 	echo -e " [ ${green}DONE${NC} ] "
 
 	
-	echo -n -e "$IDENTATION_LVL_1 Install current distro php5 version (${red}needed by ISPConfig${NC}) \n"
+	# echo -n -e "$IDENTATION_LVL_1 Install current distro php5 version (${red}needed by ISPConfig${NC}) \n"
 
-	echo -n -e "$IDENTATION_LVL_2 Prepare PHP5 Modules list ... "
-	PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES//PHP_SELECTED_VERSION/php5}"
-	#php5-soap will be installed as php-soap
-	PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-soap/}"
-	#php5-xml will be installed as php-xml
-	PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-xml/}"
-	#php5-zip will be installed as php-zip
-	PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-zip/}"
-	#php5-bz2 will be installed as php-bz2
-	PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-bz2/}"
-	#php5-mbstring will be installed as php-mbstring
-	PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-mbstring/php-mbstring}"
-	#php5-sqlite3 will be installed as php-sqlite3
-	PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-sqlite3/php-sqlite3}"	
-	#fix php5-xmlrpc wrong rename
-	PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST// rpc / php5-xmlrpc }"
-	echo -e " [ ${green}DONE${NC} ] "
+	# echo -n -e "$IDENTATION_LVL_2 Prepare PHP5 Modules list ... "
+	# PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES//PHP_SELECTED_VERSION/php5}"
+	# #php5-soap will be installed as php-soap
+	# PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-soap/}"
+	# #php5-xml will be installed as php-xml
+	# PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-xml/}"
+	# #php5-zip will be installed as php-zip
+	# PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-zip/}"
+	# #php5-bz2 will be installed as php-bz2
+	# PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-bz2/}"
+	# #php5-mbstring will be installed as php-mbstring
+	# PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-mbstring/php-mbstring}"
+	# #php5-sqlite3 will be installed as php-sqlite3
+	# PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-sqlite3/php-sqlite3}"	
+	# #fix php5-xmlrpc wrong rename
+	# PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST// rpc / php5-xmlrpc }"
+	# echo -e " [ ${green}DONE${NC} ] "
 
-	echo -n -e "$IDENTATION_LVL_2 Install PHP5 Modules list [ ${green}$PARSED_PHP_MODULE_LIST${NC} ] ... "
-	package_install $PARSED_PHP_MODULE_LIST
-	echo -e " [ ${green}DONE${NC} ] "
+	# echo -n -e "$IDENTATION_LVL_2 Install PHP5 Modules list [ ${green}$PARSED_PHP_MODULE_LIST${NC} ] ... "
+	# package_install $PARSED_PHP_MODULE_LIST
+	# echo -e " [ ${green}DONE${NC} ] "
 				
-	echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo ... "
-	sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php5/fpm/php.ini >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-	echo -e " [ ${green}DONE${NC} ] "
+	# echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo ... "
+	# sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php5/fpm/php.ini >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+	# echo -e " [ ${green}DONE${NC} ] "
 				
-	echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest ... "
-	sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php5/fpm/php.ini >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-	echo -e " [ ${green}DONE${NC} ] "
+	# echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest ... "
+	# sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php5/fpm/php.ini >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+	# echo -e " [ ${green}DONE${NC} ] "
 
 
 	ANY_VERSION_INSTALLED=false
@@ -146,7 +146,7 @@ InstallPHP() {
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Install PHP7.2 Modules list [ ${green}$PARSED_PHP_MODULE_LIST${NC} ] ... "
-				package_install install $PARSED_PHP_MODULE_LIST
+				package_install $PARSED_PHP_MODULE_LIST
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo ... "
@@ -155,6 +155,33 @@ InstallPHP() {
 				
 				echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest ... "
 				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/7.2/fpm/php.ini >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+				echo -e " [ ${green}DONE${NC} ] "
+				
+				ANY_VERSION_INSTALLED=true
+		    ;;    
+
+			"php7.3" )
+				echo -n -e "$IDENTATION_LVL_1 Install PHP version ${BBlack} 7.3 ${NC}:"
+				echo
+				echo -n -e "$IDENTATION_LVL_2 Prepare PHP7.3 Modules list ... "
+				PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES//PHP_SELECTED_VERSION/$PHP_VERSION_ENABLED}"
+				#cleanup the installs
+				#The mcrypt is removed on 7.3
+				PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//$PHP_SELECTED_VERSION-mcrypt/}"
+				PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//$PHP_SELECTED_VERSION-mysqlnd/$PHP_SELECTED_VERSION-mysql}"
+
+				echo -e " [ ${green}DONE${NC} ] "
+				
+				echo -n -e "$IDENTATION_LVL_2 Install PHP7.3 Modules list [ ${green}$PARSED_PHP_MODULE_LIST${NC} ] ... "
+				package_install $PARSED_PHP_MODULE_LIST
+				echo -e " [ ${green}DONE${NC} ] "
+				
+				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo ... "
+				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.3/fpm/php.ini >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+				echo -e " [ ${green}DONE${NC} ] "
+				
+				echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest ... "
+				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/7.3/fpm/php.ini >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 				
 				ANY_VERSION_INSTALLED=true
@@ -193,7 +220,7 @@ InstallPHP() {
 		
 		echo -n -e "$IDENTATION_LVL_2 Restart PHP-FPM ... "
 
-		service php5-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		# service php5-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 
 		for PHP_VERSION_ENABLED in ${CFG_PHP_VERSION[@]};
     	do
@@ -206,6 +233,9 @@ InstallPHP() {
 				;;      
 			    "php7.2" )
 					service php7.2-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+				;;
+				"php7.3" )
+					service php7.3-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 				;;
 	        esac
         done

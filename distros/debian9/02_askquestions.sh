@@ -4,13 +4,13 @@
 #---------------------------------------------------------------------
 AskQuestions() {
 	START_TIME=$SECONDS
-	CFG_SETUP_WEB=yes #Needed for Multiserver setup compatibility
-	CFG_SETUP_MAIL=yes #Needed for Multiserver setup compatibility
-	CFG_SETUP_NS=yes #Needed for Multiserver setup compatibility
-	
+	CFG_SETUP_WEB=true #Needed for Multiserver setup compatibility
+	CFG_SETUP_MAIL=true #Needed for Multiserver setup compatibility
+	CFG_SETUP_NS=true #Needed for Multiserver setup compatibility
+
 	echo -n -e "$IDENTATION_LVL_0 ${BWhite}Gathering informations about softwares and versions:${NC} "
 	echo
-	
+
 	while [ "x$CFG_SQLSERVER" == "x" ]
     do
 		CFG_SQLSERVER=$(whiptail --title "Install SQL Server" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
@@ -19,18 +19,19 @@ AskQuestions() {
 		    "MariaDB" "MariaDB" OFF \
 		    "None"    "(already installed)" OFF 3>&1 1>&2 2>&3)
     done
+
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}SQL Server${NC}: ${green}$CFG_SQLSERVER${NC} "
 	echo
-	
+
 	if [ $CFG_SQLSERVER == "MySQL" ]; then
 		while [ "x$CFG_MYSQL_VERSION" == "x" ]
         do
 			CFG_MYSQL_VERSION=$(whiptail --title "MySQL Version" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
 			    "Select MySQL Version" 10 60 4 \
-			    "default"  "OS Current Version" ON \
-			    "5.6"      "MySQL-5.6" OFF \
-			    "5.7"      "MySQL-5.7" OFF \
-			    "8.0"      "MySQL-8.0" OFF 3>&1 1>&2 2>&3)
+			    "default" "OS Current Version" ON \
+			    "5.6"     "MySQL-5.6" OFF \
+			    "5.7"     "MySQL-5.7" OFF \
+			    "8.0"     "MySQL-8.0" OFF 3>&1 1>&2 2>&3)
         done
 		echo -n -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green}$CFG_MYSQL_VERSION${NC} "
 	    echo
@@ -48,6 +49,7 @@ AskQuestions() {
 	else
 		CFG_MYSQL_ROOT_PWD_AUTO=false
 	fi
+
 	echo -e " [ ${green}DONE${NC} ] "
 
     while [ "x$CFG_WEBSERVER" == "x" ]
@@ -58,36 +60,41 @@ AskQuestions() {
 		"nginx"  "Nginx (default)" ON \
 		"none"   "No Install" OFF 3>&1 1>&2 2>&3)
 	done
+
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}Web Server${NC}: ${green}$CFG_WEBSERVER${NC} "
 	echo
-	
+
 	if [ $CFG_WEBSERVER == "nginx" ]; then
 	    while [ "x$CFG_NGINX_VERSION" == "x" ]
 		do
 	        CFG_NGINX_VERSION=$(whiptail --title "Nginx Web Server" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
 			"Select which Nginx Version you want to install" 15 65 5 \
-			"n-os-default" "OS Default" ON \
-			"n-nginx"      "NGINX Official - nginx.org" OFF \
-			"n-dotdeb"     "DotDeb.org - with full HTTP2" OFF \
-			"n-stretch"    "Debian Stretch - with HTTP2" OFF \
+			"n-os-default" "OS Default" OFF \
+			"n-nginx"      "NGINX Official - nginx.org" ON \
+			"n-stretch"    "Debian Stretch Backports - with HTTP2" OFF \
             "n-custom"     "With OpenSSL 1.1 and ChaCha20-Poly1305" OFF 3>&1 1>&2 2>&3)
 	    done
-		
+
 		echo -n -e "$IDENTATION_LVL_2 ${BBlack}Nginx Version${NC}: ${green}" $CFG_NGINX_VERSION "${NC} "
 	    echo
     else
+		if [$CFG_WEBSERVER == "none"]; then
+			CFG_SETUP_WEB=false
+		fi
     	CFG_NGINX_VERSION='none'
 	fi
-	
+
 	while [ "x$CFG_PHP_VERSION" == "x" ]
 	do
 		CFG_PHP_VERSION=$(whiptail --title "Choose PHP Version(s)" --backtitle "$WT_BACKTITLE" --nocancel --separate-output --checklist \
 		    "Choose PHP Version do you want to install" 20 75 5 \
             "php7.0"    "Latest Available from 7.0" ON \
-            "php7.1"    "Latest Available from 7.1" OFF \
-            "php7.2"    "Latest Available from 7.2" OFF \
+            "php7.1"    "Latest Available from 7.1" ON \
+            "php7.2"    "Latest Available from 7.2" ON \
+			"php7.3"    "Latest Available from 7.3" ON \
 			"none"      "No install" OFF 3>&1 1>&2 2>&3)
-	done 
+	done
+
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}PHP Version(s)${NC}: ${green}" $CFG_PHP_VERSION "${NC} "
 	echo
 
@@ -96,12 +103,13 @@ AskQuestions() {
 		CFG_CERTBOT_VERSION=$(whiptail --title "Install LetsEncrypt CertBot" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
 		"Select CertBot Version" 10 60 3 \
 		"none"    "No installation" OFF \
-		"default" "Yes, from jessie backports" ON \
-		"stretch" "Yes, from stretch backports" OFF 3>&1 1>&2 2>&3)
+		"default" "OS default version" OFF \
+		"stretch" "Yes, from stretch backports" ON 3>&1 1>&2 2>&3)
 	done
+
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}LetsEncrypt CertBot Version${NC}: ${green}$CFG_CERTBOT_VERSION${NC} "
 	echo
-		
+
 	while [ "x$CFG_HHVM" == "x" ]
     do
         CFG_HHVM=$(whiptail --title "HHVM" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
@@ -109,9 +117,10 @@ AskQuestions() {
 		"no" "(default)" ON \
 		"yes" "" OFF 3>&1 1>&2 2>&3)
     done
+
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}Install HHVM${NC}: ${green}$CFG_HHVM${NC} "
 	echo
-				
+
 	while [ "x$CFG_PHPMYADMIN" == "x" ]
 	do
 		CFG_PHPMYADMIN=$(whiptail --title "Install phpMyAdmin" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
@@ -119,25 +128,26 @@ AskQuestions() {
 		"yes" "(default)" ON \
 		"no" "" OFF 3>&1 1>&2 2>&3)
 	done
+
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}Install PhpMyAdmin${NC}: ${green}$CFG_PHPMYADMIN${NC} "
 	echo
-	  
+
 	if [ $CFG_PHPMYADMIN == "yes" ]; then
         while [ "x$CFG_PHPMYADMIN_VERSION" == "x" ]
 	    do
 		    CFG_PHPMYADMIN_VERSION=$(whiptail --title "phpMyAdmin Version" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
 			"What version of phpMyAdmin do you want to install?" 15 75 4 \
-			"default"         "Current OS Version" ON \
-			"jessie"          "from jessie backports - possible newer" OFF \
+			"default"         "Current OS Version" OFF \
 			"stretch"         "from stretch version - newer" OFF \
-			"latest-stable"   "from phpMyAdmin.net" OFF 3>&1 1>&2 2>&3)
+			"latest-stable"   "from phpMyAdmin.net" ON 3>&1 1>&2 2>&3)
 	    done
+
 		echo -n -e "$IDENTATION_LVL_2 ${BBlack}Version${NC}: ${green}$CFG_PHPMYADMIN_VERSION${NC} "
 	    echo
     else
     	CFG_PHPMYADMIN_VERSION='none'
 	fi
-	  
+
   	while [ "x$CFG_FTP" == "x" ]
 	do
 		CFG_FTP=$(whiptail --title "FTP Server" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
@@ -147,54 +157,87 @@ AskQuestions() {
 		"FTPandTLS" "Yes, with FTP and TLS" OFF \
 		"none" "No, don't install it" OFF 3>&1 1>&2 2>&3)
 	done
+
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}Install and Configure FTP Server${NC}: ${green}$CFG_FTP${NC} "
 	echo
 
 	while [ "x$CFG_MTA" == "x" ]
 	do
 		CFG_MTA=$(whiptail --title "Mail Server" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
-		"Select mailserver type" 10 60 2 \
+		"Select mailserver type" 10 60 3 \
+		"none" "" OFF \
 		"dovecot" "(default)" ON \
 		"courier" "" OFF 3>&1 1>&2 2>&3)
 	done
+
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}Mail Server${NC}: ${green}$CFG_MTA${NC} "
 	echo
-	
-	while [ "x$CFG_WEBMAIL" == "x" ]
-	do
-		CFG_WEBMAIL=$(whiptail --title "Webmail client" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
-		"Select which Web Mail client you want" 10 60 3 \
-		"roundcube" "(default)" ON \
-		"squirrelmail" "" OFF \
-		"none" "No Web Mail Client" OFF 3>&1 1>&2 2>&3)
-	done
+
+	if [$CFG_MTA != "none"]; then
+		CFG_SETUP_MAIL=true
+		while [ "x$CFG_WEBMAIL" == "x" ]
+		do
+			CFG_WEBMAIL=$(whiptail --title "Webmail client" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
+			"Select which Web Mail client you want" 10 60 4\
+			"roundcube" "(default)" OFF \
+			"roundcube-lates" "latest available" ON \
+			"squirrelmail" "" OFF \
+			"none" "No Web Mail Client" OFF 3>&1 1>&2 2>&3)
+		done
+	else 
+		CFG_WEBMAIL='none'
+		CFG_SETUP_MAIL=false
+	fi
+
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}WebMail client${NC}: ${green}$CFG_WEBMAIL${NC} "
 	echo
-	
+
 	if ( whiptail --title "Update Freshclam DB" --backtitle "$WT_BACKTITLE" --yesno "You want to update Antivirus Database during install?" 10 60) then
-		CFG_AVUPDATE=yes
+		CFG_AVUPDATE=true
 	else
-		CFG_AVUPDATE=no
+		CFG_AVUPDATE=false
 	fi
+
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}Update Antivirus Database${NC}: ${green}$CFG_AVUPDATE${NC} "
 	echo
-	
+
 	if (whiptail --title "Quota" --backtitle "$WT_BACKTITLE" --yesno "Setup user quota?" 10 60) then
-		CFG_QUOTA=yes
+		CFG_QUOTA=true
 	else
-		CFG_QUOTA=no
+		CFG_QUOTA=false
 	fi
+
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}Setup Quota${NC}: ${green}$CFG_QUOTA${NC} "
 	echo
-	
+
 	if (whiptail --title "Jailkit" --backtitle "$WT_BACKTITLE" --yesno "Would you like to install Jailkit?" 10 60) then
-		CFG_JKIT=yes
+		CFG_JKIT=true
 	else
-		CFG_JKIT=no
+		CFG_JKIT=false
 	fi
+
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}Install Jailkit${NC}: ${green}$CFG_JKIT${NC} "
 	echo
-	
+
+	if (whiptail --title "DNS (bind9)" --backtitle "$WT_BACKTITLE" --yesno "Would you like to install DNS server (bind9)?" --defaultno 10 60) then
+		CFG_BIND=true
+	else
+		CFG_BIND=false
+		CFG_SETUP_NS=false
+	fi
+
+	echo -n -e "$IDENTATION_LVL_1 ${BBlack}Install DNS server (bind9)${NC}: ${green}$CFG_JKIT${NC} "
+	echo
+
+	if (whiptail --title "WebStats" --backtitle "$WT_BACKTITLE" --yesno "Would you like to install WebStats?" 10 60) then
+		CFG_WEBSTATS=true
+	else
+		CFG_WEBSTATS=false
+	fi
+
+	echo -n -e "$IDENTATION_LVL_1 ${BBlack}Install DNS server (bind9)${NC}: ${green}$CFG_JKIT${NC} "
+	echo
+
 	while [ "x$CFG_INSTALL_ADITIONAL_SOFTWARE" == "x" ]
 	do
 		CFG_INSTALL_ADITIONAL_SOFTWARE=$(whiptail --title "Install Aditional Software" --backtitle "$WT_BACKTITLE" --nocancel --separate-output --checklist \
@@ -209,12 +252,14 @@ AskQuestions() {
 			"openssh-server-stretch"   "OpenSSH Server - version from stretch branch - usually newer" ON \
 			"none"                     "Not install any thing from the above list" OFF \
 	    3>&1 1>&2 2>&3)
-	done 
+	done
+
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}Install Aditional Software(s)${NC}: ${green}"$CFG_INSTALL_ADITIONAL_SOFTWARE"${NC} "
 	echo
-	
+
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}ISPConfig Configuration: ${NC}"
 	echo
+
 	while [ "x$CFG_ISPC" == "x" ]
 	do
       	CFG_ISPC=$(whiptail --title "ISPConfig Setup" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
@@ -222,9 +267,10 @@ AskQuestions() {
 		"standard" "Yes (default)" ON \
 		"expert"   "No, i want to configure" OFF 3>&1 1>&2 2>&3)
     done
+
 	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Install Mode${NC}: ${green}" $CFG_ISPC "${NC} "
 	echo
-	
+
 
 	CFG_ISPONCFIG_PORT=$(whiptail --title "ISPConfig" --backtitle "$WT_BACKTITLE" --inputbox \
 	"Please specify a ISPConfig Port (leave empty for use 8080 port)" --nocancel 10 60 3>&1 1>&2 2>&3)
@@ -232,9 +278,9 @@ AskQuestions() {
 	if [[ -z $CFG_ISPONCFIG_PORT ]]; then
 		CFG_ISPONCFIG_PORT=8080
 	fi
-	
+
 	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Port${NC}: ${green}" $CFG_ISPONCFIG_PORT "${NC} "
-	echo	
+	echo
 
 	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Retrieve ISPConfig Admin password${NC}: "
 	CFG_ISPONCFIG_ADMIN_PASS=$(whiptail --title "ISPConfig" --backtitle "$WT_BACKTITLE" --inputbox \
@@ -243,8 +289,9 @@ AskQuestions() {
 	if [[ -z $CFG_ISPONCFIG_ADMIN_PASS ]]; then
 		CFG_ISPONCFIG_ADMIN_PASS=$(< /dev/urandom tr -dc 'A-Z-a-z-0-9' | head -c${1:-12})
 	fi
+
 	echo -e " [ ${green}DONE${NC} ] "
-	
+
 	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Retrieve ISPConfig DB password${NC}: "
 	CFG_ISPCONFIG_DB_PASS=$(whiptail --title "ISPConfig DB Password" --backtitle "$WT_BACKTITLE" --inputbox \
 	"Please specify a ISPConfig DB Password (leave empty for autogenerate)" --nocancel 10 60 3>&1 1>&2 2>&3)
@@ -255,49 +302,55 @@ AskQuestions() {
 	else
 		CFG_ISPCONFIG_DB_PASS_AUTO=false
 	fi
+
 	echo -e " [ ${green}DONE${NC} ] "
 
 
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}SSL Configuration:${NC} "
 	echo
-	
+
 	SSL_COUNTRY=$(whiptail --title "SSL Country Code" --backtitle "$WT_BACKTITLE" \
 	                --inputbox "SSL Configuration - Country Code (2 letter code - ex. RO)" --nocancel 10 60 3>&1 1>&2 2>&3)
     if [[ -z $SSL_COUNTRY ]]; then
     	SSL_COUNTRY="RO"
     fi
+
 	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Country${NC}: ${green}" $SSL_COUNTRY "${NC} "
 	echo
-	
+
     SSL_STATE=$(whiptail --title "SSL State or Province Name" --backtitle "$WT_BACKTITLE" \
                     --inputbox "SSL Configuration - STATE or Province Name (full name - ex. Romania)" --nocancel 10 60 3>&1 1>&2 2>&3)
     if [[ -z $SSL_STATE ]]; then
     	SSL_STATE="Romania"
     fi
+
 	echo -n -e "$IDENTATION_LVL_2 ${BBlack}State${NC}: ${green}" $SSL_STATE "${NC} "
 	echo
-	
+
     SSL_LOCALITY=$(whiptail --title "SSL Locality" --backtitle "$WT_BACKTITLE" \
                     --inputbox "SSL Configuration - Locality (ex. Craiova)" --nocancel 10 60 3>&1 1>&2 2>&3)
     if [[ -z $SSL_LOCALITY ]]; then
     	SSL_LOCALITY="Craiova"
     fi
+
 	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Locality${NC}: ${green}" $SSL_LOCALITY "${NC} "
 	echo
-	
+
     SSL_ORGANIZATION=$(whiptail --title "SSL Organization" --backtitle "$WT_BACKTITLE" \
                     --inputbox "SSL Configuration - Organization (ex. Company L.t.d.)" --nocancel 10 60 3>&1 1>&2 2>&3)
     if [[ -z $SSL_ORGANIZATION ]]; then
     	SSL_ORGANIZATION="$CFG_HOSTNAME_FQDN"
     fi
+
 	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Organization${NC}: ${green}" $SSL_ORGANIZATION "${NC} "
 	echo
-	
+
     SSL_ORGUNIT=$(whiptail --title "SSL Organization Unit" --backtitle "$WT_BACKTITLE" \
                     --inputbox "SSL Configuration - Organization Unit (ex. IT)" --nocancel 10 60 3>&1 1>&2 2>&3)
  	if [[ -z $SSL_ORGUNIT ]]; then
     	SSL_ORGUNIT="IT"
     fi
+
 	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Unit${NC}: ${green}" $SSL_ORGUNIT "${NC} "
 	echo
 

@@ -58,9 +58,9 @@ AskQuestionsMultiserver(){
 		  whiptail --title "MySQL command on Master Server" --msgbox "$text" 25 90
 
 		  if (whiptail --title "Install server types" --backtitle "$WT_BACKTITLE" --yesno "Do you want to setup a Web server" 10 50) then
-			CFG_SETUP_WEB=yes
+			CFG_SETUP_WEB=y
 		  else
-			CFG_SETUP_WEB=no
+			CFG_SETUP_WEB=n
       CFG_APACHE=n
       CFG_NGINX=n
 		  fi
@@ -79,20 +79,20 @@ AskQuestionsMultiserver(){
 		  fi
 	    done
     else
-      CFG_SETUP_WEB=yes
+      CFG_SETUP_WEB=y
       MULTISERVER=n
     fi
 
     if (whiptail --title "Install server types" --backtitle "$WT_BACKTITLE" --yesno "Do you want to setup a Mail server" 10 50) then
-      CFG_SETUP_MAIL=yes
+      CFG_SETUP_MAIL=y
     else
-      CFG_SETUP_MAIL=no
+      CFG_SETUP_MAIL=n
     fi
 
     if (whiptail --title "Install server types" --backtitle "$WT_BACKTITLE" --yesno "Do you want to setup a Name server" 10 50) then
-      CFG_SETUP_NS=yes
+      CFG_SETUP_NS=y
     else
-      CFG_SETUP_NS=no
+      CFG_SETUP_NS=n
     fi
 
     if (whiptail --title "Install server types" --backtitle "$WT_BACKTITLE" --yesno "Do you want to setup a Database server" 10 50) then
@@ -101,22 +101,22 @@ AskQuestionsMultiserver(){
       CFG_SETUP_DB=n
     fi
 
-    if [ $CFG_SETUP_WEB == "yes" ]; then
+    if [ $CFG_SETUP_WEB == "y" ]; then
       while [ "x$CFG_WEBSERVER" == "x" ]
       do
             CFG_WEBSERVER=$(whiptail --title "WEBSERVER" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "Select webserver type" 10 50 2 "apache" "(default)" ON "nginx" "" OFF 3>&1 1>&2 2>&3)
       done
 
       if (whiptail --title "Quota" --backtitle "$WT_BACKTITLE" --yesno "Setup user quota?" 10 50) then
-        CFG_QUOTA=yes
+        CFG_QUOTA=true
       else
-        CFG_QUOTA=no
+        CFG_QUOTA=false
       fi
 
       if (whiptail --title "Jailkit" --backtitle "$WT_BACKTITLE" --yesno "Would you like to install Jailkit?" 10 50) then
-        CFG_JKIT=yes
+        CFG_JKIT=true
       else
-        CFG_JKIT=no
+        CFG_JKIT=false
       fi
 
       while [ "x$CFG_PHPMYADMIN" == "x" ]
@@ -140,7 +140,7 @@ AskQuestionsMultiserver(){
       CFG_WEBMAIL="no"
     fi
 
-    if [ $CFG_SETUP_MAIL == "yes" ]; then
+    if [ $CFG_SETUP_MAIL == "y" ]; then
       while [ "x$CFG_MTA" == "x" ]
       do
         CFG_MTA=$(whiptail --title "Mail Server" --backtitle "$WT_BACKTITLE" --nocancel --radiolist "Select mailserver type" 10 50 2 "dovecot" "(default)" ON "courier" "" OFF 3>&1 1>&2 2>&3)

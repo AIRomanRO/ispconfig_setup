@@ -24,7 +24,7 @@ InstallSQLServer() {
 		elif [ $CFG_MYSQL_VERSION == "5.6" ]; then
 		
 			echo -n -e "$IDENTATION_LVL_1 Downloading the MySQL APT Config [ ${BBlack}Version 0.8.3.1 ${NC}] ... "
-			wget -q -O "mysql-apt-config-all.deb" "https://repo.mysql.com/mysql-apt-config_0.8.3-1_all.deb"
+			wget -q -O "$PROGRAMS_INSTALL_DOWNLOAD/mysql-apt-config-all.deb" "https://repo.mysql.com/mysql-apt-config_0.8.3-1_all.deb"
 			echo -e " [ ${green}DONE${NC} ] "
 
 			echo -n -e "$IDENTATION_LVL_1 Set Selections on debconf ... "
@@ -35,7 +35,7 @@ InstallSQLServer() {
 			echo -e " [ ${green}DONE${NC} ] "
 
 			echo -n -e "$IDENTATION_LVL_1 Run the MySql APT Config ... "
-			dpkg -i mysql-apt-config-all.deb >> $PROGRAMS_INSTALL_LOG_FILES 2>&1	
+			dpkg -i $PROGRAMS_INSTALL_DOWNLOAD/mysql-apt-config-all.deb >> $PROGRAMS_INSTALL_LOG_FILES 2>&1	
 			echo -e " [ ${green}DONE${NC} ] "
 
 			echo -n -e "$IDENTATION_LVL_1 Update the Packages List ... "
@@ -50,7 +50,7 @@ InstallSQLServer() {
 			MYSQLAPTVER="`wget -q -O - https://repo.mysql.com/|grep -E -o 'mysql-apt-config_([0-9]|[\.-])+_all\.deb' | tail -1`"
 
 			echo -n -e "$IDENTATION_LVL_1 Downloading the MySQL APT Config [ ${BBlack}Version $MYSQLAPTVER ${NC}] ... "
-			wget -q -O "mysql-apt-config-all.deb" "https://repo.mysql.com/$MYSQLAPTVER"
+			wget -q -O "$PROGRAMS_INSTALL_DOWNLOAD/mysql-apt-config-all.deb" "https://repo.mysql.com/$MYSQLAPTVER"
 
 			echo -e " [ ${green}DONE${NC} ] "
 
@@ -62,7 +62,7 @@ InstallSQLServer() {
 			echo -e " [ ${green}DONE${NC} ] "
 
 			echo -n -e "$IDENTATION_LVL_1 Run the MySql APT Config ... "
-			dpkg -i mysql-apt-config-all.deb >> $PROGRAMS_INSTALL_LOG_FILES 2>&1	
+			dpkg -i $PROGRAMS_INSTALL_DOWNLOAD/mysql-apt-config-all.deb >> $PROGRAMS_INSTALL_LOG_FILES 2>&1	
 			echo -e " [ ${green}DONE${NC} ]"
 
 			echo -n -e "$IDENTATION_LVL_1 Update the Packages List ... "
@@ -107,6 +107,17 @@ bind-address = 127.0.0.1" >> "$CNF_DEST/mysqld_bind_address.cnf"
 sql-mode='NO_ENGINE_SUBSTITUTION'
 " >> "$CNF_DEST/mysqld_sql_mode.cnf"
 
+			if [ $CFG_MYSQL_VERSION == "8.0" ]; then
+			echo "
+# This is neccesary to connect to mysql 8+ from php.
+# On 8.0(4) the default-authentication-plugin is caching_sha2_password
+# mysqli doens't support yet the caching_sha2_password
+# !!! IMPORTANT !!! this should be removed once mysqli will support it !!!
+[mysqld]
+default-authentication-plugin=mysql_native_password
+" >> "$CNF_DEST/mysqld_def_auth_plugin.cnf"
+			fi
+
 			if [ -f /usr/my-new.cnf ]; then
 				mv /usr/my-new.cnf /etc/mysql/my-new.cnf.usr.back >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			fi
@@ -128,6 +139,13 @@ sql-mode='NO_ENGINE_SUBSTITUTION'
 			echo -n -e "$IDENTATION_LVL_1 Restart the MySQL Service ... "
 			service mysql restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			echo -e " [ ${green}DONE${NC} ] "
+		fi
+
+		if [ $CFG_MYSQL_VERSION == "8.0" ]; then
+			echo "CREATE USER 'root'@'127.0.0.1' IDENTIFIED BY '$CFG_MYSQL_ROOT_PWD';" > $PROGRAMS_INSTALL_SQLS/rootIP.sql
+            echo "GRANT ALL PRIVILEGES ON *.* TO 'root'@'127.0.0.1';" >> $PROGRAMS_INSTALL_SQLS/rootIP.sql
+			echo "FLUSH PRIVILEGES;" >> $PROGRAMS_INSTALL_SQLS/rootIP.sql
+			mysql -u root -p$CFG_MYSQL_ROOT_PWD < $PROGRAMS_INSTALL_SQLS/rootIP.sql >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		fi
 
 		unset DEBIAN_FRONTEND
