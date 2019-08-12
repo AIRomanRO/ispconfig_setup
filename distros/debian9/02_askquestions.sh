@@ -173,7 +173,10 @@ AskQuestions() {
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}Mail Server${NC}: ${green}$CFG_MTA${NC} "
 	echo
 
-	if [$CFG_MTA != "none"]; then
+	if [$CFG_MTA == "none"]; then
+		CFG_WEBMAIL="none"
+		CFG_SETUP_MAIL=false		
+	else 
 		CFG_SETUP_MAIL=true
 		while [ "x$CFG_WEBMAIL" == "x" ]
 		do
@@ -184,9 +187,6 @@ AskQuestions() {
 			"squirrelmail" "" OFF \
 			"none" "No Web Mail Client" OFF 3>&1 1>&2 2>&3)
 		done
-	else 
-		CFG_WEBMAIL='none'
-		CFG_SETUP_MAIL=false
 	fi
 
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}WebMail client${NC}: ${green}$CFG_WEBMAIL${NC} "
