@@ -18,7 +18,7 @@ InstallPHP() {
 
 	
 	echo -n -e "$IDENTATION_LVL_1 Build aditional programs raw list ... "
-	RAW_ADITIONAL_PROGRAMS="fcgiwrap php-tcpdf php-pear php-auth php-gd php-apcu php-redis redis-server memcached php-memcached imagemagick php-imagick mcrypt libruby curl snmp tidy"
+	RAW_ADITIONAL_PROGRAMS="fcgiwrap php-tcpdf php-pear php-gd php-apcu php-redis redis-server memcached php-memcached imagemagick php-imagick mcrypt libruby curl snmp tidy"
 	echo -e " [ ${green}DONE${NC} ] "
 	
 	
@@ -199,12 +199,17 @@ InstallPHP() {
         esac
     done
 
-	
+	echo -n -e "$IDENTATION_LVL_1 Set Default PHP Cli version to ${green}$CFG_PHP_CLI_VERSION${NC} ... "
+	if [ $CFG_PHP_CLI_VERSION != "ignore" && $CFG_PHP_CLI_VERSION != "latest" ];
+	then
+		update-alternatives --set php "/usr/bin/php$CFG_PHP_CLI_VERSION"
+	fi
+
 	echo -n "$IDENTATION_LVL_1 Install needed Programs for PHP and Web Server ... "
 	package_install $RAW_ADITIONAL_PROGRAMS
 	echo -e " [ ${green}DONE${NC} ]"
   
-  
+
 	echo -n -e "$IDENTATION_LVL_1 Restart Web Server and PHP ... "
 	echo
 	if [ $CFG_WEBSERVER == "apache" ]; 

@@ -144,6 +144,13 @@ InstallWebServer() {
 			package_install -t stretch nginx
 			echo -e " [ ${green}DONE${NC} ]"
 
+			echo -n -e "$IDENTATION_LVL_2 Make nginx directory on downloads and set permissions"
+			mkdir -p $PROGRAMS_INSTALL_DOWNLOAD/nginx
+			chown -R _apt:root $PROGRAMS_INSTALL_DOWNLOAD/nginx
+			chmod -R 700 $PROGRAMS_INSTALL_DOWNLOAD/nginx
+			cd $PROGRAMS_INSTALL_DOWNLOAD/nginx
+			echo -e " [ ${green}DONE${NC} ]"
+
 			echo -n -e "$IDENTATION_LVL_2 Backup the configurations"
 			cp /etc/nginx/nginx.conf nginx.conf >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 			cp /etc/nginx/fastcgi_params fastcgi_params >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
@@ -162,14 +169,7 @@ InstallWebServer() {
 
 			echo -n -e "$IDENTATION_LVL_2 Install OpenSSL v1.1"
 			package_install openssl libssl-dev -t stretch
-			echo -e " [ ${green}DONE${NC} ]"
-
-			echo -n -e "$IDENTATION_LVL_2 Make nginx directory on downloads and set permissions"
-			mkdir -p $PROGRAMS_INSTALL_DOWNLOAD/nginx
-			chown -R _apt:root $PROGRAMS_INSTALL_DOWNLOAD/nginx
-			chmod -R 700 $PROGRAMS_INSTALL_DOWNLOAD/nginx
-			cd $PROGRAMS_INSTALL_DOWNLOAD/nginx
-			echo -e " [ ${green}DONE${NC} ]"
+			echo -e " [ ${green}DONE${NC} ]"	
 
 			echo -n -e "$IDENTATION_LVL_2 Get NGINX sources"
 			apt-get source nginx >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
@@ -203,13 +203,13 @@ InstallWebServer() {
 			cd $PWD
 			echo -e " [ ${green}DONE${NC} ]"
 
-			echo -n -e "$IDENTATION_LVL_2 Restore configurations"
-			cp -f nginx.conf /etc/nginx/nginx.conf && rm -f nginx.conf >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-			cp -f fastcgi_params /etc/nginx/fastcgi_params && rm -f fastcgi_params >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-			cp -f fastcgi.conf /etc/nginx/fastcgi.conf && rm -f fastcgi.conf >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-			cp -f mime.types  /etc/nginx/mime.types && rm -f mime.types >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-			cp -f proxy_params /etc/nginx/proxy_params && rm -f proxy_params >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-			echo -e " [ ${green}DONE${NC} ]"
+			# echo -n -e "$IDENTATION_LVL_2 Restore configurations"
+			# cp -f nginx.conf /etc/nginx/nginx.conf && rm -f nginx.conf >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			# cp -f fastcgi_params /etc/nginx/fastcgi_params && rm -f fastcgi_params >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			# cp -f fastcgi.conf /etc/nginx/fastcgi.conf && rm -f fastcgi.conf >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			# cp -f mime.types  /etc/nginx/mime.types && rm -f mime.types >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			# cp -f proxy_params /etc/nginx/proxy_params && rm -f proxy_params >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+			# echo -e " [ ${green}DONE${NC} ]"
 		fi
 
 		echo -n -e "$IDENTATION_LVL_1 Verify /var/www/html Folder... "
@@ -234,6 +234,13 @@ InstallWebServer() {
 		#Force install of nginx if no IPV6 enabled
 		if [ $IPV6_ENABLED == false ]; then
 			sed -i "s/listen \[::\]:80/###-No IPV6### listen [::]:80/" /etc/nginx/sites-available/default
+		fi
+		echo -e "[ ${green}DONE${NC} ]"
+
+		echo -n -e "$IDENTATION_LVL_1 Add Sites Enabled Loading... "
+		#Force install of nginx if no IPV6 enabled
+		if [ $IPV6_ENABLED == false ]; then
+			grep -q "sites-enabled\/\*\.vhost" /etc/nginx/nginx.conf || sed -i "/include \/etc\/nginx\/conf.d\/\*\.conf;/ a \    include \/etc\/nginx\/sites-enabled\/\*\.vhost;" /etc/nginx/nginx.conf
 		fi
 		echo -e "[ ${green}DONE${NC} ]"
 

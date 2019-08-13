@@ -98,6 +98,24 @@ AskQuestions() {
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}PHP Version(s)${NC}: ${green}" $CFG_PHP_VERSION "${NC} "
 	echo
 
+	if [$CFG_PHP_VERSION != "none"]; then
+		while [ "x$CFG_PHP_CLI_VERSION" == "x" ]
+		do
+			CFG_PHP_CLI_VERSION=$(whiptail --title "Choose PHP Cli Default Version(s)" --backtitle "$WT_BACKTITLE" --nocancel --separate-output --checklist \
+				"Choose PHP Version do you want to install" 20 75 5 \
+				"7.0"    "7.0" OFF \
+				"7.1"    "7.1" OFF \
+				"7.2"    "7.2" OFF \
+				"7.3"    "7.3" OFF \
+				"latest"    "Latest Installed" OFF 3>&1 1>&2 2>&3)
+		done
+	else 
+		CFG_PHP_CLI_VERSION="ignore"
+	fi
+
+	echo -n -e "$IDENTATION_LVL_1 ${BBlack}PHP Version(s)${NC}: ${green}" $CFG_PHP_CLI_VERSION "${NC} "
+	echo
+
 	while [ "x$CFG_CERTBOT_VERSION" == "x" ]
 	do
 		CFG_CERTBOT_VERSION=$(whiptail --title "Install LetsEncrypt CertBot" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
@@ -173,7 +191,7 @@ AskQuestions() {
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}Mail Server${NC}: ${green}$CFG_MTA${NC} "
 	echo
 
-	if [$CFG_MTA == "none"]; then
+	if [ $CFG_MTA == "none" ]; then
 		CFG_WEBMAIL="none"
 		CFG_SETUP_MAIL=false		
 	else 

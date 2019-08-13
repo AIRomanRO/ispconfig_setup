@@ -324,12 +324,14 @@ if [ -f /etc/debian_version ]; then
   		    echo  -n -e "Phpmyadmin is accessibile at: \n http://$CFG_HOSTNAME_FQDN:8081/phpmyadmin \n or \n http://$CFG_IPV4:8081/phpmyadmin \n"
 	    fi
 
-	    if [ "$CFG_WEBMAIL" == "roundcube" ]; then
-		    echo  -n -e "Webmail is accessibile at: \n https://$CFG_HOSTNAME_FQDN/webmail \n or \n https://$CFG_IPV4/webmail \n"
-	    else
-		    echo  -n -e "Webmail is accessibile at: \n http://$CFG_HOSTNAME_FQDN:8081/webmail \n or \n http://$CFG_IPV4:8081/webmail \n"
-	    fi
-    fi
+		if [ "$CFG_WEBMAIL" != "none" ]; then
+			if [ "$CFG_WEBMAIL" == "roundcube" ]; then
+				echo  -n -e "Webmail is accessibile at: \n https://$CFG_HOSTNAME_FQDN/webmail \n or \n https://$CFG_IPV4/webmail \n"
+			else
+				echo  -n -e "Webmail is accessibile at: \n http://$CFG_HOSTNAME_FQDN:8081/webmail \n or \n http://$CFG_IPV4:8081/webmail \n"
+			fi
+		fi
+	fi
 
 	echo -n -e "You Have choosed to autogenerate the following PASSWORDS \n"
 	echo -n -e "Please copy (Only ${red}red text${NC}) and keep them safe \n"
