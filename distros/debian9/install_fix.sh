@@ -6,15 +6,15 @@ InstallFix(){
 	if [ $CFG_CERTBOT_VERSION == "default" ] || [ $CFG_CERTBOT_VERSION == "stretch" ]; then
 		echo -n -e "$IDENTATION_LVL_1 ${BWhite}Generate LetsEncrypt SSL for $CFG_HOSTNAME_FQDN ${NC}"
 
-		$CERTBOOT_DOMAINS="-d $CFG_HOSTNAME_FQDN"
+		CERTBOOT_DOMAINS="-d $CFG_HOSTNAME_FQDN"
 		if [ $CFG_WEBMAIL != "none" ];
 		then
-			$CERTBOOT_DOMAINS="$CERTBOOT_DOMAINS -d webmail.$CFG_HOSTNAME_FQDN"
+			CERTBOOT_DOMAINS="$CERTBOOT_DOMAINS -d webmail.$CFG_HOSTNAME_FQDN"
 		fi
 
 		if [ $CFG_WEBSERVER != "none" ];
 		then
-			$CERTBOOT_DOMAINS="$CERTBOOT_DOMAINS -d apps.$CFG_HOSTNAME_FQDN -d manage.$CFG_HOSTNAME_FQDN"
+			CERTBOOT_DOMAINS="$CERTBOOT_DOMAINS -d apps.$CFG_HOSTNAME_FQDN -d manage.$CFG_HOSTNAME_FQDN"
 		fi
 
   		certbot certonly --webroot -w /var/www/html/ $CERTBOOT_DOMAINS -n --text --agree-tos --rsa-key-size 4096 --email $CFG_INSTALL_EMAIL_ADR >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
@@ -109,6 +109,25 @@ InstallFix(){
 		sed -i 's/listen 80/###listen 80/g' /etc/nginx/sites-available/webmail-roundcube.vhost >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 
 		echo -e " [ ${green}DONE${NC} ] "
+	fi
+
+	if [ $CFG_WEBSERVER != "none" ];
+	then
+		sed -i 's/listen $CFG_ISPONCFIG_PORT;/listen $CFG_ISPONCFIG_PORT http2 ssl;/' /etc/nginx/sites-available/ispconfig.vhost >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		sed -i 's/listen [::]:$CFG_ISPONCFIG_PORT ipv6only=on;/listen [::]:$CFG_ISPONCFIG_PORT ipv6only=on http2 ssl;/' /etc/nginx/sites-available/ispconfig.vhost >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		sed -i 's/ssl_protocols TLSv1 TLSv1.1 TLSv1.2;/ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3/' /etc/nginx/sites-available/ispconfig.vhost >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		sed -i 's/server_name _;/server_name manage.$CFG_HOSTNAME_FQDN;/' /etc/nginx/sites-available/ispconfig.vhost >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+
+		sed -i 's/listen $CFG_ISPONCFIG_APPS_PORT;/listen $CFG_ISPONCFIG_APPS_PORT http2 ssl;/' /etc/nginx/sites-available/apps.vhost >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		sed -i 's/listen [::]:$CFG_ISPONCFIG_APPS_PORT ipv6only=on;/listen [::]:$CFG_ISPONCFIG_APPS_PORT ipv6only=on http2 ssl;/' /etc/nginx/sites-available/apps.vhost >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		sed -i 's/listen 8081;/listen $CFG_ISPONCFIG_APPS_PORT http2 ssl;/' /etc/nginx/sites-available/apps.vhost >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		sed -i 's/listen [::]:8081 ipv6only=on;/listen [::]:$CFG_ISPONCFIG_APPS_PORT ipv6only=on http2 ssl;/' /etc/nginx/sites-available/apps.vhost >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		sed -i 's/error_page 497 https:\/\/\$host:1002\$request_uri;/error_page 497 https:\/\/\$host:$CFG_ISPONCFIG_APPS_PORT\$request_uri;/' /etc/nginx/sites-available/apps.vhost >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		sed -i 's/ssl off;/#ssl off;/' /etc/nginx/sites-available/apps.vhost >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		sed -i 's/#ssl_protocols/ssl_protocols/' /etc/nginx/sites-available/apps.vhost >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		sed -i 's/#ssl_certificate/ssl_certificate/' /etc/nginx/sites-available/apps.vhost >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		sed -i 's/#ssl_certificate_key/ssl_certificate_key/' /etc/nginx/sites-available/apps.vhost >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+		sed -i 's/server_name _;/server_name apps.$CFG_HOSTNAME_FQDN;/' /etc/nginx/sites-available/apps.vhost >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 	fi
 
 	if [ $CFG_WEBSERVER == "apache" ]; then

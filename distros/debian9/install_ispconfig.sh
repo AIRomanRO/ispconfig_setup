@@ -88,7 +88,7 @@ InstallISPConfig() {
 		echo "mysql_master_database=dbispconfig" >> $AUTO_INSTALL_INI_LOCATION/autoinstall.ini
 		echo "reconfigure_permissions_in_master_database=no" >> $AUTO_INSTALL_INI_LOCATION/autoinstall.ini
 		echo "reconfigure_services=yes" >> $AUTO_INSTALL_INI_LOCATION/autoinstall.ini
-		echo "apps_vhost_port=1003" >> $AUTO_INSTALL_INI_LOCATION/autoinstall.ini
+		echo "apps_vhost_port=$CFG_ISPONCFIG_APPS_PORT" >> $AUTO_INSTALL_INI_LOCATION/autoinstall.ini
 	    echo "ispconfig_port=$CFG_ISPONCFIG_PORT" >> $AUTO_INSTALL_INI_LOCATION/autoinstall.ini
 		echo "create_new_ispconfig_ssl_cert=no" >> $AUTO_INSTALL_INI_LOCATION/autoinstall.ini
 	    echo "reconfigure_crontab=yes" >> $AUTO_INSTALL_INI_LOCATION/autoinstall.ini

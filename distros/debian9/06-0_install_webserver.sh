@@ -237,11 +237,8 @@ InstallWebServer() {
 		fi
 		echo -e "[ ${green}DONE${NC} ]"
 
-		echo -n -e "$IDENTATION_LVL_1 Add Sites Enabled Loading... "
-		#Force install of nginx if no IPV6 enabled
-		if [ $IPV6_ENABLED == false ]; then
-			grep -q "sites-enabled\/\*\.vhost" /etc/nginx/nginx.conf || sed -i "/include \/etc\/nginx\/conf.d\/\*\.conf;/ a \    include \/etc\/nginx\/sites-enabled\/\*\.vhost;" /etc/nginx/nginx.conf
-		fi
+		echo -n -e "$IDENTATION_LVL_1 Add Sites Enabled Loading... "		
+		grep -q "sites-enabled\/\*\.vhost" /etc/nginx/nginx.conf || sed -i "/include \/etc\/nginx\/conf.d\/\*\.conf;/ a \    include \/etc\/nginx\/sites-enabled\/\*\.vhost;" /etc/nginx/nginx.conf >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		echo -e "[ ${green}DONE${NC} ]"
 
 		echo -n -e "$IDENTATION_LVL_1 Restart Nginx Service... "

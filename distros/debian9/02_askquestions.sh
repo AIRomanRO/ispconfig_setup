@@ -100,13 +100,13 @@ AskQuestions() {
 	
 	while [ "x$CFG_PHP_CLI_VERSION" == "x" ]
 	do
-		CFG_PHP_CLI_VERSION=$(whiptail --title "Choose PHP Cli Default Version(s)" --backtitle "$WT_BACKTITLE" --nocancel --separate-output --checklist \
+		CFG_PHP_CLI_VERSION=$(whiptail --title "Choose PHP Cli Default Version(s)" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
 			"Choose PHP CLI Version do you want to use" 20 75 5 \
-			"7.0"    "7.0" OFF \
-			"7.1"    "7.1" OFF \
-			"7.2"    "7.2" OFF \
-			"7.3"    "7.3" OFF \
-			"latest"    "Latest Installed" ON 3>&1 1>&2 2>&3)
+			"7.0"     "7.0" OFF \
+			"7.1"     "7.1" OFF \
+			"7.2"     "7.2" OFF \
+			"7.3"     "7.3" OFF \
+			"latest"  "Latest Installed" ON 3>&1 1>&2 2>&3)
 	done
 	
 
@@ -294,8 +294,19 @@ AskQuestions() {
 		CFG_ISPONCFIG_PORT=8080
 	fi
 
-	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Port${NC}: ${green}" $CFG_ISPONCFIG_PORT "${NC} "
+	echo -n -e "$IDENTATION_LVL_2 ${BBlack}ISPConfig Port${NC}: ${green}" $CFG_ISPONCFIG_PORT "${NC} "
 	echo
+
+	CFG_ISPONCFIG_APPS_PORT=$(whiptail --title "ISPConfig" --backtitle "$WT_BACKTITLE" --inputbox \
+	"Please specify a ISPConfig Apps Port (leave empty for use 8081 port)" --nocancel 10 60 3>&1 1>&2 2>&3)
+
+	if [[ -z $CFG_ISPONCFIG_APPS_PORT ]]; then
+		CFG_ISPONCFIG_APPS_PORT=8081
+	fi
+
+	echo -n -e "$IDENTATION_LVL_2 ${BBlack}ISPConfig Apps Port${NC}: ${green}" $CFG_ISPONCFIG_APPS_PORT "${NC} "
+	echo
+
 
 	echo -n -e "$IDENTATION_LVL_2 ${BBlack}Retrieve ISPConfig Admin password${NC}: "
 	CFG_ISPONCFIG_ADMIN_PASS=$(whiptail --title "ISPConfig" --backtitle "$WT_BACKTITLE" --inputbox \

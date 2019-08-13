@@ -199,10 +199,10 @@ InstallPHP() {
         esac
     done
 
-	echo -n -e "$IDENTATION_LVL_1 Set Default PHP Cli version to ${green}$CFG_PHP_CLI_VERSION${NC} ... "
+	echo -n -e "$IDENTATION_LVL_1 Set Default PHP Cli version to ${green} $CFG_PHP_CLI_VERSION ${NC} ... "
 	if [ $CFG_PHP_CLI_VERSION != "ignore" && $CFG_PHP_CLI_VERSION != "latest" ];
 	then
-		update-alternatives --set php "/usr/bin/php$CFG_PHP_CLI_VERSION"
+		update-alternatives --set php "/usr/bin/php$CFG_PHP_CLI_VERSION" >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 	fi
 
 	echo -n "$IDENTATION_LVL_1 Install needed Programs for PHP and Web Server ... "
