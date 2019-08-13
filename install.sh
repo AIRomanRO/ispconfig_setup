@@ -98,6 +98,7 @@ source $PWD/functions/02_check_ipv6.sh
 source $PWD/functions/03_check_whiptail.sh
 source $PWD/functions/04_measure_duration_and_echo.sh
 source $PWD/functions/05_apt_get_commands_wrappers.sh
+source $PWD/functions/06_normalize_values.sh
 
 #---------------------------------------------------------------------
 # Basic Checks
@@ -324,7 +325,7 @@ if [ -f /etc/debian_version ]; then
   		    echo  -n -e "Phpmyadmin is accessibile at: \n http://$CFG_HOSTNAME_FQDN:8081/phpmyadmin \n or \n http://$CFG_IPV4:8081/phpmyadmin \n"
 	    fi
 
-		if [ "$CFG_WEBMAIL" != "none" ]; then
+	if [ "$CFG_WEBMAIL" != "none" ]; then
 			if [ "$CFG_WEBMAIL" == "roundcube" ]; then
 				echo  -n -e "Webmail is accessibile at: \n https://$CFG_HOSTNAME_FQDN/webmail \n or \n https://$CFG_IPV4/webmail \n"
 			else

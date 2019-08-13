@@ -77,14 +77,14 @@ InstallFix(){
         esac
     done
 
-    if [ $SHOULD_INSERT_ADDITIONAL_PHP_VERSIONS == true ];
+    if getTrueFalseFormatComparationEqual $SHOULD_INSERT_ADDITIONAL_PHP_VERSIONS true;
 	then
 		echo -n -e "$IDENTATION_LVL_2 Insert generated SQL ... "
         mysql -uroot -p$CFG_MYSQL_ROOT_PWD dbispconfig < $SQL_FILE_NAME >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
         echo -e " [ ${green}DONE${NC} ] "
     fi
 
-	if [ $CFG_WEBMAIL == "roundcube" ]; then
+	if getTrueFalseFormatComparationEqual $CFG_WEBMAIL "roundcube"; then
 		echo -n -e "$IDENTATION_LVL_1 ${BWhite}Fix RoundCube Integration ${NC}"
 
 		SQL_FILE_NAME=$PROGRAMS_INSTALL_SQLS/addRouncubeRemoteUserOnISPConfig.sql
@@ -111,7 +111,7 @@ InstallFix(){
 		echo -e " [ ${green}DONE${NC} ] "
 	fi
 
-	if [ $CFG_WEBSERVER != "none" ];
+	if getTrueFalseFormatComparationNotEqual $CFG_WEBSERVER "none";
 	then
 		sed -i 's/listen $CFG_ISPONCFIG_PORT;/listen $CFG_ISPONCFIG_PORT http2 ssl;/' /etc/nginx/sites-available/ispconfig.vhost >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		sed -i 's/listen [::]:$CFG_ISPONCFIG_PORT ipv6only=on;/listen [::]:$CFG_ISPONCFIG_PORT ipv6only=on http2 ssl;/' /etc/nginx/sites-available/ispconfig.vhost >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
