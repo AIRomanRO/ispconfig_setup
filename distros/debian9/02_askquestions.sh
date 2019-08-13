@@ -98,7 +98,7 @@ AskQuestions() {
 	echo -n -e "$IDENTATION_LVL_1 ${BBlack}PHP Version(s)${NC}: ${green}" $CFG_PHP_VERSION "${NC} "
 	echo
 
-	if [$CFG_PHP_VERSION != "none"]; then
+	if [ $CFG_PHP_VERSION != "none"]; then
 		while [ "x$CFG_PHP_CLI_VERSION" == "x" ]
 		do
 			CFG_PHP_CLI_VERSION=$(whiptail --title "Choose PHP Cli Default Version(s)" --backtitle "$WT_BACKTITLE" --nocancel --separate-output --checklist \
