@@ -4,6 +4,7 @@
 #---------------------------------------------------------------------
 InstallAditionalRepos() {
   START_TIME=$SECONDS
+  LSB_RELEASE=$(lsb_release -sc)
 
   echo -n -e "$IDENTATION_LVL_0 ${BWhite} Start Adding additional repositories ${NC} \n"
 
@@ -21,36 +22,36 @@ InstallAditionalRepos() {
   fi
 
   #Add Debian backports - Required for Letsencrypt
-  echo -n -e "$IDENTATION_LVL_1 ${BBlack}Debian Buster backports${NC} ... "
-  echo "##################  Debian Buster Backports  ##################
+  echo -n -e "$IDENTATION_LVL_1 ${BBlack}Debian $LSB_RELEASE backports${NC} ... "
+  echo "##################  Debian $LSB_RELEASE Backports  ##################
 
-deb http://ftp.debian.org/debian/ buster-backports main contrib non-free
-deb-src http://ftp.debian.org/debian/ buster-backports main contrib non-free
+deb http://ftp.debian.org/debian/ $LSB_RELEASE-backports main contrib non-free
+deb-src http://ftp.debian.org/debian/ $LSB_RELEASE-backports main contrib non-free
 
 ###############################################################" >/etc/apt/sources.list.d/buster-backports.list
   echo -e " [ ${green}DONE${NC} ]"
 
   #Add the debian-Buster sources
-  echo -n -e "$IDENTATION_LVL_1 ${BBlack}Debian Buster Repository${NC} ... "
-  echo "#################  Debian Buster Repository  #################
+  echo -n -e "$IDENTATION_LVL_1 ${BBlack}Debian $LSB_RELEASE Repository${NC} ... "
+  echo "#################  Debian $LSB_RELEASE Repository  #################
 
-deb http://ftp.debian.org/debian/ buster main contrib non-free
-deb-src http://ftp.debian.org/debian/ buster main contrib non-free
+deb http://ftp.debian.org/debian/ $LSB_RELEASE main contrib non-free
+deb-src http://ftp.debian.org/debian/ $LSB_RELEASE main contrib non-free
 
-deb http://security.debian.org/ buster/updates main contrib non-free
-deb-src http://security.debian.org/ buster/updates main contrib non-free
+deb http://security.debian.org/ $LSB_RELEASE/updates main contrib non-free
+deb-src http://security.debian.org/ $LSB_RELEASE/updates main contrib non-free
 
-deb http://ftp.debian.org/debian/ buster-updates main contrib non-free
-deb-src http://ftp.debian.org/debian/ buster-updates main contrib non-free
+deb http://ftp.debian.org/debian/ $LSB_RELEASE-updates main contrib non-free
+deb-src http://ftp.debian.org/debian/ $LSB_RELEASE-updates main contrib non-free
 
 ###############################################################" >/etc/apt/sources.list.d/buster-full.list
   echo -e " [ ${green}DONE${NC} ]"
 
   #Add Deb.Sury repo for php
-  echo -n -e "$IDENTATION_LVL_1 ${BBlack}Deb Sury PHP  [ packages.sury.org ] Repository${NC} ... "
+  echo -n -e "$IDENTATION_LVL_1 ${BBlack}Deb Sury PHP - $LSB_RELEASE [ packages.sury.org ] Repository${NC} ... "
   echo "##################  Deb Sury PHP Repository  ##################" >/etc/apt/sources.list.d/php-deb-sury.list
   echo "" >>/etc/apt/sources.list.d/php-deb-sury.list
-  echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" >>/etc/apt/sources.list.d/php-deb-sury.list
+  echo "deb https://packages.sury.org/php/ $LSB_RELEASE main" >>/etc/apt/sources.list.d/php-deb-sury.list
   echo "" >>/etc/apt/sources.list.d/php-deb-sury.list
   echo "###############################################################" >>/etc/apt/sources.list.d/php-deb-sury.list
   echo -e " [ ${green}DONE${NC} ]"
@@ -67,8 +68,8 @@ deb-src http://ftp.debian.org/debian/ buster-updates main contrib non-free
   echo "#################  Official Nginx Repository  #################
 
 #latest Official Nginx version
-deb https://nginx.org/packages/mainline/debian/ buster nginx
-deb-src https://nginx.org/packages/mainline/debian/ buster nginx
+deb https://nginx.org/packages/mainline/debian/ $LSB_RELEASE nginx
+deb-src https://nginx.org/packages/mainline/debian/ $LSB_RELEASE nginx
 
 ###############################################################" >/etc/apt/sources.list.d/nginx-latest-official.list
   echo -e " [ ${green}DONE${NC} ]"
@@ -97,11 +98,11 @@ deb-src https://nginx.org/packages/mainline/debian/ buster nginx
   echo -n -e "$IDENTATION_LVL_1 Configure ${BBlack}sources priorities via PIN${NC}"
   echo "##############################
 Package: *
-Pin: release n=buster
+Pin: release n=$LSB_RELEASE
 Pin-Priority: 900
 
 Package: *
-Pin: release a=buster-backports
+Pin: release a=$LSB_RELEASE-backports
 Pin-Priority: 400
 
 ####################################" >/etc/apt/preferences
