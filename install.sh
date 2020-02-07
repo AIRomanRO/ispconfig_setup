@@ -83,7 +83,7 @@ echo -e "[ ${green}DONE${NC} ]"
 # Global variables
 #---------------------------------------------------------------------
 echo -n -e "$IDENTATION_LVL_0 ${BWhite}Setup Global Variable${NC}"
-CFG_HOSTNAME_FQDN=`hostname -f`;
+CFG_HOSTNAME_FQDN=$(hostname -f)
 WT_BACKTITLE="ISPConfig 3 System Installer from Aurel Roman"
 
 echo -e " [ ${green}DONE${NC} ] "
@@ -120,24 +120,17 @@ MeasureTimeDuration $SCRIPT_EXECUTION_START_TIME
 #---------------------------------------------------------------------
 
 echo -e -n "$IDENTATION_LVL_0 ${BWhite}Confirm if we detected the correct Informations:${NC} "
+echo -n -e "$IDENTATION_LVL_1 Linux Distribution is: ${green}" $ID-$VERSION_ID "${NC}"
 
 echo
-if [ -n "$PRETTY_NAME" ]; then
-  echo -n -e "$IDENTATION_LVL_1 Linux Distribution is: ${green}" $PRETTY_NAME "${NC}"
-else
-  echo -n -e "$IDENTATION_LVL_1 Linux Distribution is: ${green}" $ID-$VERSION_ID "${NC}"
-fi
-
+echo -n -e "$IDENTATION_LVL_1 IPV4: ${green} $CFG_IPV4 ${NC} - is possible to be incorrect - we don't use it anywhere in configuration"
 echo
+
 if [ $IPV6_ENABLED == true ]; then
   echo -n -e "$IDENTATION_LVL_1 IPV6 enabled: ${green} YES ${NC}"
-  echo
-  echo -n -e "$IDENTATION_LVL_1 IPV4: ${green} $CFG_IPV4 ${NC} - is possible to be incorrect - we don't use it anywhere in configuration"
-  echo
   echo -n -e "$IDENTATION_LVL_1 IPV6: ${green} $CFG_IPV6 ${NC} - is possible to be incorrect - we don't use it anywhere in configuration"
 else
   echo -n -e "$IDENTATION_LVL_1 IPV6 enabled: ${red} NO ${NC}"
-  echo
   echo -n -e "$IDENTATION_LVL_1 IPV4: ${green} $CFG_IPV4 ${NC} - is possible to be incorrect - we don't use it anywhere in configuration"
 fi
 
