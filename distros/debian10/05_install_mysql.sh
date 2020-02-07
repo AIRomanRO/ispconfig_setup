@@ -23,8 +23,8 @@ InstallSQLServer() {
 
 		elif [ $CFG_MYSQL_VERSION == "5.6" ]; then
 		
-			echo -n -e "$IDENTATION_LVL_1 Downloading the MySQL APT Config [ ${BBlack}Version 0.8.3.1 ${NC}] ... "
-			wget -q -O "$PROGRAMS_INSTALL_DOWNLOAD/mysql-apt-config-all.deb" "https://repo.mysql.com/mysql-apt-config_0.8.3-1_all.deb"
+			echo -n -e "$IDENTATION_LVL_1 Downloading the MySQL APT Config [ ${BBlack}Version 0.8.14-1_all ${NC}] ... "
+			wget -q -O "$PROGRAMS_INSTALL_DOWNLOAD/mysql-apt-config-all.deb" "https://repo.mysql.com/mysql-apt-config_0.8.14-1_all.deb"
 			echo -e " [ ${green}DONE${NC} ] "
 
 			echo -n -e "$IDENTATION_LVL_1 Set Selections on debconf ... "

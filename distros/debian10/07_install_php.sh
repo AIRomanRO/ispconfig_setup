@@ -65,7 +65,7 @@ InstallPHP() {
 
 
 	ANY_VERSION_INSTALLED=false
-	for PHP_VERSION_ENABLED in ${CFG_PHP_VERSION[@]};
+	for PHP_VERSION_ENABLED in "${CFG_PHP_VERSION[@]}";
     do
         case $PHP_VERSION_ENABLED in
     #         "php5.6" )
@@ -190,8 +190,8 @@ InstallPHP() {
 				if [ $ANY_VERSION_INSTALLED == false ]; then
 					echo -n "$IDENTATION_LVL_1 Installing basic php modules for ispconfig ... "
 					if [ $CFG_WEBSERVER == "apache" ]; then
-						package_install php7.0 libapache2-mod-php7.0 php7.0-cli php7.0-mysql php7.0-mcrypt
-						package_install php7.0-fpm php7.0-cli php7.0-mysql php7.0-mcrypt
+						package_install php7.3 libapache2-mod-php7.3 php7.3-cli php7.3-mysql php7.3-mcrypt
+						package_install php7.3-fpm php7.3-cli php7.3-mysql php7.3-mcrypt
 					fi
 					echo -e " [ ${green}DONE${NC} ]"
 				fi
@@ -200,7 +200,7 @@ InstallPHP() {
     done
 
 	echo -n -e "$IDENTATION_LVL_1 Set Default PHP Cli version to ${green} $CFG_PHP_CLI_VERSION ${NC} ... "
-	if [ $CFG_PHP_CLI_VERSION != "ignore" && $CFG_PHP_CLI_VERSION != "latest" ];
+	if [ $CFG_PHP_CLI_VERSION != "ignore" ] && [ $CFG_PHP_CLI_VERSION != "latest" ];
 	then
 		update-alternatives --set php "/usr/bin/php$CFG_PHP_CLI_VERSION" >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 	fi
@@ -227,7 +227,7 @@ InstallPHP() {
 
 		# service php5-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 
-		for PHP_VERSION_ENABLED in ${CFG_PHP_VERSION[@]};
+		for PHP_VERSION_ENABLED in "${CFG_PHP_VERSION[@]}";
     	do
 			case $PHP_VERSION_ENABLED in            
 	            "php7.0" )
