@@ -59,7 +59,7 @@ IDENTATION_LVL_2="     *"
 IDENTATION_LVL_3="       *"
 
 #Saving current directory
-PWD=$(pwd);
+PWD=$(pwd)
 #Those lines are for logging porpuses
 mkdir -p $PWD/tmp/{logs,sqls,downloads}
 echo -e "$IDENTATION_LVL_0 ${BWhite}Create needed directories${NC}"
@@ -87,7 +87,6 @@ CFG_HOSTNAME_FQDN=`hostname -f`;
 WT_BACKTITLE="ISPConfig 3 System Installer from Aurel Roman"
 
 echo -e " [ ${green}DONE${NC} ] "
-
 
 echo -e "$IDENTATION_LVL_0 ${BWhite}Checking your system, please wait...${NC}"
 #---------------------------------------------------------------------
@@ -124,22 +123,22 @@ echo -e -n "$IDENTATION_LVL_0 ${BWhite}Confirm if we detected the correct Inform
 
 echo
 if [ -n "$PRETTY_NAME" ]; then
-	echo -n -e "$IDENTATION_LVL_1 Linux Distribution is: ${green}" $PRETTY_NAME "${NC}"
+  echo -n -e "$IDENTATION_LVL_1 Linux Distribution is: ${green}" $PRETTY_NAME "${NC}"
 else
-	echo -n -e "$IDENTATION_LVL_1 Linux Distribution is: ${green}" $ID-$VERSION_ID "${NC}"
+  echo -n -e "$IDENTATION_LVL_1 Linux Distribution is: ${green}" $ID-$VERSION_ID "${NC}"
 fi
 
 echo
 if [ $IPV6_ENABLED == true ]; then
-    echo -n -e "$IDENTATION_LVL_1 IPV6 enabled: ${green} YES ${NC}"
-	echo
-	echo -n -e "$IDENTATION_LVL_1 IPV4: ${green} $CFG_IPV4 ${NC} - is possible to be incorrect - we don't use it anywhere in configuration"
-	echo
-	echo -n -e "$IDENTATION_LVL_1 IPV6: ${green} $CFG_IPV6 ${NC} - is possible to be incorrect - we don't use it anywhere in configuration"
+  echo -n -e "$IDENTATION_LVL_1 IPV6 enabled: ${green} YES ${NC}"
+  echo
+  echo -n -e "$IDENTATION_LVL_1 IPV4: ${green} $CFG_IPV4 ${NC} - is possible to be incorrect - we don't use it anywhere in configuration"
+  echo
+  echo -n -e "$IDENTATION_LVL_1 IPV6: ${green} $CFG_IPV6 ${NC} - is possible to be incorrect - we don't use it anywhere in configuration"
 else
-    echo -n -e "$IDENTATION_LVL_1 IPV6 enabled: ${red} NO ${NC}"
-	echo
-	echo -n -e "$IDENTATION_LVL_1 IPV4: ${green} $CFG_IPV4 ${NC} - is possible to be incorrect - we don't use it anywhere in configuration"
+  echo -n -e "$IDENTATION_LVL_1 IPV6 enabled: ${red} NO ${NC}"
+  echo
+  echo -n -e "$IDENTATION_LVL_1 IPV4: ${green} $CFG_IPV4 ${NC} - is possible to be incorrect - we don't use it anywhere in configuration"
 fi
 
 echo
@@ -150,28 +149,28 @@ echo -n -e "$IDENTATION_LVL_1 DISTRO: ${green} $DISTRO ${NC}"
 
 echo
 if [ -n "$DISTRO" ]; then
-	echo -e -n "$IDENTATION_LVL_0 ${BWhite}Are this Informations Correct ? ${NC}"
-	echo
-	echo -e -n "$IDENTATION_LVL_0 ${BWhite}Please answer with y / n: ${NC} "
-	read -n 1 RESPONSE
+  echo -e -n "$IDENTATION_LVL_0 ${BWhite}Are this Informations Correct ? ${NC}"
+  echo
+  echo -e -n "$IDENTATION_LVL_0 ${BWhite}Please answer with y / n: ${NC} "
+  read -n 1 RESPONSE
 
-	if [[ ! $RESPONSE =~ ^[Yy]$ ]]; then
-		echo -e -n "$IDENTATION_LVL_0 Sorry, but you choosed to not continue"
-		echo
-		echo -e -n "$IDENTATION_LVL_0 If you want to install anyway please, restart the installation and answer ${green} y ${NC} or ${green} Y ${NC}"
-		echo
+  if [[ ! $RESPONSE =~ ^[Yy]$ ]]; then
+    echo -e -n "$IDENTATION_LVL_0 Sorry, but you choosed to not continue"
+    echo
+    echo -e -n "$IDENTATION_LVL_0 If you want to install anyway please, restart the installation and answer ${green} y ${NC} or ${green} Y ${NC}"
+    echo
 
-		exit 1
-	fi
+    exit 1
+  fi
 else
-	echo -e "${red}"
-	echo -e "Sorry but your System is not supported by this script,"
-    echo -e "If your system is a 8+ Debian Version please open and issue on https://github.com/a1ur3l/ispconfig_setup"
-	echo
-	echo -e "Otherwise please check if it is suported at https://github.com/servisys/ispconfig_setup"
-	echo -e "if you want your system supported there please open an issue on GitHub: https://github.com/servisys/ispconfig_setup"
-	echo -e "${NC}"
-	exit 1
+  echo -e "${red}"
+  echo -e "Sorry but your System is not supported by this script,"
+  echo -e "If your system is a 8+ Debian Version please open and issue on https://github.com/a1ur3l/ispconfig_setup"
+  echo
+  echo -e "Otherwise please check if it is suported at https://github.com/servisys/ispconfig_setup"
+  echo -e "if you want your system supported there please open an issue on GitHub: https://github.com/servisys/ispconfig_setup"
+  echo -e "${NC}"
+  exit 1
 fi
 
 echo
@@ -207,152 +206,146 @@ source $PWD/distros/$DISTRO/install_basephp.sh #to remove in feature release
 
 echo -e " [ ${green}DONE${NC} ] "
 
-
 echo -n -e "$IDENTATION_LVL_0 ${BWhite}Gathering the ISPConfig Version which you want and Setup Type ${NC}"
 echo
 
-allowedDistros=("debian8" "debian9")
+allowedDistros=("debian8" "debian9" "debian10")
 
 if [[ " ${allowedDistros[*]} " == *" ${DISTRO} "* ]]; then
 
-	echo -n -e "$IDENTATION_LVL_1 ${BBlack}ISPConfig Version${NC}: ${green}Latest Stable${NC}\n"
+  echo -n -e "$IDENTATION_LVL_1 ${BBlack}ISPConfig Version${NC}: ${green}Latest Stable${NC}\n"
 
-	while [ "x$CFG_MULTISERVER" == "x" ]
-	do
-		CFG_MULTISERVER=$(whiptail --backtitle "$WT_BACKTITLE" --title "MULTISERVER SETUP" --nocancel --radiolist \
-				"Would you like to install ISPConfig in a MultiServer Setup?" 10 50 2 \
-				"no" "Single Server" ON \
-				"yes" "Multi Server" OFF \
-			3>&1 1>&2 2>&3 )
-	done
-	echo -n -e "$IDENTATION_LVL_1 ${BBlack}MULTISERVER SETUP${NC}: ${green}$CFG_MULTISERVER${NC}\n"
+  while [ "x$CFG_MULTISERVER" == "x" ]; do
+    CFG_MULTISERVER=$(whiptail --backtitle "$WT_BACKTITLE" --title "MULTISERVER SETUP" --nocancel --radiolist \
+      "Would you like to install ISPConfig in a MultiServer Setup?" 10 50 2 \
+      "no" "Single Server" ON \
+      "yes" "Multi Server" OFF \
+      3>&1 1>&2 2>&3)
+  done
+  echo -n -e "$IDENTATION_LVL_1 ${BBlack}MULTISERVER SETUP${NC}: ${green}$CFG_MULTISERVER${NC}\n"
 
 else
-	CFG_MULTISERVER=no
+  CFG_MULTISERVER=no
 fi
 echo -n -e "$IDENTATION_LVL_0 ${BWhite}Gathering ISPConfig Version & Setup Type [${NC} ${green}DONE${NC} ${BWhite}]${NC} "
 echo
 
 if [ -f /etc/debian_version ]; then
-    PreInstallCheck
+  PreInstallCheck
 
-    CFG_INSTALL_EMAIL_ADR=$(whiptail --title "Your Email" --backtitle "$WT_BACKTITLE" --inputbox \
-	"Please Enter your Email Address. We will use it for:
+  CFG_INSTALL_EMAIL_ADR=$(whiptail --title "Your Email" --backtitle "$WT_BACKTITLE" --inputbox \
+    "Please Enter your Email Address. We will use it for:
 - Generate ISPConfig LetsEncrypt ssl ( if you choosed to install LetsEncrypt and ISPConfig interface)
 - Send you the logs of this setup. \n
 !Important! If you will let it empty we will use postmaster@$CFG_HOSTNAME_FQDN" --nocancel 15 90 3>&1 1>&2 2>&3)
 
-    if [[ -z $CFG_INSTALL_EMAIL_ADR ]]; then
-        CFG_INSTALL_EMAIL_ADR="postmaster@$CFG_HOSTNAME_FQDN"
-	fi
+  if [[ -z $CFG_INSTALL_EMAIL_ADR ]]; then
+    CFG_INSTALL_EMAIL_ADR="postmaster@$CFG_HOSTNAME_FQDN"
+  fi
 
-    if [ "$CFG_MULTISERVER" == "no" ]; then
-	    AskQuestions
-    else
-        source $PWD/distros/$DISTRO/02_askquestions_multiserver.sh
-	    AskQuestionsMultiserver
+  if [ "$CFG_MULTISERVER" == "no" ]; then
+    AskQuestions
+  else
+    source $PWD/distros/$DISTRO/02_askquestions_multiserver.sh
+    AskQuestionsMultiserver
+  fi
+
+  InstallAditionalRepos
+  InstallBasics
+  InstallSQLServer
+
+  if [ "$CFG_SETUP_WEB" == true ]; then
+    InstallWebServer
+    InstallPHP
+    InstallPHPMyAdmin
+    InstallLetsEncrypt
+    InstallFTP
+
+    if [ "$CFG_QUOTA" == true ]; then
+      InstallQuota
     fi
 
-	InstallAditionalRepos
-    InstallBasics
-    InstallSQLServer
-
-    if [ "$CFG_SETUP_WEB" == true ];
-	then
-        InstallWebServer
-		InstallPHP
-		InstallPHPMyAdmin
-		InstallLetsEncrypt
-        InstallFTP
-
-        if [ "$CFG_QUOTA" == true ];
-		then
-    	    InstallQuota
-        fi
-
-        if [ "$CFG_JKIT" == true ];
-		then
-    	    InstallJailkit
-        fi
-
-		if [ "$CFG_SETUP_MAIL" == true ];
-		then
-        	InstallWebmail
-		fi
+    if [ "$CFG_JKIT" == true ]; then
+      InstallJailkit
     fi
 
     if [ "$CFG_SETUP_MAIL" == true ]; then
-        InstallPostfix
-        InstallMTA
+      InstallWebmail
+    fi
+  fi
+
+  if [ "$CFG_SETUP_MAIL" == true ]; then
+    InstallPostfix
+    InstallMTA
+  fi
+
+  InstallAntiVirus
+
+  if [ "$CFG_SETUP_NS" == true ]; then
+    if [ "$CFG_BIND" == true ]; then
+      InstallBind
+    fi
+  fi
+
+  InstallWebStats
+  InstallFail2ban
+
+  if [ "$CFG_PHP_VERSION" == "none" ]; then
+    InstallBasePhp
+  fi
+
+  InstallISPConfig
+  InstallFix
+
+  echo -e "${green}Well done ISPConfig seems installed and configured correctly :D ${NC}"
+  echo
+  echo "You can visit my GitHub profile at https://github.com/a1ur3l/ispconfig_setup"
+  echo '-----------------------------------------------------------------------------'
+  echo "Original version of this script can be found on GitHub at	https://github.com/servisys/ispconfig_setup/"
+  echo
+
+  if [ "$CFG_WEBMAIL" == "roundcube" ]; then
+    if [ "$DISTRO" != "debian8" ] && [ "$DISTRO" != "debian9" ]; then
+      echo -e "${red}You had to edit user/pass /var/lib/roundcube/plugins/ispconfig3_account/config/config.inc.php of roundcube user, as the one you inserted in ISPconfig ${NC}"
+    fi
+  fi
+
+  echo
+  echo -n -e "Now you can connect to your ISPConfig installation at: \n https://$CFG_HOSTNAME_FQDN:$CFG_ISPONCFIG_PORT \n or \n https://$CFG_IPV4:$CFG_ISPONCFIG_PORT \n"
+
+  if [ "$CFG_WEBSERVER" == "nginx" ]; then
+    if [ "$CFG_PHPMYADMIN" == "yes" ]; then
+      echo -n -e "Phpmyadmin is accessibile at: \n http://$CFG_HOSTNAME_FQDN:8081/phpmyadmin \n or \n http://$CFG_IPV4:8081/phpmyadmin \n"
     fi
 
-	InstallAntiVirus
-
-    if [ "$CFG_SETUP_NS" == true ]; then
-		if ["$CFG_BIND" == true ]; then
-	        InstallBind
-		fi
+    if [ "$CFG_WEBMAIL" != "none" ]; then
+      if [ "$CFG_WEBMAIL" == "roundcube" ]; then
+        echo -n -e "Webmail is accessibile at: \n https://$CFG_HOSTNAME_FQDN/webmail \n or \n https://$CFG_IPV4/webmail \n"
+      else
+        echo -n -e "Webmail is accessibile at: \n http://$CFG_HOSTNAME_FQDN:8081/webmail \n or \n http://$CFG_IPV4:8081/webmail \n"
+      fi
     fi
+  fi
 
-    InstallWebStats
-    InstallFail2ban
+  echo -n -e "You Have choosed to autogenerate the following PASSWORDS \n"
+  echo -n -e "Please copy (Only ${red}red text${NC}) and keep them safe \n"
 
-	if [ "$CFG_PHP_VERSION" == "none" ]; then
-        InstallBasePhp
-    fi
+  if [ $CFG_MYSQL_ROOT_PWD_AUTO == true ]; then
+    echo -n -e "MySQL ROOT: ${red}$CFG_MYSQL_ROOT_PWD${NC}\n"
+  fi
 
-    InstallISPConfig
-    InstallFix
+  if [ $CFG_ISPCONFIG_DB_PASS_AUTO == true ]; then
+    echo -n -e "ISPConfig DB: ${red}$CFG_ISPCONFIG_DB_PASS${NC}\n"
+  fi
 
-    echo -e "${green}Well done ISPConfig seems installed and configured correctly :D ${NC}"
-	echo
-    echo "You can visit my GitHub profile at https://github.com/a1ur3l/ispconfig_setup"
-    echo '-----------------------------------------------------------------------------'
-    echo "Original version of this script can be found on GitHub at	https://github.com/servisys/ispconfig_setup/"
-    echo
-
-	if [ "$CFG_WEBMAIL" == "roundcube" ]; then
-        if [ "$DISTRO" != "debian8" ] && [ "$DISTRO" != "debian9" ]; then
-		    echo -e "${red}You had to edit user/pass /var/lib/roundcube/plugins/ispconfig3_account/config/config.inc.php of roundcube user, as the one you inserted in ISPconfig ${NC}"
-	    fi
-    fi
-
-    echo
-	echo -n -e "Now you can connect to your ISPConfig installation at: \n https://$CFG_HOSTNAME_FQDN:$CFG_ISPONCFIG_PORT \n or \n https://$CFG_IPV4:$CFG_ISPONCFIG_PORT \n"
-	
-    if [ "$CFG_WEBSERVER" == "nginx" ]; then
-  	    if [ "$CFG_PHPMYADMIN" == "yes" ]; then
-  		    echo  -n -e "Phpmyadmin is accessibile at: \n http://$CFG_HOSTNAME_FQDN:8081/phpmyadmin \n or \n http://$CFG_IPV4:8081/phpmyadmin \n"
-	    fi
-
-	if [ "$CFG_WEBMAIL" != "none" ]; then
-			if [ "$CFG_WEBMAIL" == "roundcube" ]; then
-				echo  -n -e "Webmail is accessibile at: \n https://$CFG_HOSTNAME_FQDN/webmail \n or \n https://$CFG_IPV4/webmail \n"
-			else
-				echo  -n -e "Webmail is accessibile at: \n http://$CFG_HOSTNAME_FQDN:8081/webmail \n or \n http://$CFG_IPV4:8081/webmail \n"
-			fi
-		fi
-	fi
-
-	echo -n -e "You Have choosed to autogenerate the following PASSWORDS \n"
-	echo -n -e "Please copy (Only ${red}red text${NC}) and keep them safe \n"
-
-	if [ $CFG_MYSQL_ROOT_PWD_AUTO == true ]; then
-		echo -n -e "MySQL ROOT: ${red}$CFG_MYSQL_ROOT_PWD${NC}\n"
-	fi
-
-	if [ $CFG_ISPCONFIG_DB_PASS_AUTO == true ]; then
-		echo -n -e "ISPConfig DB: ${red}$CFG_ISPCONFIG_DB_PASS${NC}\n"
-	fi
-
-	echo -n -e "ISPConfig Admin Password: $red$CFG_ISPONCFIG_ADMIN_PASS$NC\n"
+  echo -n -e "ISPConfig Admin Password: $red$CFG_ISPONCFIG_ADMIN_PASS$NC\n"
 
 else
 
-	echo "${red}Unsupported linux distribution.${NC} \n"
-	echo -n -e "For other distributions please visit the ${red}Original version of this script${NC}"
-	echo -n -e " which can be found on GitHub at ${red}https://github.com/servisys/ispconfig_setup/${NC}"
-	echo -n -e "Thanks"
+  echo "${red}Unsupported linux distribution.${NC} \n"
+  echo -n -e "For other distributions please visit the ${red}Original version of this script${NC}"
+  echo -n -e " which can be found on GitHub at ${red}https://github.com/servisys/ispconfig_setup/${NC}"
+  echo -n -e "Thanks"
 
 fi
 

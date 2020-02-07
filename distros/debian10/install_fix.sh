@@ -3,7 +3,7 @@ InstallFix(){
 	echo -n -e "$IDENTATION_LVL_0 ${BWhite}Make some Fixes on Install ${NC}\n"
 
 
-	if [ $CFG_CERTBOT_VERSION == "default" ] || [ $CFG_CERTBOT_VERSION == "stretch" ]; then
+	if [ $CFG_CERTBOT_VERSION == "default" ] || [ $CFG_CERTBOT_VERSION == "buster" ]; then
 		echo -n -e "$IDENTATION_LVL_1 ${BWhite}Generate LetsEncrypt SSL for $CFG_HOSTNAME_FQDN ${NC}"
 
 		CERTBOOT_DOMAINS="-d $CFG_HOSTNAME_FQDN"

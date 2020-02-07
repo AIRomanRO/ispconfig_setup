@@ -6,7 +6,7 @@
 CheckIPV6() {
 
 	# Set IPV6_ENABLED variable to null
-	IPV6_ENABLED=falsenano
+	IPV6_ENABLED=false
 	CFG_IPV4=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
 
 	if [ -f /proc/net/if_inet6 ]; then

@@ -5,8 +5,7 @@
 
 CheckLinux() {
 
-  #Extract information on system
-  . /etc/os-release
+  #Extract information on system. /etc/os-release
 
   # Set DISTRO variable to null
   DISTRO=''
@@ -16,20 +15,19 @@ CheckLinux() {
   #---------------------------------------------------------------------
 
   if echo $ID-$VERSION_ID | grep -iq "debian-7"; then
-		DISTRO=debian7
+    DISTRO=debian7
   fi
-
 
   #---------------------------------------------------------------------
   #    Debian 8 Jessie
   #---------------------------------------------------------------------
 
   if echo $ID-$VERSION_ID | grep -iq "debian-8"; then
-		DISTRO=debian8
+    DISTRO=debian8
   fi
 
   #---------------------------------------------------------------------
-  #    Debian 8 Jessie
+  #    Debian 9 Stretch
   #---------------------------------------------------------------------
 
   if echo $ID-$VERSION_ID | grep -iq "debian-9"; then
@@ -37,11 +35,19 @@ CheckLinux() {
   fi
 
   #---------------------------------------------------------------------
+  #    Debian 10 Buster
+  #---------------------------------------------------------------------
+
+  if echo $ID-$VERSION_ID | grep -iq "debian-10"; then
+    DISTRO=debian10
+  fi
+
+  #---------------------------------------------------------------------
   #    Ubuntu 14.04
   #---------------------------------------------------------------------
 
   if echo $ID-$VERSION_ID | grep -iq "ubuntu-14.04"; then
-		DISTRO=ubuntu-14.04
+    DISTRO=ubuntu-14.04
   fi
 
   #---------------------------------------------------------------------
@@ -49,7 +55,7 @@ CheckLinux() {
   #---------------------------------------------------------------------
 
   if echo $ID-$VERSION_ID | grep -iq "ubuntu-15.10"; then
-		DISTRO=ubuntu-15.10
+    DISTRO=ubuntu-15.10
   fi
 
   #---------------------------------------------------------------------
@@ -57,7 +63,7 @@ CheckLinux() {
   #---------------------------------------------------------------------
 
   if echo $ID-$VERSION_ID | grep -iq "ubuntu-16.04"; then
-		DISTRO=ubuntu-16.04
+    DISTRO=ubuntu-16.04
   fi
 
   #---------------------------------------------------------------------
@@ -65,7 +71,7 @@ CheckLinux() {
   #---------------------------------------------------------------------
 
   if echo $ID-$VERSION_ID | grep -iq "ubuntu-16.04"; then
-		DISTRO=ubuntu-16.04
+    DISTRO=ubuntu-16.04
   fi
 
   #---------------------------------------------------------------------
@@ -73,7 +79,7 @@ CheckLinux() {
   #---------------------------------------------------------------------
 
   if echo $ID-$VERSION_ID | grep -iq "centos-7"; then
-		DISTRO=centos7
+    DISTRO=centos7
   fi
 
 }
