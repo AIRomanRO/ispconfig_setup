@@ -79,21 +79,6 @@ deb-src https://nginx.org/packages/mainline/debian/ $LSB_RELEASE nginx
   sudo apt-key add /etc/apt/trusted.custom.d/nginx_signing.key >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
   echo -e " [ ${green}DONE${NC} ]"
 
-  # 	#Add dotdeb nginx
-  #     echo -n -e "$IDENTATION_LVL_1 ${BBlack}DotDeb Nginx [ dotdeb.org ] Repository${NC}"
-  #     echo "#################  Official Nginx Repository  #################
-
-  # #dotdeb nginx repository
-  # deb http://packages.dotdeb.org jessie-nginx-http2 all
-  # deb-src http://packages.dotdeb.org jessie-nginx-http2 all
-
-  # ###############################################################" > /etc/apt/sources.list.d/nginx-dotdeb.list
-  #     echo -e " [ ${green}DONE${NC} ]"
-
-  #     echo -n -e "$IDENTATION_LVL_1 ${BBlack}DotDeb Nginx [ dotdeb.org ] Repository GnuPG Key${NC} ... "
-  #     wget -q -O /etc/apt/trusted.custom.d/dot-deb.gpg https://www.dotdeb.org/dotdeb.gpg >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-  #     sudo apt-key add /etc/apt/trusted.custom.d/dot-deb.gpg >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-  # 	echo -e " [ ${green}DONE${NC} ]"
 
   echo -n -e "$IDENTATION_LVL_1 Configure ${BBlack}sources priorities via PIN${NC}"
   echo "##############################
@@ -106,6 +91,7 @@ Pin: release a=$LSB_RELEASE-backports
 Pin-Priority: 400
 
 ####################################" >/etc/apt/preferences
+  echo -e "Package: *\nPin: origin packages.sury.org\nPin-Priority: 100" > /etc/apt/preferences.d/deb-sury-org
 
   echo -e " [ ${green}DONE${NC} ]"
 

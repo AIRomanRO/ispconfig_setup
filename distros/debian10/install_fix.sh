@@ -46,34 +46,10 @@ InstallFix() {
   echo -e -n "#Temp SQL for additional php versions \n" >$SQL_FILE_NAME
   for INSTALLED_PHP_VERSION in "${CFG_PHP_VERSION[@]}"; do
     case $INSTALLED_PHP_VERSION in
-    "php7.0")
-      echo -n -e "$IDENTATION_LVL_2 Generate SQL for php7.0 ... "
+    "7.0" | "7.1" | "7.2" | "7.3" | "7.4" | "8.0")
+      echo -n -e "$IDENTATION_LVL_2 Generate SQL for php$INSTALLED_PHP_VERSION ... "
       SHOULD_INSERT_ADDITIONAL_PHP_VERSIONS=true
-      echo "INSERT INTO server_php (server_php_id, sys_userid, sys_groupid, sys_perm_user, sys_perm_group, sys_perm_other, server_id, client_id, name, php_fastcgi_binary, php_fastcgi_ini_dir, php_fpm_init_script, php_fpm_ini_dir, php_fpm_pool_dir) VALUES (NULL, '1', '1', 'riud', 'riud', NULL, '1', '0', 'PHP 7.0', '/usr/bin/php-cgi7.0', '/etc/php/7.0/cgi/', '/etc/init.d/php7.0-fpm', '/etc/php/7.0/fpm/', '/etc/php/7.0/fpm/pool.d/'); " >>$SQL_FILE_NAME
-      echo -e " [ ${green}DONE${NC} ] "
-      ;;
-    "php7.1")
-      echo -n -e "$IDENTATION_LVL_2 Generate SQL for php7.1 ... "
-      SHOULD_INSERT_ADDITIONAL_PHP_VERSIONS=true
-      echo "INSERT INTO server_php (server_php_id, sys_userid, sys_groupid, sys_perm_user, sys_perm_group, sys_perm_other, server_id, client_id, name, php_fastcgi_binary, php_fastcgi_ini_dir, php_fpm_init_script, php_fpm_ini_dir, php_fpm_pool_dir) VALUES (NULL, '1', '1', 'riud', 'riud', NULL, '1', '0', 'PHP 7.1', '/usr/bin/php-cgi7.1', '/etc/php/7.1/cgi/', '/etc/init.d/php7.1-fpm', '/etc/php/7.1/fpm/', '/etc/php/7.1/fpm/pool.d/'); " >>$SQL_FILE_NAME
-      echo -e " [ ${green}DONE${NC} ] "
-      ;;
-    "php7.2")
-      echo -n -e "$IDENTATION_LVL_2 Generate SQL for php7.2"
-      SHOULD_INSERT_ADDITIONAL_PHP_VERSIONS=true
-      echo "INSERT INTO server_php (server_php_id, sys_userid, sys_groupid, sys_perm_user, sys_perm_group, sys_perm_other, server_id, client_id, name, php_fastcgi_binary, php_fastcgi_ini_dir, php_fpm_init_script, php_fpm_ini_dir, php_fpm_pool_dir) VALUES (NULL, '1', '1', 'riud', 'riud', NULL, '1', '0', 'PHP 7.2', '/usr/bin/php-cgi7.2', '/etc/php/7.2/cgi/', '/etc/init.d/php7.2-fpm', '/etc/php/7.2/fpm/', '/etc/php/7.2/fpm/pool.d/'); " >>$SQL_FILE_NAME
-      echo -e " [ ${green}DONE${NC} ] "
-      ;;
-    "php7.3")
-      echo -n -e "$IDENTATION_LVL_2 Generate SQL for php7.3"
-      SHOULD_INSERT_ADDITIONAL_PHP_VERSIONS=true
-      echo "INSERT INTO server_php (server_php_id, sys_userid, sys_groupid, sys_perm_user, sys_perm_group, sys_perm_other, server_id, client_id, name, php_fastcgi_binary, php_fastcgi_ini_dir, php_fpm_init_script, php_fpm_ini_dir, php_fpm_pool_dir) VALUES (NULL, '1', '1', 'riud', 'riud', NULL, '1', '0', 'PHP 7.3', '/usr/bin/php-cgi7.3', '/etc/php/7.3/cgi/', '/etc/init.d/php7.2-fpm', '/etc/php/7.3/fpm/', '/etc/php/7.3/fpm/pool.d/'); " >>$SQL_FILE_NAME
-      echo -e " [ ${green}DONE${NC} ] "
-      ;;
-    "php7.4")
-      echo -n -e "$IDENTATION_LVL_2 Generate SQL for php7.4"
-      SHOULD_INSERT_ADDITIONAL_PHP_VERSIONS=true
-      echo "INSERT INTO server_php (server_php_id, sys_userid, sys_groupid, sys_perm_user, sys_perm_group, sys_perm_other, server_id, client_id, name, php_fastcgi_binary, php_fastcgi_ini_dir, php_fpm_init_script, php_fpm_ini_dir, php_fpm_pool_dir) VALUES (NULL, '1', '1', 'riud', 'riud', NULL, '1', '0', 'PHP 7.4', '/usr/bin/php-cgi7.4', '/etc/php/7.4/cgi/', '/etc/init.d/php7.4-fpm', '/etc/php/7.4/fpm/', '/etc/php/7.4/fpm/pool.d/'); " >>$SQL_FILE_NAME
+      echo "INSERT INTO server_php (server_php_id, sys_userid, sys_groupid, sys_perm_user, sys_perm_group, sys_perm_other, server_id, client_id, name, php_fastcgi_binary, php_fastcgi_ini_dir, php_fpm_init_script, php_fpm_ini_dir, php_fpm_pool_dir) VALUES (NULL, '1', '1', 'riud', 'riud', NULL, '1', '0', 'PHP $INSTALLED_PHP_VERSION', '/usr/bin/php-cgi$INSTALLED_PHP_VERSION', '/etc/php/$INSTALLED_PHP_VERSION/cgi/', '/etc/init.d/php$INSTALLED_PHP_VERSION-fpm', '/etc/php/$INSTALLED_PHP_VERSION/fpm/', '/etc/php/$INSTALLED_PHP_VERSION/fpm/pool.d/'); " >>$SQL_FILE_NAME
       echo -e " [ ${green}DONE${NC} ] "
       ;;
     esac
@@ -140,6 +116,14 @@ InstallFix() {
       sed -i 's/;openssl.cafile=/openssl.cafile=\/etc\/ssl\/certs\/ca-certificates.crt/' /etc/php/7.4/fpm/php.ini
     fi
 
+    if [ -f /etc/php/8.0/apache2/php.ini ]; then
+      sed -i 's/;openssl.cafile=/openssl.cafile=\/etc\/ssl\/certs\/ca-certificates.crt/' /etc/php/8.0/apache2/php.ini
+    fi
+
+    if [ -f /etc/php/8.0/fpm/php.ini ]; then
+      sed -i 's/;openssl.cafile=/openssl.cafile=\/etc\/ssl\/certs\/ca-certificates.crt/' /etc/php/8.0/fpm/php.ini
+    fi
+
     sed -i 's/###//g' /etc/nginx/sites-available/webmail-roundcube.vhost >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
     sed -i 's/listen 80/###listen 80/g' /etc/nginx/sites-available/webmail-roundcube.vhost >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
 
@@ -167,10 +151,10 @@ InstallFix() {
 
   if [ $CFG_WEBSERVER == "apache" ]; then
     service apache2 reload >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
-    service php5-fpm reload >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
+    service php7.3-fpm reload >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
   else
     service nginx force-reload >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
-    service php7.0-fpm force-reload >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
+    service php7.3-fpm force-reload >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
   fi
 
   echo -n -e "$IDENTATION_LVL_1 ${BWhite}Cleanup APT-GET ${NC}"

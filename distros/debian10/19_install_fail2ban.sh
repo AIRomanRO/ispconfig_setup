@@ -95,7 +95,7 @@ EOF
 [pureftpd]
 enabled = true
 port = ftp
-filter = pureftpd
+filter = pure-ftpd
 logpath = /var/log/syslog
 maxretry = 3
 
@@ -108,7 +108,7 @@ maxretry = 5
 
 EOF
 
-  cat > /etc/fail2ban/filter.d/pureftpd.conf <<EOF
+  cat > /etc/fail2ban/filter.d/pure-ftpd.conf <<EOF
 [Definition]
 failregex = .*pure-ftpd: \(.*@<HOST>\) \[WARNING\] Authentication failed for user.*
 ignoreregex =
@@ -184,8 +184,12 @@ EOF
   echo -e " [ ${green}DONE${NC} ] "
 
   echo -n -e "$IDENTATION_LVL_1 Restart Fail2Ban Service ... "
-  service fail2ban restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+  systemctl restart fail2ban >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
   echo -e " [ ${green}DONE${NC} ] "
+
+  echo -n -e "$IDENTATION_LVL_1 Installing Firewall (UFW)... "
+  package_install ufw
+  echo -e " [ ${green}DONE${NC}] "
 
   MeasureTimeDuration $START_TIME
 

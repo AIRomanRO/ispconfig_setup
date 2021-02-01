@@ -50,7 +50,7 @@ InstallBasics() {
   package_upgrade
   echo -e "[${green}DONE${NC}]"
 
-  echo -n -e "$IDENTATION_LVL_1 Installing Aditional Selected Software Packages:\n"
+  echo -n -e "$IDENTATION_LVL_1 Installing Additional Selected Software Packages:\n"
   for PACKAGE_NAME in "${CFG_INSTALL_ADITIONAL_SOFTWARE[@]}"; do
     case $PACKAGE_NAME in
     "htop")
@@ -232,6 +232,22 @@ InstallBasics() {
   echo -n "$IDENTATION_LVL_1 Reconfigure dash... "
   echo "dash dash/sh boolean false" | debconf-set-selections
   dpkg-reconfigure -f noninteractive dash >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
+  echo -e "[ ${green}DONE${NC} ]"
+
+  echo -n "$IDENTATION_LVL_1 Enable unlimited bash history ... "
+  echo "
+# Eternal bash history.
+# ---------------------
+# Undocumented feature which sets the size to \"unlimited\".
+# http://stackoverflow.com/questions/9457233/unlimited-bash-history
+export HISTFILESIZE=
+export HISTSIZE=
+export HISTTIMEFORMAT=\"[%F %T] \"
+# Change the file location because certain bash sessions truncate .bash_history file upon close.
+# http://superuser.com/questions/575479/bash-history-truncated-to-500-lines-on-each-login
+export HISTFILE=~/.bash_eternal_history " >> /root/.bashrc
+
+  [[ -s ~/.bashrc ]] && . ~/.bashrc
   echo -e "[ ${green}DONE${NC} ]"
 
   MeasureTimeDuration $START_TIME

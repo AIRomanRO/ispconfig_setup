@@ -23,8 +23,8 @@ InstallSQLServer() {
 
 		elif [ $CFG_MYSQL_VERSION == "5.6" ]; then
 		
-			echo -n -e "$IDENTATION_LVL_1 Downloading the MySQL APT Config [ ${BBlack}Version 0.8.14-1_all ${NC}] ... "
-			wget -q -O "$PROGRAMS_INSTALL_DOWNLOAD/mysql-apt-config-all.deb" "https://repo.mysql.com/mysql-apt-config_0.8.14-1_all.deb"
+			echo -n -e "$IDENTATION_LVL_1 Downloading the MySQL APT Config [ ${BBlack}Version 0.8.16-1_all ${NC}] ... "
+			wget -q -O "$PROGRAMS_INSTALL_DOWNLOAD/mysql-apt-config-all.deb" "https://repo.mysql.com/mysql-apt-config_0.8.16-1_all.deb"
 			echo -e " [ ${green}DONE${NC} ] "
 
 			echo -n -e "$IDENTATION_LVL_1 Set Selections on debconf ... "
@@ -102,16 +102,16 @@ InstallSQLServer() {
 bind-address = 127.0.0.1" >> "$CNF_DEST/mysqld_bind_address.cnf"
 
 			echo "
-# This is neccesary for ISPConfig installation
+# This is necessary for ISPConfig installation
 [mysqld]
 sql-mode='NO_ENGINE_SUBSTITUTION'
 " >> "$CNF_DEST/mysqld_sql_mode.cnf"
 
 			if [ $CFG_MYSQL_VERSION == "8.0" ]; then
 			echo "
-# This is neccesary to connect to mysql 8+ from php.
+# This is necessary to connect to mysql 8+ from php.
 # On 8.0(4) the default-authentication-plugin is caching_sha2_password
-# mysqli doens't support yet the caching_sha2_password
+# mysqli don't support yet the caching_sha2_password
 # !!! IMPORTANT !!! this should be removed once mysqli will support it !!!
 [mysqld]
 default-authentication-plugin=mysql_native_password
@@ -143,7 +143,7 @@ default-authentication-plugin=mysql_native_password
 
 		if [ $CFG_MYSQL_VERSION == "8.0" ]; then
 			echo "CREATE USER 'root'@'127.0.0.1' IDENTIFIED BY '$CFG_MYSQL_ROOT_PWD';" > $PROGRAMS_INSTALL_SQLS/rootIP.sql
-            echo "GRANT ALL PRIVILEGES ON *.* TO 'root'@'127.0.0.1';" >> $PROGRAMS_INSTALL_SQLS/rootIP.sql
+      echo "GRANT ALL PRIVILEGES ON *.* TO 'root'@'127.0.0.1';" >> $PROGRAMS_INSTALL_SQLS/rootIP.sql
 			echo "FLUSH PRIVILEGES;" >> $PROGRAMS_INSTALL_SQLS/rootIP.sql
 			mysql -u root -p$CFG_MYSQL_ROOT_PWD < $PROGRAMS_INSTALL_SQLS/rootIP.sql >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 		fi
@@ -155,8 +155,8 @@ default-authentication-plugin=mysql_native_password
 		echo -n "$IDENTATION_LVL_0 Installing MariaDB... \n"
 
 		echo -n -e "$IDENTATION_LVL_1 Set Selections on debconf ... "
-		echo "mysql-server-5.5 mysql-server/root_password password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
-		echo "mysql-server-5.5 mysql-server/root_password_again password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
+		echo "maria-db-10.1 mysql-server/root_password password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
+		echo "maria-db-10.1 mysql-server/root_password_again password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
 		echo -e " [ ${green}DONE${NC} ] "
 
 		echo -n -e "$IDENTATION_LVL_1 Install MySQL Server & Client ... "
@@ -164,8 +164,12 @@ default-authentication-plugin=mysql_native_password
 		echo -e " [ ${green}DONE${NC} ] "
 
 		echo -n -e "$IDENTATION_LVL_1 Make some basic configs ... "
-		sed -i 's/bind-address		= 127.0.0.1/#bind-address		= 127.0.0.1/' /etc/mysql/my.cnf >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-		echo -e " [ ${green}DONE${NC} ] "
+		sed -i 's/bind-address		= 127.0.0.1/#bind-address		= 127.0.0.1\nsql-mode="NO_ENGINE_SUBSTITUTION"/' /etc/mysql/mariadb.conf.d/50-server.cnf
+    echo "update mysql.user set plugin = 'mysql_native_password' where user='root';" | mysql -u root
+    sed -i 's/password =/password = '$CFG_MYSQL_ROOT_PWD'/' /etc/mysql/debian.cnf
+	  mysql -e "UPDATE mysql.user SET Password = PASSWORD('$CFG_MYSQL_ROOT_PWD') WHERE User = 'root'"
+	  mysql -e "FLUSH PRIVILEGES"
+    echo -e " [ ${green}DONE${NC} ] "
 
 		echo -n -e "$IDENTATION_LVL_1 Restart the MySQL Service ... "
 		service mysql restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1

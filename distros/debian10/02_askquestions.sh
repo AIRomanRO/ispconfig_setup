@@ -81,12 +81,14 @@ AskQuestions() {
 
   while [ "x$CFG_PHP_VERSION" == "x" ]; do
     CFG_PHP_VERSION=$(whiptail --title "Choose PHP Version(s)" --backtitle "$WT_BACKTITLE" --nocancel --separate-output --checklist \
-      "Choose PHP Version do you want to install" 20 75 7 \
-      "php7.0" "Latest Available from 7.0" ON \
-      "php7.1" "Latest Available from 7.1" ON \
-      "php7.2" "Latest Available from 7.2" ON \
-      "php7.3" "Latest Available from 7.3" ON \
-      "php7.4" "Latest Available from 7.4" ON \
+      "Choose PHP Version do you want to install" 20 75 9 \
+      "5.6" "Latest Available from 5.6" ON \
+      "7.0" "Latest Available from 7.0" ON \
+      "7.1" "Latest Available from 7.1" ON \
+      "7.2" "Latest Available from 7.2" ON \
+      "7.3" "Latest Available from 7.3" ON \
+      "7.4" "Latest Available from 7.4" ON \
+      "8.0" "Latest Available from 8.0" ON \
       "none" "No install" OFF 3>&1 1>&2 2>&3)
   done
 
@@ -167,10 +169,9 @@ AskQuestions() {
 
   while [ "x$CFG_MTA" == "x" ]; do
     CFG_MTA=$(whiptail --title "Mail Server" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
-      "Select mailserver type" 10 60 3 \
+      "Select mail server type" 10 60 2 \
       "none" "" OFF \
-      "dovecot" "(default)" ON \
-      "courier" "" OFF 3>&1 1>&2 2>&3)
+      "dovecot" "(default)" ON 3>&1 1>&2 2>&3)
   done
 
   echo -n -e "$IDENTATION_LVL_1 ${BBlack}Mail Server${NC}: ${green}$CFG_MTA${NC} "

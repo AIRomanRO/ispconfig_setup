@@ -90,7 +90,7 @@ InstallWebServer() {
 
 	elif [ $CFG_WEBSERVER == "nginx" ]; then
 
-	    CFG_NGINX=y
+    CFG_NGINX=y
 		CFG_APACHE=n
 
 		echo -n -e "$IDENTATION_LVL_1 Stop And Remove Apache ... \n"

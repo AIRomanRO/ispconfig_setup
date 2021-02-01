@@ -32,7 +32,7 @@ InstallWebmail() {
 			# 	echo "deb-src http://http.debian.net/debian/ jessie-backports main contrib non-free" >> /etc/apt/sources.list
 			# fi
 			echo -n -e "$IDENTATION_LVL_2 Installing Roundcube ... "		  	
-			package_install -t buster roundcube-core roundcube roundcube-mysql roundcube-plugins
+			package_install roundcube roundcube-core roundcube-mysql roundcube-plugins
 			echo -e " [ ${green}DONE${NC} ] "
 
 			echo -n -e "$IDENTATION_LVL_2 Configure RoundCube on WebServer ... " 
@@ -152,16 +152,10 @@ InstallWebmail() {
 </IfModule>
 EOF
 		  	else
-		  		APPS_SOCKET="/var/lib/php5-fpm/apps.sock"
-		  		if [ -f /var/run/php/php7.0-fpm.sock ]; then
-		  			APPS_SOCKET="/var/run/php/php7.0-fpm.sock"
+		  		APPS_SOCKET="/var/lib/php7.0-fpm/apps.sock"
+		  		if [ -f /var/run/php/php7.3-fpm.sock ]; then
+		  			APPS_SOCKET="/var/run/php/php7.3-fpm.sock"
 		  		fi
-
-		  		APPS_SOCKET="/var/lib/php5-fpm/apps.sock"
-		  		if [ -f /var/run/php/php7.0-fpm.sock ]; then
-		  			APPS_SOCKET="/var/run/php/php7.0-fpm.sock"
-		  		fi
-
 	        echo -e "
 server {
    # SSL configuration
@@ -241,6 +235,7 @@ server {
 
 			sed -i "s/\$rcmail_config\['password_min_length'\] = 6;/\$rcmail_config\['password_min_length'\] = 8;/" /usr/share/roundcube/plugins/ispconfig3_pass/config/config.inc.php
 			sed -i "s/\$rcmail_config\['password_check_symbol'\] = TRUE;/\$rcmail_config\['password_check_symbol'\] = FALSE;/" /usr/share/roundcube/plugins/ispconfig3_pass/config/config.inc.php
+			sed -i "s/\$config\['default_host'\] = array(\"localhost\");/\$config['default_host'] = 'localhost';/" /etc/roundcube/config.inc.php
 			echo -e " [ ${green}DONE${NC} ] "
 	    ;;
 		"squirrelmail")

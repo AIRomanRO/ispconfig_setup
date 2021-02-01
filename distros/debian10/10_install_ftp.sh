@@ -16,6 +16,7 @@ InstallFTP() {
 
     echo -n -e "$IDENTATION_LVL_1 Install PureFTPd ... "
     package_install pure-ftpd-common pure-ftpd-mysql
+    openssl dhparam -out /etc/ssl/private/pure-ftpd-dhparams.pem 4096
     sed -i 's/ftp/\#ftp/' /etc/inetd.conf >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
     echo -e " [ ${green}DONE${NC} ] "
 
@@ -34,7 +35,7 @@ InstallFTP() {
 
     echo -n -e "$IDENTATION_LVL_1 Generate And Install SSL Certificate for FTP Server ... "
     mkdir -p /etc/ssl/private/ >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
-    openssl req -x509 -nodes -days 7300 -newkey rsa:4096 -keyout /etc/ssl/private/pure-ftpd.pem -out /etc/ssl/private/pure-ftpd.pem -subj "/C=$SSL_COUNTRY/ST=$SSL_STATE/L=$SSL_LOCALITY/O=$SSL_ORGANIZATION/OU=$SSL_ORGUNIT/CN=$CFG_HOSTNAME_FQDN" >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
+    openssl req -x509 -nodes -days 3650 -newkey rsa:4096 -keyout /etc/ssl/private/pure-ftpd.pem -out /etc/ssl/private/pure-ftpd.pem -subj "/C=$SSL_COUNTRY/ST=$SSL_STATE/L=$SSL_LOCALITY/O=$SSL_ORGANIZATION/OU=$SSL_ORGUNIT/CN=$CFG_HOSTNAME_FQDN" >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
     chmod 600 /etc/ssl/private/pure-ftpd.pem >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
     echo -e " [ ${green}DONE${NC} ] "
 

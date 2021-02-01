@@ -117,11 +117,14 @@ InstallPHPMyAdmin() {
       echo -n -e "$IDENTATION_LVL_2 Generate and set random blowfish string ... "
       BLOWFISH=$(tr </dev/urandom -dc 'A-Z-a-z-0-9' | head -c${1:-64})
       sed -i "s/blowfish_secret'] = ''/blowfish_secret'] = '$BLOWFISH'/" /etc/phpmyadmin/config.inc.php
+      sed -i "$ a\$cfg['TempDir'] = '/var/lib/phpmyadmin/tmp';" /usr/share/phpmyadmin/config.inc.php
       echo -e " [ ${green}DONE${NC} ] "
 
       echo -n -e "$IDENTATION_LVL_2 Update configs ... "
       sed -i "s/define('CONFIG_DIR', '')/define('CONFIG_DIR', '\/etc\/phpmyadmin\/')/" /usr/share/phpmyadmin/libraries/vendor_config.php
 
+      sed -i "s|//\s\$cfg\['Servers'\]\[\$i\]\['controlhost'\]\s=\s'';|\$cfg['Servers'][\$i]['controlhost'] = 'localhost';|" /usr/share/phpmyadmin/config.inc.php
+      sed -i "s|//\s\$cfg\['Servers'\]\[\$i\]\['controlport'\]\s=\s'';|\$cfg['Servers'][\$i]['controlport'] = '';|" /usr/share/phpmyadmin/config.inc.php
       sed -i "/controluser/c\$cfg['Servers'][\$i]['controluser']='phpmyadmin'/" /etc/phpmyadmin/config.inc.php
       sed -i "/controlpass/c\$cfg['Servers'][\$i]['controlpass']='$APP_DB_PASS'/" /etc/phpmyadmin/config.inc.php
 
@@ -145,6 +148,7 @@ InstallPHPMyAdmin() {
       sed -i "/^\/\/.*'central_columns'/s/^\/\///g" /etc/phpmyadmin/config.inc.php
       sed -i "/^\/\/.*'designer_settings'/s/^\/\///g" /etc/phpmyadmin/config.inc.php
       sed -i "/^\/\/.*'export_templates'/s/^\/\///g" /etc/phpmyadmin/config.inc.php
+      sed -i '/\*\sStorage\sdatabase\sand\stables\s\*/,/\*\*/ s|^//||' /usr/share/phpmyadmin/config.inc.php
       echo -e " [ ${green}DONE${NC} ] "
 
       echo -n -e "$IDENTATION_LVL_2 Remove the test folder ... "
