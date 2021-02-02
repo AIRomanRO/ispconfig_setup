@@ -30,12 +30,14 @@ InstallAntiVirus() {
 
   if [ $CFG_AVUPDATE == "yes" ]; then
     echo -n -e "$IDENTATION_LVL_1 Updating ClamAV. ( Please Wait. Don't abort it! ) ... "
+    systemctl stop clamav-freshclam >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
     freshclam >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+    systemctl start clamav-freshclam >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
     echo -e " [ ${green}DONE${NC} ] "
   fi
 
   echo -n -e "$IDENTATION_LVL_1 Restarting ClamAV ... "
-  systemctl restart clamav-daemon restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+  systemctl restart clamav-daemon >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
   echo -e "[${green}DONE${NC}]\n"
 
   MeasureTimeDuration $START_TIME

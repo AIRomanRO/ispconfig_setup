@@ -16,7 +16,7 @@ InstallFTP() {
 
     echo -n -e "$IDENTATION_LVL_1 Install PureFTPd ... "
     package_install pure-ftpd-common pure-ftpd-mysql
-    openssl dhparam -out /etc/ssl/private/pure-ftpd-dhparams.pem 4096
+    openssl dhparam -out /etc/ssl/private/pure-ftpd-dhparams.pem 2048 >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
     sed -i 's/ftp/\#ftp/' /etc/inetd.conf >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
     echo -e " [ ${green}DONE${NC} ] "
 
@@ -35,13 +35,13 @@ InstallFTP() {
 
     echo -n -e "$IDENTATION_LVL_1 Generate And Install SSL Certificate for FTP Server ... "
     mkdir -p /etc/ssl/private/ >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
-    openssl req -x509 -nodes -days 3650 -newkey rsa:4096 -keyout /etc/ssl/private/pure-ftpd.pem -out /etc/ssl/private/pure-ftpd.pem -subj "/C=$SSL_COUNTRY/ST=$SSL_STATE/L=$SSL_LOCALITY/O=$SSL_ORGANIZATION/OU=$SSL_ORGUNIT/CN=$CFG_HOSTNAME_FQDN" >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
+    openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout /etc/ssl/private/pure-ftpd.pem -out /etc/ssl/private/pure-ftpd.pem -subj "/C=$SSL_COUNTRY/ST=$SSL_STATE/L=$SSL_LOCALITY/O=$SSL_ORGANIZATION/OU=$SSL_ORGUNIT/CN=$CFG_HOSTNAME_FQDN" >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
     chmod 600 /etc/ssl/private/pure-ftpd.pem >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
     echo -e " [ ${green}DONE${NC} ] "
 
     echo -n -e "$IDENTATION_LVL_1 Restart FTP Server ... "
-    service openbsd-inetd restart >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
-    service pure-ftpd-mysql restart >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
+    systemctl restart openbsd-inetd >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
+    systemctl restart pure-ftpd-mysql >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
     echo -e " [ ${green}DONE${NC} ] "
   fi
 

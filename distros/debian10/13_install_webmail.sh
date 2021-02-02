@@ -7,9 +7,10 @@ InstallWebmail() {
 	START_TIME=$SECONDS
 
   	echo -n -e "$IDENTATION_LVL_0 ${BWhite}Installing WebMail Client${NC}\n"	
+    echo -n -e "$IDENTATION_LVL_1 ${BWhite} $CFG_WEBMAIL ${NC}\n"
 
   	case $CFG_WEBMAIL in
-		"roundcube")
+		"roundcube" | "roundcube-latest")
 			
 			echo -n -e "$IDENTATION_LVL_1 Installing ${red} RoundCube ${NC} WebMail Client...\n" 
 

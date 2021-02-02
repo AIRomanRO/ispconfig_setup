@@ -45,13 +45,22 @@ InstallBasics() {
     echo -e " [ ${green}DONE${NC} ]\n"
   fi
 
+  echo -n -e "$IDENTATION_LVL_1 Generate ${BWhite}en_US${NC} locale... "
+  export LANGUAGE=en_US.UTF-8
+  export LANG=en_US.UTF-8
+  export LC_ALL=en_US.UTF-8
+  locale-gen en_US.UTF-8 >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
+  echo -e "[${green}DONE${NC}]"
+
   echo -n -e "$IDENTATION_LVL_1 Updating apt and upgrading currently installed packages... "
   package_update
   package_upgrade
   echo -e "[${green}DONE${NC}]"
 
   echo -n -e "$IDENTATION_LVL_1 Installing Additional Selected Software Packages:\n"
-  for PACKAGE_NAME in "${CFG_INSTALL_ADITIONAL_SOFTWARE[@]}"; do
+  for PACKAGE_NAME in $CFG_INSTALL_ADITIONAL_SOFTWARE; do
+    echo -n -e "$IDENTATION_LVL_2 Start install $PACKAGE_NAME"
+
     case $PACKAGE_NAME in
     "htop")
       #Check for htop

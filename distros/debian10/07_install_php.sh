@@ -30,44 +30,9 @@ InstallPHP() {
 	fi
 	echo -e " [ ${green}DONE${NC} ] "
 
-
-	# echo -n -e "$IDENTATION_LVL_1 Install current distro php5 version (${red}needed by ISPConfig${NC}) \n"
-
-	# echo -n -e "$IDENTATION_LVL_2 Prepare PHP5 Modules list ... "
-	# PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES//PHP_SELECTED_VERSION/php5}"
-	# #php5-soap will be installed as php-soap
-	# PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-soap/}"
-	# #php5-xml will be installed as php-xml
-	# PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-xml/}"
-	# #php5-zip will be installed as php-zip
-	# PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-zip/}"
-	# #php5-bz2 will be installed as php-bz2
-	# PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-bz2/}"
-	# #php5-mbstring will be installed as php-mbstring
-	# PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-mbstring/php-mbstring}"
-	# #php5-sqlite3 will be installed as php-sqlite3
-	# PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST//php5-sqlite3/php-sqlite3}"
-	# #fix php5-xmlrpc wrong rename
-	# PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST// rpc / php5-xmlrpc }"
-	# echo -e " [ ${green}DONE${NC} ] "
-
-	# echo -n -e "$IDENTATION_LVL_2 Install PHP5 Modules list [ ${green}$PARSED_PHP_MODULE_LIST${NC} ] ... "
-	# package_install $PARSED_PHP_MODULE_LIST
-	# echo -e " [ ${green}DONE${NC} ] "
-
-	# echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo ... "
-	# sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php5/fpm/php.ini >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-	# echo -e " [ ${green}DONE${NC} ] "
-
-	# echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest ... "
-	# sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php5/fpm/php.ini >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
-	# echo -e " [ ${green}DONE${NC} ] "
-
-
 	ANY_VERSION_INSTALLED=false
-	for PHP_VERSION_ENABLED in "${CFG_PHP_VERSION[@]}";
-    do
-        case $PHP_VERSION_ENABLED in
+	for PHP_VERSION_ENABLED in $CFG_PHP_VERSION; do
+      case $PHP_VERSION_ENABLED in
              "5.6" )
 				 echo -n -e "$IDENTATION_LVL_1 Install PHP version ${BBlack} 5.6 ${NC}:"
 				 echo
@@ -75,7 +40,7 @@ InstallPHP() {
 				 PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES//PHP_SELECTED_VERSION/$PHP_VERSION_ENABLED}"
 				 echo -e " [ ${green}DONE${NC} ] "
 
-				 echo -n -e "$IDENTATION_LVL_2 Install PHP5.6 Modules list ... "
+				 echo -n -e "$IDENTATION_LVL_2 Install PHP5.6 Modules list [ ${green}$PARSED_PHP_MODULE_LIST${NC} ] ... "
 				 package_install $PARSED_PHP_MODULE_LIST
 				 echo -e " [ ${green}DONE${NC} ] "
 
@@ -96,16 +61,26 @@ InstallPHP() {
 				PARSED_PHP_MODULE_LIST="${PHP_RAW_MODULES//PHP_SELECTED_VERSION/$PHP_VERSION_ENABLED}"
 				echo -e " [ ${green}DONE${NC} ] "
 
+        case $PHP_VERSION_ENABLED in
+           "7.2" | "7.3" | "7.4" )
+              PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST// php$PHP_VERSION_ENABLED-mcrypt / }"
+           ;;
+           "8.0" )
+              PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST// php$PHP_VERSION_ENABLED-mcrypt / }"
+              PARSED_PHP_MODULE_LIST="${PARSED_PHP_MODULE_LIST// php$PHP_VERSION_ENABLED-xmlrpc / }"
+           ;;
+        esac
+
 				echo -n -e "$IDENTATION_LVL_2 Install PHP $PHP_VERSION_ENABLED Modules list [ ${green}$PARSED_PHP_MODULE_LIST${NC} ] ... "
 				package_install $PARSED_PHP_MODULE_LIST
 				echo -e " [ ${green}DONE${NC} ] "
 
 				echo -n -e "$IDENTATION_LVL_2 Fix CGI PathInfo ... "
-				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/{$PHP_VERSION_ENABLED}/fpm/php.ini >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+				sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/$PHP_VERSION_ENABLED/fpm/php.ini >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 
 				echo -n -e "$IDENTATION_LVL_2 Set Time Zone to Europe/Bucharest ... "
-				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/{$PHP_VERSION_ENABLED}/fpm/php.ini >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+				sed -i "s/;date.timezone =/date.timezone=\"Europe\/Bucharest\"/" /etc/php/$PHP_VERSION_ENABLED/fpm/php.ini >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 				echo -e " [ ${green}DONE${NC} ] "
 
 				ANY_VERSION_INSTALLED=true
@@ -120,16 +95,17 @@ InstallPHP() {
 					echo -e " [ ${green}DONE${NC} ]"
 				fi
 		    ;;
-        esac
-    done
+      esac
+  done
 
 	echo -n -e "$IDENTATION_LVL_1 Set Default PHP Cli version to ${green} $CFG_PHP_CLI_VERSION ${NC} ... "
 	if [ $CFG_PHP_CLI_VERSION != "ignore" ] && [ $CFG_PHP_CLI_VERSION != "latest" ];
 	then
 		update-alternatives --set php "/usr/bin/php$CFG_PHP_CLI_VERSION" >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 	fi
+  echo -e " [ ${green}DONE${NC} ]"
 
-	echo -n "$IDENTATION_LVL_1 Install needed Programs for PHP and Web Server ... "
+	echo -n -e "$IDENTATION_LVL_1 Install needed Programs for PHP and Web Server ... "
 	package_install $RAW_ADITIONAL_PROGRAMS
 	echo -e " [ ${green}DONE${NC} ]"
 
@@ -151,7 +127,7 @@ InstallPHP() {
 
 		# service php5-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 
-		for PHP_VERSION_ENABLED in "${CFG_PHP_VERSION[@]}";
+		for PHP_VERSION_ENABLED in $CFG_PHP_VERSION;
     	do
 			case $PHP_VERSION_ENABLED in
         "7.0" )
@@ -175,7 +151,7 @@ InstallPHP() {
 				;;
 
 		    "8.0" )
-					service php7.4-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
+					service php8.0-fpm restart >> $PROGRAMS_INSTALL_LOG_FILES 2>&1
 				;;
 	        esac
         done

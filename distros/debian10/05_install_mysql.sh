@@ -152,7 +152,7 @@ default-authentication-plugin=mysql_native_password
 
     elif [ $CFG_SQLSERVER == "MariaDB" ]; then
   
-		echo -n "$IDENTATION_LVL_0 Installing MariaDB... \n"
+		echo -e -n "$IDENTATION_LVL_0 Installing MariaDB... \n"
 
 		echo -n -e "$IDENTATION_LVL_1 Set Selections on debconf ... "
 		echo "maria-db-10.1 mysql-server/root_password password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections

@@ -44,7 +44,7 @@ InstallFix() {
   SHOULD_INSERT_ADDITIONAL_PHP_VERSIONS=false
   SQL_FILE_NAME=$PROGRAMS_INSTALL_SQLS/addAdditionalPhpVersionsToISPConfig.sql
   echo -e -n "#Temp SQL for additional php versions \n" >$SQL_FILE_NAME
-  for INSTALLED_PHP_VERSION in "${CFG_PHP_VERSION[@]}"; do
+  for INSTALLED_PHP_VERSION in $CFG_PHP_VERSION; do
     case $INSTALLED_PHP_VERSION in
     "7.0" | "7.1" | "7.2" | "7.3" | "7.4" | "8.0")
       echo -n -e "$IDENTATION_LVL_2 Generate SQL for php$INSTALLED_PHP_VERSION ... "
@@ -61,7 +61,9 @@ InstallFix() {
     echo -e " [ ${green}DONE${NC} ] "
   fi
 
-  if getTrueFalseFormatComparationEqual $CFG_WEBMAIL "roundcube"; then
+
+  if [ getTrueFalseFormatComparationEqual $CFG_WEBMAIL "roundcube" == true ] ||
+   [ getTrueFalseFormatComparationEqual $CFG_WEBMAIL "roundcube-latest"]]; then
     echo -n -e "$IDENTATION_LVL_1 ${BWhite}Fix RoundCube Integration ${NC}"
 
     SQL_FILE_NAME=$PROGRAMS_INSTALL_SQLS/addRouncubeRemoteUserOnISPConfig.sql
@@ -130,7 +132,7 @@ InstallFix() {
     echo -e " [ ${green}DONE${NC} ] "
   fi
 
-  if getTrueFalseFormatComparationNotEqual $CFG_WEBSERVER "none"; then
+  if [$CFG_WEBSERVER == "nginx"]; then
     sed -i 's/listen $CFG_ISPONCFIG_PORT;/listen $CFG_ISPONCFIG_PORT http2 ssl;/' /etc/nginx/sites-available/ispconfig.vhost >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
     sed -i 's/listen [::]:$CFG_ISPONCFIG_PORT ipv6only=on;/listen [::]:$CFG_ISPONCFIG_PORT ipv6only=on http2 ssl;/' /etc/nginx/sites-available/ispconfig.vhost >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
     sed -i 's/ssl_protocols TLSv1 TLSv1.1 TLSv1.2;/ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;/' /etc/nginx/sites-available/ispconfig.vhost >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
@@ -155,6 +157,7 @@ InstallFix() {
   else
     service nginx force-reload >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
     service php7.3-fpm force-reload >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
+    service php8.0-fpm force-reload >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
   fi
 
   echo -n -e "$IDENTATION_LVL_1 ${BWhite}Cleanup APT-GET ${NC}"

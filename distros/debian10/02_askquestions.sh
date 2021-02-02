@@ -186,7 +186,7 @@ AskQuestions() {
       CFG_WEBMAIL=$(whiptail --title "Webmail client" --backtitle "$WT_BACKTITLE" --nocancel --radiolist \
         "Select which Web Mail client you want" 10 60 4 \
         "roundcube" "(default)" OFF \
-        "roundcube-lates" "latest available" ON \
+        "roundcube-latest" "latest available" ON \
         "squirrelmail" "" OFF \
         "none" "No Web Mail Client" OFF 3>&1 1>&2 2>&3)
     done
