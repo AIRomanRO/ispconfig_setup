@@ -31,7 +31,7 @@ PreInstallCheck() {
 
   # Check connectivity
   echo -n "$IDENTATION_LVL_1 Check if we can reach the ISPConfig servers ... "
-  ping -q -c 3 www.ispconfig.org >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
+  ping -q -c 3 www.ispconfig.org -4 >>$PROGRAMS_INSTALL_LOG_FILES 2>&1
   if [ ! "$?" -eq 0 ]; then
     echo -e "[ ${red}ERROR ${NC} : Couldn't reach www.ispconfig.org, please check your internet connection ${NC} ]"
     exit 1

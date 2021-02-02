@@ -122,7 +122,7 @@ InstallPHPMyAdmin() {
 
       echo -n -e "$IDENTATION_LVL_2 Update configs ... "
       sed -i "s/define('CONFIG_DIR', '')/define('CONFIG_DIR', '\/etc\/phpmyadmin\/')/" /usr/share/phpmyadmin/libraries/vendor_config.php
-      sed -i "s/define('CONFIG_DIR', 'ROOT_PATH')/define('CONFIG_DIR', '\/etc\/phpmyadmin\/')/" /usr/share/phpmyadmin/libraries/vendor_config.php
+      sed -i "s/define('CONFIG_DIR', ROOT_PATH)/define('CONFIG_DIR', '\/etc\/phpmyadmin\/')/" /usr/share/phpmyadmin/libraries/vendor_config.php
 
       sed -i "s|//\s\$cfg\['Servers'\]\[\$i\]\['controlhost'\]\s=\s'';|\$cfg['Servers'][\$i]['controlhost'] = 'localhost';|" /etc/phpmyadmin/config.inc.php
       sed -i "s|//\s\$cfg\['Servers'\]\[\$i\]\['controlport'\]\s=\s'';|\$cfg['Servers'][\$i]['controlport'] = '3306';|" /etc/phpmyadmin/config.inc.php

@@ -65,7 +65,7 @@ InstallISPConfig() {
     echo "mysql_master_database=dbispconfig" >> autoinstall.ini
     echo "configure_mail=$CFG_SETUP_MAIL" >> autoinstall.ini
 
-    if getTrueFalseFormat $CFG_SETUP_WEB; then
+    if $(getTrueFalseFormat $CFG_SETUP_WEB) == "true"; then
       echo "configure_jailkit=" getYNFormat $CFG_JKIT >> autoinstall.ini
     else
       echo "configure_jailkit=n" >> autoinstall.ini
@@ -106,7 +106,7 @@ InstallISPConfig() {
     php -q install.php
   fi
 
-  if getTrueFalseFormat $CFG_SETUP_WEB; then
+  if $(getTrueFalseFormat $CFG_SETUP_WEB) == "true"; then
     echo -n -e "$IDENTATION_LVL_1 Restart the webserver "
     if [ $CFG_WEBSERVER == "nginx" ]; then
       service nginx restart
